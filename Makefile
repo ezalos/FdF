@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/03/07 15:21:12 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/03/07 19:15:25 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,18 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs\
 -Winline -Wlong-long -Wunreachable-code
 
+MLX_FLG = -lmlx -framework OpenGL -framework AppKit
+MLX_LIB = -L /usr/local/lib/
+MLX_INC = -I /usr/local/include
 #CFLAGS = $(DFLAGS)
+
+CFLAGS += -fsanitize=address,undefined -g3
+
+ifeq ($(f), n)
+CFLAGS =
+else ifeq ($(f), y)
+CFLAGS = $(DFLAGS)
+endif
 
 ##############################################################################
 ##############################################################################
@@ -137,18 +148,20 @@ endef
 all :	$(NAME)
 
 $(NAME): $(A_OBJ) $(HEAD_PATH) $(LIB)
+		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(MLX_INC) $(A_OBJ) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
+
+$(LIB) : FORCE
 		@$(MAKE) -C $(LIB_DIR)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME))
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
 
 clean :
-		@echo "\$(YELLOW)fill_objs \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
+		@echo "\$(YELLOW)fill_objs \$(END)\\t\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@rm -f $(A_OBJ)
 
 fclean : clean
-		@echo "\$(YELLOW)$(NAME) \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
+		@echo "\$(YELLOW)$(NAME) \$(END)\\t\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@rm -rf $(NAME)
 
 aclean : clean
@@ -175,6 +188,8 @@ echooo :
 
 vt	:	all
 		@ $(VALGRIND) ./$(NAME) $(ARG)
+
+FORCE:
 
 ##########################
 ##						##
