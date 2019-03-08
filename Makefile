@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/03/07 19:15:25 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/03/08 04:55:18 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,13 @@ endif
 ##############################################################################
 ##############################################################################
 
-SRCS		=	main
+SRCS		=	main\
+				init\
+				display color\
+				print\
+				tools\
+				easter_egg\
+				free
 
 SRC_PATH	= ./srcs
 
@@ -109,7 +115,9 @@ WARN_STRING  = [WARNING]
 COM_STRING   = Compiling
 
 MSG ?= Makefile automated push
-nb ?= 10
+map ?= maps/subject_tests/42.fdf
+width ?= 0
+height ?= 0
 
 ARG=`ruby -e "puts (0..$(nb)).to_a.shuffle.join(' ')"`
 
@@ -150,11 +158,11 @@ all :	$(NAME)
 $(NAME): $(A_OBJ) $(HEAD_PATH) $(LIB)
 		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(MLX_INC) $(A_OBJ) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
 
+$(DIR_OBJ)%.o:$(SRC_PATH)/%.c Makefile
+		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
+
 $(LIB) : FORCE
 		@$(MAKE) -C $(LIB_DIR)
-
-$(DIR_OBJ)%.o:$(SRC_PATH)/%.c
-		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
 
 clean :
 		@echo "\$(YELLOW)fill_objs \$(END)\\t\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
@@ -181,13 +189,14 @@ git :
 		@git push
 
 t	:	all
-		@./$(NAME) $(ARG)
+		clear
+		@./$(NAME) $(map) $(width) $(height)
 
 echooo :
 		@echo $(ARG)
 
 vt	:	all
-		@ $(VALGRIND) ./$(NAME) $(ARG)
+		@ $(VALGRIND) ./$(NAME) $(map) $(width) $(height)
 
 FORCE:
 
