@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 13:28:39 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:42:55 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		main(int ac, char **av)
 {
 	t_mlx			*window;
 	t_img			*img;
+	t_line			*line;
 
 	if (ac < 2 && ac > 4)
 		return (0);
@@ -43,10 +44,13 @@ int		main(int ac, char **av)
 		ft_putstr("Start generating choice n*");
 		ft_putnbr(window->choice);
 		ft_putendl("");
-		ft_window_iter(window, &ft_display_swag);
+		// ft_window_iter(window, &ft_display_swag);
 		//mlx_put_image_to_window(window->ptr, window->win, img->b_img, 0, 0);
 		//ft_putstr("Clean screen\n");
-		// mlx_clear_window(window->ptr, window->win);
+		mlx_clear_window(window->ptr, window->win);
+		line = ft_line(ft_get_point(0, 0), ft_get_point(800, 1020));
+		ft_line_gradient(window, line);
+		//ft_draw_line(window, line, 0x00ffffff);
 		mlx_put_image_to_window(window->ptr, window->win, img->img, 0, 0);
 		CURSOR_LOAD
 		ft_putstr("New image appplied              \n");

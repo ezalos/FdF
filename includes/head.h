@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 15:02:16 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:47:07 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 **************
 */
 # define SIZE 1
+# define PRECISION 6
 
 # define OUR_CHOICE 3
 # define UNIQ_BPP   4
@@ -160,6 +161,20 @@ void				ft_print_struct_img(t_img *window);
 */
 int					ft_get_color(unsigned char alpha, unsigned char red,
 						unsigned char green, unsigned char blue);
+
+/*
+**************
+** 	 LINE   **
+**************
+*/
+t_point				*ft_get_point(int x, int y);
+t_line				*ft_line(t_point *one, t_point *two);
+double				ft_f_of_x(t_line *line, double x);
+double				ft_get_decimal(double number);
+int					ft_get_per_ntenth(double number, char precision);
+int					ft_display(t_mlx *window, int x, int y, int color);
+int					ft_draw_line(t_mlx *window, t_line *line, int color);
+int					ft_line_gradient(t_mlx *window, t_line *line);
 
 /*
 **************

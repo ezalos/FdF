@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/03/08 04:55:18 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/03/12 17:41:53 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ endif
 
 SRCS		=	main\
 				init\
+				line\
 				display color\
 				print\
 				tools\

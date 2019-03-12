@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 15:34:07 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:47:30 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,102 @@ int			ft_get_per_ntenth(double number, char precision)
 	return ((int)((double)ft_power(10, (int)precision) * number));
 }
 
-t_img		ft_line_gradient(t_img *img, t_line *line)
+
+int		ft_display_if_brighter(t_mlx *window, int x, int y, int color)
 {
-	int		bound;
-	int		x_start;
+	t_list	*lst;
+	t_img	*img;
 
-	x_start = line->limits[0].x;
-	while (x_start < line->limits[1].x)
+	lst = ft_lst_reach_end(window->img);
+	img = lst->content;
+	if (img->content_img[(img->width * y) + x] < color)
 	{
-		bound = ft_get_per_ntenth(ft_get_decimal(ft_line_point(line, x_start)), 3)
-
+		img->content_img[(img->width * y) + x] = color;
+		return (color);
 	}
+	return (-1);
+}
+
+int		ft_display(t_mlx *window, int x, int y, int color)
+{
+	t_list	*lst;
+	t_img	*img;
+
+	lst = ft_lst_reach_end(window->img);
+	img = lst->content;
+	img->content_img[(img->width * y) + x] = color;
+	return (color);
+}
+
+int		ft_get_grey(int per_nth, char precision, int mode)
+{
+	unsigned char		grey;
+	double				percent;
+
+	percent = ((double) per_nth / (double)ft_power(10, (int)precision));
+	if (!mode)
+		grey = 255.0 * (1.0 - percent);
+	else
+		grey = 255.0 * percent;
+	return (ft_get_color(grey, grey, grey, grey)); //play only with the alpha parameter to obtaincolor's gradient
+}
+
+int		ft_draw_line(t_mlx *window, t_line *line, int color)
+{
+	int		x;
+	int		y;
+
+	x = line->limits[0].x - 1;
+	while (++x < line->limits[1].x)
+	{
+		y = ft_f_of_x(line, x);
+		ft_display(window, x, y, color);
+	}
+	return (line->limits[0].x - x);
+}
+
+int		ft_line_gradient(t_mlx *window, t_line *line)
+{
+	int			bound_x;
+	int			bound_y;
+	double		x;
+	double		y;
+
+	x = line->limits[0].x;
+	while (x < line->limits[1].x)
+	{
+		y = ft_f_of_x(line, x);
+		if (y + 1 >= window->height)
+			return (0);
+		bound_x = ft_get_per_ntenth(ft_get_decimal(ft_f_of_x(line, x)), PRECISION);
+		bound_y = ft_get_per_ntenth(ft_get_decimal(y), PRECISION);
+		if (!bound_x)
+		{
+			if (!bound_y)
+			{
+				ft_display(window, x, y, 0xffffffff);
+			}
+			else
+			{
+				ft_display_if_brighter(window, x, y, ft_get_grey(bound_x, PRECISION, 0));
+				ft_display_if_brighter(window, x, y + 1, ft_get_grey(bound_x, PRECISION, 1));
+			}
+		}
+		else if (bound_x > 0)
+		{
+			if (!bound_y)
+			{
+				ft_display_if_brighter(window, x, y, ft_get_grey(bound_y, PRECISION, 0));
+				ft_display_if_brighter(window, x + 1, y, ft_get_grey(bound_y, PRECISION, 1));
+			}
+			else
+			{
+				ft_display_if_brighter(window, x, y, ft_get_grey(bound_y, PRECISION, 1));
+				ft_display_if_brighter(window, x + 1, y + 1, ft_get_grey(bound_y, PRECISION, 1));
+			}
+
+		}
+		x += 0.1;
+	}
+	return (line->limits[0].x - x);
 }
