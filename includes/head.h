@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/08 04:41:06 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:08:59 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct		s_mlx
 	void			*win;
 	size_t			width;
 	size_t			height;
+	char			choice;
 	t_list			*img;
 }					t_mlx;
 

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/08 05:48:41 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:53:45 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,34 @@ int		main(int ac, char **av)
 		ft_clean_garbage();
 
 
-
-	ft_window_iter(window, &ft_display_swag);
 	img = window->img->content;
-	mlx_put_image_to_window(window->ptr, window->win, img->img, 0, 0);
-
+	window->choice = 3;
+	CURSOR_SAVE
+	//while (++window->choice < 5)
+	{
+		ft_putstr("Start generating choice n*");
+		ft_putnbr(window->choice);
+		ft_putendl("");
+		ft_window_iter(window, &ft_display_swag);
+		//mlx_put_image_to_window(window->ptr, window->win, img->b_img, 0, 0);
+		//ft_putstr("Clean screen\n");
+		mlx_put_image_to_window(window->ptr, window->win, img->img, 0, 0);
+		CURSOR_LOAD
+		ft_putstr("New image appplied              \n");
+		ft_wait_pls(0);
+		ft_wait_pls(0);
+		ft_wait_pls(0);
+		ft_wait_pls(0);
+		ft_wait_pls(0);
+		CURSOR_SAVE
+	}
+	// ft_putendl("");
+	// while (window->width--)
+	// {
+	// 	place_cursor(50, 0);
+	// 	ft_putstr_color("END OF FREE WILL", -1, -1 , -1);
+	// 	ft_wait_pls(500000);
+	// }
 	mlx_loop(window->ptr);
 	ft_clean_fdf(window);
 	return (0);
