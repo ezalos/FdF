@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/08 18:08:59 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 15:02:16 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,19 @@ typedef struct		s_img
 	size_t			height;
 }					t_img;
 
+typedef struct		s_point
+{
+	int				x;
+	int				y;
+}					t_point;
+
+typedef struct		s_line
+{
+	double			a;
+	double			b;
+	t_point			limits[2];
+}					t_line;
+
 /*
 ******************************************************************************
 **																			**
@@ -129,7 +142,7 @@ t_mlx				*ft_init_window(char *title, size_t width, size_t height);
 ** DISPLAY	**
 **************
 */
-int					ft_nice_view(int choice, int y, int x);
+int					ft_nice_view(int choice, int x, int y);
 int					ft_display_swag(t_mlx *window, int x, int y);
 
 /*

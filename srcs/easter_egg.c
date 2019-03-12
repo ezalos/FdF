@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/08 00:52:11 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 13:27:28 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 **        mlx_string_put ( void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string );
 */
 
-int	ft_nice_view(int choice, int y, int x)
+int	ft_nice_view(int choice, int x, int y)
 {
 	if (choice == 0)
 		return (ft_random(-2147483648, 2147483647, ((y + 1) / (x + 1)) + 1, 1));

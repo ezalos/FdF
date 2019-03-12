@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/08 18:53:45 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 13:28:39 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		main(int ac, char **av)
 	img = window->img->content;
 	window->choice = 3;
 	CURSOR_SAVE
-	//while (++window->choice < 5)
+	// while (++window->choice < 4)
 	{
 		ft_putstr("Start generating choice n*");
 		ft_putnbr(window->choice);
@@ -46,14 +46,15 @@ int		main(int ac, char **av)
 		ft_window_iter(window, &ft_display_swag);
 		//mlx_put_image_to_window(window->ptr, window->win, img->b_img, 0, 0);
 		//ft_putstr("Clean screen\n");
+		// mlx_clear_window(window->ptr, window->win);
 		mlx_put_image_to_window(window->ptr, window->win, img->img, 0, 0);
 		CURSOR_LOAD
 		ft_putstr("New image appplied              \n");
-		ft_wait_pls(0);
-		ft_wait_pls(0);
-		ft_wait_pls(0);
-		ft_wait_pls(0);
-		ft_wait_pls(0);
+		// ft_wait_pls(0);
+		// ft_wait_pls(0);
+		// ft_wait_pls(0);
+		// ft_wait_pls(0);
+		// ft_wait_pls(0);
 		CURSOR_SAVE
 	}
 	// ft_putendl("");
