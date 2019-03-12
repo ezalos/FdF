@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 18:47:30 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/12 19:00:48 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int		ft_line_gradient(t_mlx *window, t_line *line)
 			}
 			else
 			{
-				ft_display_if_brighter(window, x, y, ft_get_grey(bound_y, PRECISION, 1));
+				ft_display_if_brighter(window, x + 1, y, ft_get_grey(bound_y, PRECISION, 1));
 				ft_display_if_brighter(window, x + 1, y + 1, ft_get_grey(bound_y, PRECISION, 1));
 			}
 
