@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 18:42:55 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/19 00:47:36 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int		main(int ac, char **av)
 	t_mlx			*window;
 	t_img			*img;
 	t_line			*line;
+	int				y;
+	int				x;
 
 	if (ac < 2 && ac > 4)
 		return (0);
@@ -35,7 +37,8 @@ int		main(int ac, char **av)
 	if (!(window = ft_init_window(av[0], ft_atoi(av[2]), ft_atoi(av[3]))))
 		ft_clean_garbage();
 
-
+	x = SIZE_WIDTH;
+	y = SIZE_HEIGTH - TRANS;
 	img = window->img->content;
 	window->choice = 3;
 	CURSOR_SAVE
@@ -48,9 +51,10 @@ int		main(int ac, char **av)
 		//mlx_put_image_to_window(window->ptr, window->win, img->b_img, 0, 0);
 		//ft_putstr("Clean screen\n");
 		mlx_clear_window(window->ptr, window->win);
-		line = ft_line(ft_get_point(0, 0), ft_get_point(800, 1020));
+		line = ft_line(ft_get_point(0, 0), ft_get_point(x, y));
 		ft_line_gradient(window, line);
-		//ft_draw_line(window, line, 0x00ffffff);
+		line = ft_line(ft_get_point(0, TRANS), ft_get_point(x, y + TRANS));
+		ft_draw_line(window, line, 0x00ffffff);
 		mlx_put_image_to_window(window->ptr, window->win, img->img, 0, 0);
 		CURSOR_LOAD
 		ft_putstr("New image appplied              \n");

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 18:47:07 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/19 00:23:15 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 **  GLOBAL	**
 **************
 */
-# define SIZE 1
-# define PRECISION 6
-
-# define OUR_CHOICE 3
-# define UNIQ_BPP   4
+# define SIZE		1
+# define PRECISION	3
+# define SQRT_2		1.41421356237309504880
+# define OUR_CHOICE	3
+# define UNIQ_BPP	4
+# define TRANS		10
 
 /*
 **************
@@ -159,7 +160,7 @@ void				ft_print_struct_img(t_img *window);
 ** 	 COLOR  **
 **************
 */
-int					ft_get_color(unsigned char alpha, unsigned char red,
+unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
 						unsigned char green, unsigned char blue);
 
 /*

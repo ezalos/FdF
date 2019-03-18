@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/03/12 17:41:53 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/03/19 00:16:59 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ MLX_INC = -I /usr/local/include
 #CFLAGS = $(DFLAGS)
 
 CFLAGS += -fsanitize=address,undefined -g3
+
 
 ifeq ($(f), n)
 CFLAGS =
@@ -80,7 +81,8 @@ HEAD_DIR	= ./includes
 HEAD_PATH	= $(HEAD_DIR)/$(HEAD)
 
 LIB			= $(LIB_DIR)/libft.a
-
+HEAD_PATH	+= ../ft_printf/includes/head.h
+LIB			+= ../ft_printf/libftprintf.a
 ##########################
 ##						##
 ##		  DEBUG			##
@@ -157,7 +159,7 @@ endef
 all :	$(NAME)
 
 $(NAME): $(A_OBJ) $(HEAD_PATH) $(LIB)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(MLX_INC) $(A_OBJ) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
+		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(MLX_INC) $(FT_PRINT) $(A_OBJ) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c Makefile
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)

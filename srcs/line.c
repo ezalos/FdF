@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 19:00:48 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/03/19 00:47:15 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ double		ft_get_decimal(double number)
 
 int			ft_get_per_ntenth(double number, char precision)
 {
-	return ((int)((double)ft_power(10, (int)precision) * number));
+	return ((int)((double)ft_power(10, (int)precision) * (number)));
 }
 
+int			ft_get_bound(double number)
+{
+	return (ft_get_per_ntenth(ft_get_decimal(number) - 0.5, PRECISION));
+}
 
 int		ft_display_if_brighter(t_mlx *window, int x, int y, int color)
 {
@@ -78,17 +82,19 @@ int		ft_display(t_mlx *window, int x, int y, int color)
 	return (color);
 }
 
-int		ft_get_grey(int per_nth, char precision, int mode)
+//127-150
+//si grey > 127 aucun pixel ne s'affiche. Pourtant ft_get_color fonctionne parfaitement
+int		ft_get_grey(int per_nth, char precision)
 {
 	unsigned char		grey;
 	double				percent;
 
-	percent = ((double) per_nth / (double)ft_power(10, (int)precision));
-	if (!mode)
-		grey = 255.0 * (1.0 - percent);
-	else
-		grey = 255.0 * percent;
-	return (ft_get_color(grey, grey, grey, grey)); //play only with the alpha parameter to obtaincolor's gradient
+	per_nth = (double) per_nth / (1.75);
+	percent = ((double) per_nth / ((double)ft_power(10, (int)precision)));
+	grey = 255.0 * (1.0 - percent);
+	// if (grey > 250)
+	// printf("%d|", grey);
+	return (ft_get_color(0, grey, grey, grey)); //play only with the alpha parameter to obtaincolor's gradient
 }
 
 int		ft_draw_line(t_mlx *window, t_line *line, int color)
@@ -105,6 +111,18 @@ int		ft_draw_line(t_mlx *window, t_line *line, int color)
 	return (line->limits[0].x - x);
 }
 
+int		ft_how_far(double y, double x)
+{
+
+
+	return (ft_fsqrt(ft_power(x, 2) + ft_power(y, 2), 0));
+	return (ft_power(x, 2) + ft_power(y, 2));
+}
+
+/*
+** ft_display_if_brighter(window, x, y, ft_get_grey(bound_x, PRECISION, 0));
+*/
+
 int		ft_line_gradient(t_mlx *window, t_line *line)
 {
 	int			bound_x;
@@ -118,35 +136,10 @@ int		ft_line_gradient(t_mlx *window, t_line *line)
 		y = ft_f_of_x(line, x);
 		if (y + 1 >= window->height)
 			return (0);
-		bound_x = ft_get_per_ntenth(ft_get_decimal(ft_f_of_x(line, x)), PRECISION);
-		bound_y = ft_get_per_ntenth(ft_get_decimal(y), PRECISION);
-		if (!bound_x)
-		{
-			if (!bound_y)
-			{
-				ft_display(window, x, y, 0xffffffff);
-			}
-			else
-			{
-				ft_display_if_brighter(window, x, y, ft_get_grey(bound_x, PRECISION, 0));
-				ft_display_if_brighter(window, x, y + 1, ft_get_grey(bound_x, PRECISION, 1));
-			}
-		}
-		else if (bound_x > 0)
-		{
-			if (!bound_y)
-			{
-				ft_display_if_brighter(window, x, y, ft_get_grey(bound_y, PRECISION, 0));
-				ft_display_if_brighter(window, x + 1, y, ft_get_grey(bound_y, PRECISION, 1));
-			}
-			else
-			{
-				ft_display_if_brighter(window, x + 1, y, ft_get_grey(bound_y, PRECISION, 1));
-				ft_display_if_brighter(window, x + 1, y + 1, ft_get_grey(bound_y, PRECISION, 1));
-			}
-
-		}
-		x += 0.1;
+		bound_y = ft_get_bound(y);
+		bound_x = ft_get_bound(x);
+		ft_display_if_brighter(window, x, y, ft_get_grey(ft_how_far(bound_y, bound_x), PRECISION));
+		x += 0.001;
 	}
 	return (line->limits[0].x - x);
 }
