@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:59:58 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/12 13:20:06 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/08 18:06:23 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_window_iter(t_mlx *window, int(*f)(t_mlx *, int, int))
 		if (percent < ft_get_percent(y, window->height))
 		{
 			percent++;
-			place_cursor(30, 50);
+			ft_place_cursor(30, 50);
 			ft_rgb_color(-1, -1, -1);
 			ft_putnbr(percent);
 			C_RESET

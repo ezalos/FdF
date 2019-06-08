@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/19 00:23:15 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/08 18:01:51 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@
 **																			**
 ******************************************************************************
 */
-# include "./../../libft/libft.h"
+# include "./../../libft/includes/libft.h"
 # include "mlx.h"
 # include <stdio.h>
 # include <math.h>

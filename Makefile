@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/03/19 00:16:59 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/06/08 18:07:41 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,8 +81,6 @@ HEAD_DIR	= ./includes
 HEAD_PATH	= $(HEAD_DIR)/$(HEAD)
 
 LIB			= $(LIB_DIR)/libft.a
-HEAD_PATH	+= ../ft_printf/includes/head.h
-LIB			+= ../ft_printf/libftprintf.a
 ##########################
 ##						##
 ##		  DEBUG			##
