@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2019/06/10 19:30:42 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 19:36:22 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 int key_press(int keycode, t_mlx *param)
 {
-	// char b;
-
 	ft_printf("Key press\n\tkey: %d\n", keycode);
-	// param->key_array[49] = '1';
-	// b = param->key_array[49];
-	// printf("%c\n", param->key_array[49]);
-	// // printf("%c\n", param->key_array[keycode]);
+	// param->key_array[keycode] = '1';
+	// printf("%c\n", param->key_array[keycode]);
 	if (keycode == 53)
 	{
 		ft_clean_fdf(param);

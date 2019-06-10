@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2019/06/10 19:32:07 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 19:36:47 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int			mouse_press(int button, int x, int y, t_mlx *param)
 {
 	// if (button == 1 && param->key_array[CONTROL] == 1)
 	// 	draw_lines_dynamically(button, x, y, param);
-	// param->mouse_array[button] = '1';
-	// printf("%c\n", param->mouse_array[button]);
+	param->mouse_array[button] = '1';
+	printf("mouse buttom %c\n", param->mouse_array[button]);
 	if (button == 1)
 	{
 		ft_color_pixel((param), x, y, 0x00ffffff);
