@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:46:41 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 19:43:47 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,12 @@
 # endif
 
 /*
-** SIZE_WIDTH == X
-** SIZE_HEIGTH == Y
+**************
+**  KEYCODE	**
+**************
 */
+# define ESC 		53
+# define CONTROL 	256
 
 /*
 ******************************************************************************
@@ -92,6 +95,8 @@ typedef struct		s_mlx
 	size_t			width;
 	size_t			height;
 	char			choice;
+	char			key_array[280];
+	char			mouse_array[7];
 	t_list			*image_list;
 }					t_mlx;
 
@@ -163,8 +168,10 @@ int					ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int));
 ** 	 EVENT  **
 **************
 */
-int					mouse_event(int button, int x, int y, t_mlx *param);
-int					key_event(int keycode, t_mlx *param);
+int					key_press(int keycode, t_mlx *param);
+int					key_release(int keycode, t_mlx *param);
+int					mouse_press(int button, int x, int y, t_mlx *param);
+int					mouse_release(int button, int x, int y, t_mlx *param);
 
 /*
 **************
