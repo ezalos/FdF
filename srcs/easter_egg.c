@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:02:12 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 20:22:08 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,29 @@ int	ft_nice_view(int choice, int x, int y)
 		return (ft_random(-2147483648, 2147483647, ((y + 1) / (x + 1)) + 1, 1));
 	else
 		return (0);
+}
+
+int			draw_lines_dynamically(int x, int y, t_mlx *param)
+{
+	t_list			*lst;
+	t_img			*img;
+	t_mlx			*mlx;
+	t_line 			*line;
+	t_point 		*actual;
+	static t_point 	*last;
+
+	mlx = param;
+	lst = ft_lst_reach_end(mlx->image_list);
+	img = lst->content;
+	actual = ft_get_point(x, y);
+	if (actual && last)
+	{
+		line = ft_line(last, actual);
+		ft_line_gradient(mlx, line);
+		render(mlx);
+	}
+	else
+		img->my_image_data[(img->width * y) + x] = 0x00ffffff;
+	last = actual;
+	return (0);
 }

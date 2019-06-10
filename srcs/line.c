@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:48:03 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 21:07:17 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,12 @@ int		ft_color_pixel(t_mlx *mlx, int x, int y, int color)
 	t_list	*lst;
 	t_img	*img;
 
-	lst = ft_lst_reach_end(mlx->image_list);
-	img = lst->content;
-	img->my_image_data[(img->width * y) + x] = color;
+	if ((size_t)x <= mlx->width && (size_t)y <= mlx->height)
+	{
+		lst = ft_lst_reach_end(mlx->image_list);
+		img = lst->content;
+		img->my_image_data[(img->width * y) + x] = color;
+	}
 	return (color);
 }
 

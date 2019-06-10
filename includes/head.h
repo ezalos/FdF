@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 19:29:00 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 21:15:42 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 **  GLOBAL	**
 **************
 */
-# define SIZE		1
+# define SIZE		0
 # define PRECISION	3
 # define SQRT_2		1.41421356237309504880
 # define OUR_CHOICE	3
@@ -64,6 +64,8 @@
 */
 # define ESC 		53
 # define CONTROL 	256
+# define DEL		117
+# define SHIFT		257
 
 /*
 ******************************************************************************
@@ -96,7 +98,7 @@ typedef struct		s_mlx
 	size_t			height;
 	char			choice;
 	char			key_array[280];
-	char			mouse_array[7];
+	char			mouse_array[8];
 	t_list			*image_list;
 }					t_mlx;
 
@@ -172,13 +174,13 @@ int					key_press(int keycode, t_mlx *param);
 int					key_release(int keycode, t_mlx *param);
 int					mouse_press(int button, int x, int y, t_mlx *param);
 int					mouse_release(int button, int x, int y, t_mlx *param);
+int					mouse_move(int x, int y, t_mlx *param);
 
 /*
 **************
 ** DISPLAY	**
 **************
 */
-int					ft_nice_view(int choice, int x, int y);
 int					ft_color_pixel_swag(t_mlx *mlx, int x, int y);
 void				render(t_mlx *mlx);
 
@@ -203,6 +205,15 @@ unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
 ** 	 FREE   **
 **************
 */
-int					ft_clean_fdf(t_mlx *mlx);
+void				ft_clean_and_exit(t_mlx *mlx);
+void 				virgin_screen(t_mlx *mlx);
+
+/*
+**************
+**EASTER_EGG**
+**************
+*/
+int					ft_nice_view(int choice, int x, int y);
+int					draw_lines_dynamically(int x, int y, t_mlx *param);
 
 #endif
