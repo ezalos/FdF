@@ -6,13 +6,13 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:47:47 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/10 19:28:14 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
 
-void	ft_check_mlx_size(t_mlx *mlx, size_t width, size_t height)
+void	ft_check_window_size(t_mlx *mlx, size_t width, size_t height)
 {
 	if (!width)
 		mlx->width = SIZE_WIDTH;
@@ -65,7 +65,7 @@ t_mlx		*ft_init_mlx(char *title, size_t width, size_t height)
 	t_mlx			*mlx;
 
 	mlx = cnalloc(NULL, sizeof(t_mlx));
-	ft_check_mlx_size(mlx, width, height);
+	ft_check_window_size(mlx, width, height);
 	if (!(mlx->mlx_pointer = mlx_init()))
 		return (NULL);
 	if (!ft_open_mlx(mlx, title))
