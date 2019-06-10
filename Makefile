@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/08 18:07:41 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/06/10 12:44:42 by amartino         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,9 @@ SRCS		=	main\
 				print\
 				tools\
 				easter_egg\
-				free
+				free\
+				mouse_event\
+				key_event
 
 SRC_PATH	= ./srcs
 

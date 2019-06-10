@@ -27,7 +27,7 @@ int		mlx_loop(t_xvar *xvar)
 	{
 	  XNextEvent(xvar->display,&ev);
 	  win = xvar->win_list;
-	  while (win && (win->window!=ev.xany.window))
+	  while (win && (win->mlx!=ev.xany.mlx))
 	    win = win->next;
 	  if (win && ev.type < MLX_MAX_EVENT)
 	    if (win->hooks[ev.type].hook)

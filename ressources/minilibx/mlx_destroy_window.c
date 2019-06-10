@@ -1,5 +1,5 @@
 /*
-** mlx_destroy_window.c for MinilibX in 
+** mlx_destroy_mlx.c for MinilibX in 
 ** 
 ** Made by Charlie Root
 ** Login   <ol@epitech.net>
@@ -12,7 +12,7 @@
 #include	"mlx_int.h"
 
 
-int	mlx_destroy_window(t_xvar *xvar,t_win_list *win)
+int	mlx_destroy_mlx(t_xvar *xvar,t_win_list *win)
 {
   t_win_list	*w;
   t_win_list	*prev;
@@ -30,7 +30,7 @@ int	mlx_destroy_window(t_xvar *xvar,t_win_list *win)
       w = w->next;
     }
   xvar->win_list = first.next;
-  XDestroyWindow(xvar->display,win->window);
+  XDestroyWindow(xvar->display,win->mlx);
   XFreeGC(xvar->display,win->gc);
   free(win);
   if (xvar->do_flush)

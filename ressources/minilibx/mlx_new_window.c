@@ -1,5 +1,5 @@
 /*
-** mlx_new_window.c for MiniLibX in 
+** mlx_new_mlx.c for MiniLibX in 
 ** 
 ** Made by Charlie Root
 ** Login   <ol@epitech.net>
@@ -19,7 +19,7 @@
 #include	"mlx_int.h"
 
 
-void	*mlx_new_window(t_xvar *xvar,int size_x,int size_y,char *title)
+void	*mlx_new_mlx(t_xvar *xvar,int size_x,int size_y,char *title)
 {
   t_win_list		*new_win;
   XSetWindowAttributes  xswa;
@@ -36,16 +36,16 @@ void	*mlx_new_window(t_xvar *xvar,int size_x,int size_y,char *title)
   xswa.event_mask = 0xFFFFFF;  /* all events */
   if (!(new_win = malloc(sizeof(*new_win))))
     return ((void *)0);
-  new_win->window = XCreateWindow(xvar->display,xvar->root,0,0,size_x,size_y,
+  new_win->mlx = XCreateWindow(xvar->display,xvar->root,0,0,size_x,size_y,
 				  0,CopyFromParent,InputOutput,xvar->visual,
 				  CWEventMask|CWBackPixel|CWBorderPixel|
 				  CWColormap,&xswa);
-  mlx_int_anti_resize_win(xvar,new_win->window,size_x,size_y);
-  XStoreName(xvar->display,new_win->window,title);
+  mlx_int_anti_resize_win(xvar,new_win->mlx,size_x,size_y);
+  XStoreName(xvar->display,new_win->mlx,title);
   xgcv.foreground = -1;
   xgcv.function = GXcopy;
   xgcv.plane_mask = AllPlanes;
-  new_win->gc = XCreateGC(xvar->display,new_win->window,
+  new_win->gc = XCreateGC(xvar->display,new_win->mlx,
 			  GCFunction|GCPlaneMask|GCForeground,&xgcv);
   new_win->next = xvar->win_list;
   xvar->win_list = new_win;
@@ -55,7 +55,7 @@ void	*mlx_new_window(t_xvar *xvar,int size_x,int size_y,char *title)
   new_win->expose_hook = mlx_int_do_nothing;
   */
   bzero(&(new_win->hooks), sizeof(new_win->hooks));
-  XMapRaised(xvar->display,new_win->window);
-  mlx_int_wait_first_expose(xvar,new_win->window);
+  XMapRaised(xvar->display,new_win->mlx);
+  mlx_int_wait_first_expose(xvar,new_win->mlx);
   return (new_win);
 }

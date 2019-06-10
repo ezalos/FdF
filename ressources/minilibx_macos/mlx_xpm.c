@@ -35,21 +35,21 @@ struct  s_col_name
 
 
 
-char	*mlx_int_get_line(char *ptr,int *pos,int size)
+char	*mlx_int_get_line(char *,int *pos,int size)
 {
   int	pos2;
   int	pos3;
   int	pos4;
 
-  if ((pos2 = mlx_int_str_str(ptr+*pos,"\"",size-*pos))==-1)
+  if ((pos2 = mlx_int_str_str(+*pos,"\"",size-*pos))==-1)
     return ((char *)0);
-  if ((pos3 = mlx_int_str_str(ptr+*pos+pos2+1,"\"",size-*pos-pos2-1))==-1)
+  if ((pos3 = mlx_int_str_str(+*pos+pos2+1,"\"",size-*pos-pos2-1))==-1)
     return ((char *)0);
-  *(ptr+*pos+pos2) = 0;
-  *(ptr+*pos+pos2+1+pos3) = 0;
+  *(+*pos+pos2) = 0;
+  *(+*pos+pos2+1+pos3) = 0;
   pos4 = *pos+pos2+1;
   *pos += pos2+pos3+2;
-  return (ptr+pos4);
+  return (+pos4);
 }
 
 
@@ -129,7 +129,7 @@ void	mlx_int_xpm_set_pixel(mlx_img_list_t *img, char *data, int opp, int col, in
 }
 
 
-void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
+void	*mlx_int_parse_xpm(mlx__t *xvar,void *info,int info_size,char *(*f)())
 {
   int	pos;
   char	*line;
@@ -281,51 +281,51 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
 }
 
 
-void	mlx_int_file_get_rid_comment(char *ptr, int size)
+void	mlx_int_file_get_rid_comment(char *, int size)
 {
   int	com_begin;
   int	com_end;
 
-  while ((com_begin = mlx_int_str_str_cote(ptr,"/*",size))!=-1)
+  while ((com_begin = mlx_int_str_str_cote(,"/*",size))!=-1)
     {
-      com_end = mlx_int_str_str(ptr+com_begin+2,"*/",size-com_begin-2);
-      memset(ptr+com_begin,' ',com_end+4);
+      com_end = mlx_int_str_str(+com_begin+2,"*/",size-com_begin-2);
+      memset(+com_begin,' ',com_end+4);
     }
-  while ((com_begin = mlx_int_str_str_cote(ptr,"//",size))!=-1)
+  while ((com_begin = mlx_int_str_str_cote(,"//",size))!=-1)
     {
-      com_end = mlx_int_str_str(ptr+com_begin+2,"\n",size-com_begin-2);
-      memset(ptr+com_begin,' ',com_end+3);
+      com_end = mlx_int_str_str(+com_begin+2,"\n",size-com_begin-2);
+      memset(+com_begin,' ',com_end+3);
     }
 }
 
 
-void	*mlx_xpm_file_to_image(mlx_ptr_t *xvar,char *file,int *width,int *height)
+void	*mlx_xpm_file_to_image(mlx__t *xvar,char *file,int *width,int *height)
 {
   int	fd;
   int	size;
-  char	*ptr;
+  char	*;
   mlx_img_list_t	*img;
 
   if ((fd = open(file,O_RDONLY))==-1 || (size = lseek(fd,0,SEEK_END))==-1 ||
-      (ptr = mmap(0,size,PROT_WRITE|PROT_READ,MAP_PRIVATE,fd,0))==
+      ( = mmap(0,size,PROT_WRITE|PROT_READ,MAP_PRIVATE,fd,0))==
       (void *)MAP_FAILED)
     {
       if (fd>=0)
 	close(fd);
       return ((void *)0);
     }
-  mlx_int_file_get_rid_comment(ptr, size);
-  if ((img = mlx_int_parse_xpm(xvar,ptr,size,mlx_int_get_line)))
+  mlx_int_file_get_rid_comment(, size);
+  if ((img = mlx_int_parse_xpm(xvar,,size,mlx_int_get_line)))
     {
       *width = img->width;
       *height = img->height;
     }
-  munmap(ptr,size);
+  munmap(,size);
   close(fd);
   return (img);
 }
 
-void	*mlx_xpm_to_image(mlx_ptr_t *xvar,char **xpm_data,int *width,int *height)
+void	*mlx_xpm_to_image(mlx__t *xvar,char **xpm_data,int *width,int *height)
 {
   mlx_img_list_t	*img;
 

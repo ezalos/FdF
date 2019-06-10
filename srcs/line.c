@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/03/19 00:47:15 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:48:03 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,26 @@ t_line		*ft_line(t_point *one, t_point *two)
 
 	if (!(line = ft_memalloc(sizeof(t_line))))
 		return (NULL);
-	line->a = (double)(two->y - one->y) / (double)(two->x - one->x);
-	line->b = (double)one->y - (line->a * (double)one->x);
-	line->limits[0] = *one;
-	line->limits[1] = *two;
+	if (!(two->x - one->x))
+	{
+		line->a = INFINITY;
+		line->b = one->x;
+		return (line);
+	}
+	if (one->x > two->x)
+	{
+		line->a = (double)(one->y - two->y) / (double)(one->x - two->x);
+		line->b = (double)two->y - (line->a * (double)two->x);
+		line->limits[0] = *two;
+		line->limits[1] = *one;
+	}
+	else
+	{
+		line->a = (double)(two->y - one->y) / (double)(two->x - one->x);
+		line->b = (double)one->y - (line->a * (double)one->x);
+		line->limits[0] = *one;
+		line->limits[1] = *two;
+	}
 	return (line);
 }
 
@@ -56,29 +72,29 @@ int			ft_get_bound(double number)
 	return (ft_get_per_ntenth(ft_get_decimal(number) - 0.5, PRECISION));
 }
 
-int		ft_display_if_brighter(t_mlx *window, int x, int y, int color)
+int		ft_color_pixel_if_brighter(t_mlx *mlx, int x, int y, int color)
 {
 	t_list	*lst;
 	t_img	*img;
 
-	lst = ft_lst_reach_end(window->img);
+	lst = ft_lst_reach_end(mlx->image_list);
 	img = lst->content;
-	if (img->content_img[(img->width * y) + x] < color)
+	if (img->my_image_data[(img->width * y) + x] < color)
 	{
-		img->content_img[(img->width * y) + x] = color;
+		img->my_image_data[(img->width * y) + x] = color;
 		return (color);
 	}
 	return (-1);
 }
 
-int		ft_display(t_mlx *window, int x, int y, int color)
+int		ft_color_pixel(t_mlx *mlx, int x, int y, int color)
 {
 	t_list	*lst;
 	t_img	*img;
 
-	lst = ft_lst_reach_end(window->img);
+	lst = ft_lst_reach_end(mlx->image_list);
 	img = lst->content;
-	img->content_img[(img->width * y) + x] = color;
+	img->my_image_data[(img->width * y) + x] = color;
 	return (color);
 }
 
@@ -97,7 +113,7 @@ int		ft_get_grey(int per_nth, char precision)
 	return (ft_get_color(0, grey, grey, grey)); //play only with the alpha parameter to obtaincolor's gradient
 }
 
-int		ft_draw_line(t_mlx *window, t_line *line, int color)
+int		ft_draw_line(t_mlx *mlx, t_line *line, int color)
 {
 	int		x;
 	int		y;
@@ -106,7 +122,7 @@ int		ft_draw_line(t_mlx *window, t_line *line, int color)
 	while (++x < line->limits[1].x)
 	{
 		y = ft_f_of_x(line, x);
-		ft_display(window, x, y, color);
+		ft_color_pixel(mlx, x, y, color);
 	}
 	return (line->limits[0].x - x);
 }
@@ -119,11 +135,7 @@ int		ft_how_far(double y, double x)
 	return (ft_power(x, 2) + ft_power(y, 2));
 }
 
-/*
-** ft_display_if_brighter(window, x, y, ft_get_grey(bound_x, PRECISION, 0));
-*/
-
-int		ft_line_gradient(t_mlx *window, t_line *line)
+int		ft_line_gradient(t_mlx *mlx, t_line *line)
 {
 	int			bound_x;
 	int			bound_y;
@@ -134,11 +146,11 @@ int		ft_line_gradient(t_mlx *window, t_line *line)
 	while (x < line->limits[1].x)
 	{
 		y = ft_f_of_x(line, x);
-		if (y + 1 >= window->height)
+		if (y + 1 >= mlx->height)
 			return (0);
 		bound_y = ft_get_bound(y);
 		bound_x = ft_get_bound(x);
-		ft_display_if_brighter(window, x, y, ft_get_grey(ft_how_far(bound_y, bound_x), PRECISION));
+		ft_color_pixel_if_brighter(mlx, x, y, ft_get_grey(ft_how_far(bound_y, bound_x), PRECISION));
 		x += 0.001;
 	}
 	return (line->limits[0].x - x);

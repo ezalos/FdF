@@ -1,6 +1,6 @@
 .TH MiniLibX 3 "September 19, 2002"
 .SH NAME
-MiniLibX - Drawing inside windows
+MiniLibX - Drawing inside mlxs
 .SH SYNOPSYS
 
 .nf
@@ -8,7 +8,7 @@ MiniLibX - Drawing inside windows
 .fi
 .B mlx_pixel_put
 (
-.I void *mlx_ptr, void *win_ptr, int x, int y, int color
+.I void *mlx_, void *win_, int x, int y, int color
 );
 
 .nf
@@ -16,25 +16,25 @@ MiniLibX - Drawing inside windows
 .fi
 .B mlx_string_put
 (
-.I void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string
+.I void *mlx_, void *win_, int x, int y, int color, char *string
 );
 
 
 .SH DESCRIPTION
 The
 .B mlx_pixel_put
-() function draws a defined pixel in the window
-.I win_ptr
+() function draws a defined pixel in the mlx
+.I win_
 using the (
 .I x
 ,
 .I y
 ) coordinates, and the specified
 .I color
-\&. The origin (0,0) is the upper left corner of the window, the x and y axis
+\&. The origin (0,0) is the upper left corner of the mlx, the x and y axis
 respectively pointing right and down. The connection
 identifier,
-.I mlx_ptr
+.I mlx_
 , is needed (see the
 .B mlx
 man page).
@@ -50,7 +50,7 @@ will be displayed at (
 ).
 
 In both functions, it is impossible to display anything outside the
-specified window, nor display in another window in front of the selected one.
+specified mlx, nor display in another mlx in front of the selected one.
 
 .SH COLOR MANAGEMENT
 The
@@ -74,7 +74,7 @@ that the "blue" byte should always be the least significant one.
 
 
 .SH SEE ALSO
-mlx(3), mlx_new_window(3), mlx_new_image(3), mlx_loop(3)
+mlx(3), mlx_new_mlx(3), mlx_new_image(3), mlx_loop(3)
 
 
 .SH AUTHOR

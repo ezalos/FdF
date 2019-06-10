@@ -1,4 +1,4 @@
-//  mlx_new_window.m
+//  mlx_new_mlx.m
 
 #import <Cocoa/Cocoa.h>
 #import <OpenGL/gl3.h>
@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 #include "mlx_int.h"
-#include "mlx_new_window.h"
+#include "mlx_new_mlx.h"
 
 
 NSOpenGLPixelFormatAttribute pfa_attrs[] =
@@ -48,7 +48,7 @@ int get_mouse_button(NSEventType eventtype)
 }
 
 
-// classes for window & events
+// classes for mlx & events
 
 
 
@@ -343,10 +343,10 @@ int get_mouse_button(NSEventType eventtype)
 
   if ((self = [super initWithFrame:rect pixelFormat:pixFmt]) != nil)
     {
-      NSUInteger windowStyle = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
+      NSUInteger mlxStyle = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable;
 
       win = [[NSWindowEvent alloc] initWithContentRect:rect
-				   styleMask:windowStyle
+				   styleMask:mlxStyle
 				   backing:NSBackingStoreBuffered   // NSBackingStoreNonretained
 				   defer:NO];
       [win setContentView:self];
@@ -383,15 +383,15 @@ int get_mouse_button(NSEventType eventtype)
 
       //[win makeKeyAndOrderFront:nil];
       // BOOL r = [win isKeyWindow];
-      //  if (r==YES) printf("keywindow ok\n"); else printf("keywindow KO\n");
+      //  if (r==YES) printf("keymlx ok\n"); else printf("keymlx KO\n");
 
       // Window controller subclass to set title
-      // NSWindowController* windowController = [[NSWindowController alloc] initWithWindow:win];
-      // [windowController windowTitleForDocumentDisplayName:title];
-      // [windowController showWindow:nil];
+      // NSWindowController* mlxController = [[NSWindowController alloc] initWithWindow:win];
+      // [mlxController mlxTitleForDocumentDisplayName:title];
+      // [mlxController showWindow:nil];
       // MlxWinController *mlxWinCont = [[MlxWinController alloc] initWin:win andTitle:title];
 
-      // after nswindowcontroller who will retake first responder
+      // after nsmlxcontroller who will retake first responder
       //      BOOL r = [win makeFirstResponder:nil];
       //      if (r==YES) printf("responder ok\n"); else printf("responder KO\n");
 
@@ -408,7 +408,7 @@ int get_mouse_button(NSEventType eventtype)
   glGenBuffers(1, &pixel_vbuffer);
   glBindBuffer(GL_ARRAY_BUFFER, pixel_vbuffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(pixel_vertexes), pixel_vertexes, GL_DYNAMIC_DRAW); // 4 points buff
-  // pixel_ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+  // pixel_ = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
   glGenTextures(1, &pixel_texture);
   glBindTexture(GL_TEXTURE_2D, pixel_texture);
@@ -639,7 +639,7 @@ int get_mouse_button(NSEventType eventtype)
 // mlx API
  
 
-void *mlx_new_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
+void *mlx_new_mlx(mlx__t *mlx_, int size_x, int size_y, char *title)
 {
   mlx_win_list_t	*newwin;
   NSString		*str;
@@ -647,14 +647,14 @@ void *mlx_new_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
   if ((newwin = malloc(sizeof(*newwin))) == NULL)
     return ((void *)0);
   newwin->img_list = NULL;
-  newwin->next = mlx_ptr->win_list;
+  newwin->next = mlx_->win_list;
   newwin->nb_flush = 0;
   newwin->pixmgt = 1;
-  mlx_ptr->win_list = newwin;
+  mlx_->win_list = newwin;
 
-  NSRect windowRect = NSMakeRect(100, 100, size_x, size_y);
+  NSRect mlxRect = NSMakeRect(100, 100, size_x, size_y);
   str = [NSString stringWithCString:title encoding:NSASCIIStringEncoding];
-  newwin->winid = [[MlxWin alloc] initWithRect:windowRect andTitle:str pfaAttrs:pfa_attrs];
+  newwin->winid = [[MlxWin alloc] initWithRect:mlxRect andTitle:str pfaAttrs:pfa_attrs];
   if (newwin->winid)
     if (![(id)(newwin->winid) pixel_management])
       {
@@ -665,39 +665,39 @@ void *mlx_new_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
 }
 
 
-void mlx_clear_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr)
+void mlx_clear_mlx(mlx__t *mlx_, mlx_win_list_t *win_)
 {
-  [(id)(win_ptr->winid) selectGLContext];
-  [(id)(win_ptr->winid) clearWin];
-  win_ptr->nb_flush ++;
+  [(id)(win_->winid) selectGLContext];
+  [(id)(win_->winid) clearWin];
+  win_->nb_flush ++;
 }
 
 
-void mlx_expose_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+void mlx_expose_hook(mlx_win_list_t *win_, int (*funct_)(), void *param)
 {
-  [(id)(win_ptr->winid) setEvent:12 andFunc:funct_ptr andParam:param];
+  [(id)(win_->winid) setEvent:12 andFunc:funct_ andParam:param];
 }
 
-void mlx_key_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+void mlx_key_hook(mlx_win_list_t *win_, int (*funct_)(), void *param)
 {
-  [(id)(win_ptr->winid) setEvent:3 andFunc:funct_ptr andParam:param];
+  [(id)(win_->winid) setEvent:3 andFunc:funct_ andParam:param];
 }
 
-void mlx_mouse_hook(mlx_win_list_t *win_ptr, int (*funct_ptr)(), void *param)
+void mlx_mouse_hook(mlx_win_list_t *win_, int (*funct_)(), void *param)
 {
-  [(id)(win_ptr->winid) setEvent:4 andFunc:funct_ptr andParam:param];
+  [(id)(win_->winid) setEvent:4 andFunc:funct_ andParam:param];
 }
 
-void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*funct_ptr)(), void *param)
+void mlx_hook(mlx_win_list_t *win_, int x_event, int x_mask, int (*funct_)(), void *param)
 {
-  [(id)(win_ptr->winid) setEvent:x_event andFunc:funct_ptr andParam:param];
+  [(id)(win_->winid) setEvent:x_event andFunc:funct_ andParam:param];
 }
 
-int     mlx_do_key_autorepeatoff(mlx_ptr_t *mlx_ptr)
+int     mlx_do_key_autorepeatoff(mlx__t *mlx_)
 {
   mlx_win_list_t *win;
 
-  win = mlx_ptr->win_list;
+  win = mlx_->win_list;
   while (win)
     {
       [(id)(win->winid) setKeyRepeat:0];
@@ -706,11 +706,11 @@ int     mlx_do_key_autorepeatoff(mlx_ptr_t *mlx_ptr)
   return (0);
 }
 
-int     mlx_do_key_autorepeaton(mlx_ptr_t *mlx_ptr)
+int     mlx_do_key_autorepeaton(mlx__t *mlx_)
 {
   mlx_win_list_t *win;
 
-  win = mlx_ptr->win_list;
+  win = mlx_->win_list;
   while (win)
     {
       [(id)(win->winid) setKeyRepeat:1];
@@ -720,14 +720,14 @@ int     mlx_do_key_autorepeaton(mlx_ptr_t *mlx_ptr)
 }
 
 
-int     mlx_destroy_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_to_del)
+int     mlx_destroy_mlx(mlx__t *mlx_, mlx_win_list_t *win_to_del)
 {
   mlx_win_list_t    first;
   mlx_win_list_t    *win;
   mlx_img_ctx_t	    *ctx;
   mlx_img_ctx_t	    *ctx2;
 
-  first.next = mlx_ptr->win_list;
+  first.next = mlx_->win_list;
   win = &first;
   while (win && win->next)
     {
@@ -735,7 +735,7 @@ int     mlx_destroy_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_to_del)
 	win->next = win->next->next;
       win = win->next;
     }
-  mlx_ptr->win_list = first.next;
+  mlx_->win_list = first.next;
 
   if (win_to_del->pixmgt)
     {
@@ -754,7 +754,7 @@ int     mlx_destroy_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_to_del)
   [(id)(win_to_del->winid) destroyMe];
   free(win_to_del);
 
-  //  printf("destroy window done.\n");
-  mlx_do_sync(mlx_ptr);
+  //  printf("destroy mlx done.\n");
+  mlx_do_sync(mlx_);
   return (0);
 }

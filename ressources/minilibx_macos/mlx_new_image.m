@@ -8,20 +8,20 @@
 #import <OpenGL/gl3.h>
 
 #include "mlx_int.h"
-#include "mlx_new_window.h"
+#include "mlx_new_mlx.h"
 
 
 
-void    *mlx_new_image(mlx_ptr_t *mlx_ptr, int width, int height)
+void    *mlx_new_image(mlx__t *mlx_, int width, int height)
 {
   mlx_img_list_t        *newimg;
 
-  //  if (mlx_ptr->win_list == NULL)
-  //    return (NULL);  // need at leat one window created to have openGL context and create texture
+  //  if (mlx_->win_list == NULL)
+  //    return (NULL);  // need at leat one mlx created to have openGL context and create texture
   if ((newimg = malloc(sizeof(*newimg))) == NULL)
     return ((void *)0);
-  newimg->next = mlx_ptr->img_list;
-  mlx_ptr->img_list = newimg;
+  newimg->next = mlx_->img_list;
+  mlx_->img_list = newimg;
   newimg->width = width;
   newimg->height = height;
   newimg->vertexes[0] = 0.0;  newimg->vertexes[1] = 0.0;
@@ -73,53 +73,53 @@ mlx_img_ctx_t	*add_img_to_ctx(mlx_img_list_t *img, mlx_win_list_t *win)
 }
 
 
-void    mlx_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx_img_list_t *img_ptr, int x, int y)
+void    mlx_put_image_to_mlx(mlx__t *mlx_, mlx_win_list_t *win_, mlx_img_list_t *img_, int x, int y)
 {
   mlx_img_ctx_t	*imgctx;
 
-  if (!win_ptr->pixmgt)
+  if (!win_->pixmgt)
     return ;
 
-  [(id)(win_ptr->winid) selectGLContext];
-  imgctx = add_img_to_ctx(img_ptr, win_ptr);
+  [(id)(win_->winid) selectGLContext];
+  imgctx = add_img_to_ctx(img_, win_);
 
   // update texture
   glBindTexture(GL_TEXTURE_2D, imgctx->texture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img_ptr->width, img_ptr->height, 0,
-	       GL_BGRA, GL_UNSIGNED_BYTE, img_ptr->buffer);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img_->width, img_->height, 0,
+	       GL_BGRA, GL_UNSIGNED_BYTE, img_->buffer);
 
-  [(id)(win_ptr->winid) mlx_gl_draw_img:img_ptr andCtx:imgctx andX:x andY:y];
+  [(id)(win_->winid) mlx_gl_draw_img:img_ andCtx:imgctx andX:x andY:y];
 
-  win_ptr->nb_flush ++;
+  win_->nb_flush ++;
 }
 
 // assume here 32bpp little endian
 
-char    *mlx_get_data_addr(mlx_img_list_t *img_ptr, int *bits_per_pixel, int *size_line, int *endian)
+char    *mlx_get_data_addr(mlx_img_list_t *img_, int *bits_per_pixel, int *size_line, int *endian)
 {
   *bits_per_pixel = UNIQ_BPP*8;
-  *size_line = img_ptr->width*UNIQ_BPP;
+  *size_line = img_->width*UNIQ_BPP;
   *endian = 0; // little endian for now on mac-intel
-  return (img_ptr->buffer);
+  return (img_->buffer);
 }
 
-unsigned int    mlx_get_color_value(mlx_ptr_t *mlx_ptr, int color)
+unsigned int    mlx_get_color_value(mlx__t *mlx_, int color)
 {
   return (color);
 }
 
-int mlx_string_put(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, int x, int y, int color, unsigned char *string)
+int mlx_string_put(mlx__t *mlx_, mlx_win_list_t *win_, int x, int y, int color, unsigned char *string)
 {
   mlx_img_ctx_t	*imgctx;
   int		gX;
   int		gY;
 
-  if (!win_ptr->pixmgt)
+  if (!win_->pixmgt)
     return(0);
 
-  [(id)(win_ptr->winid) selectGLContext];
+  [(id)(win_->winid) selectGLContext];
 
-  imgctx = add_img_to_ctx(mlx_ptr->font, win_ptr);
+  imgctx = add_img_to_ctx(mlx_->font, win_);
 
   while (*string)
     {
@@ -128,18 +128,18 @@ int mlx_string_put(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, int x, int y, in
 	  gX = (FONT_WIDTH+2)*(*string-32);
 	  gY = 0;
 	  //      printf("put char %c pos %d %d\n", *string, gX, gY);
-	  [(id)(win_ptr->winid) mlx_gl_draw_font:mlx_ptr->font andCtx:imgctx andX:x andY:y andColor:color glyphX:gX glyphY:gY];
+	  [(id)(win_->winid) mlx_gl_draw_font:mlx_->font andCtx:imgctx andX:x andY:y andColor:color glyphX:gX glyphY:gY];
 	  x += FONT_WIDTH;
 	}
       string ++;
     }
 
-  win_ptr->nb_flush ++;
+  win_->nb_flush ++;
   
   return (0);
 }
 
-int     mlx_destroy_image(mlx_ptr_t *mlx_ptr, mlx_img_list_t *img_todel)
+int     mlx_destroy_image(mlx__t *mlx_, mlx_img_list_t *img_todel)
 {
   mlx_img_ctx_t	ctx_first;
   mlx_img_ctx_t	*ctx;
@@ -148,7 +148,7 @@ int     mlx_destroy_image(mlx_ptr_t *mlx_ptr, mlx_img_list_t *img_todel)
   mlx_img_list_t *img;
   mlx_win_list_t *win;
 
-  img_first.next = mlx_ptr->img_list;
+  img_first.next = mlx_->img_list;
   img = &img_first;
   while (img && img->next)
     {
@@ -156,10 +156,10 @@ int     mlx_destroy_image(mlx_ptr_t *mlx_ptr, mlx_img_list_t *img_todel)
 	img->next = img->next->next;
       img = img->next;
     }
-  mlx_ptr->img_list = img_first.next;
+  mlx_->img_list = img_first.next;
 
 
-  win = mlx_ptr->win_list;
+  win = mlx_->win_list;
   while (win)
     {
       ctx_first.next = win->img_list;

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/08 18:01:51 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:46:41 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,19 @@
 */
 typedef struct		s_mlx
 {
-	void			*ptr;
-	void			*win;
+	void			*mlx_pointer;
+	void			*window_pointer;
 	size_t			width;
 	size_t			height;
 	char			choice;
-	t_list			*img;
+	t_list			*image_list;
 }					t_mlx;
 
 typedef struct		s_img
 {
-	int				*content_img;
-	int				*content_b_img;
+	int				*my_image_data;
 	char			*title;
-	void			*img;
-	void			*b_img;
+	void			*image_pointer;
 	int				size_line;
 	int				bits_per_pixel;
 	int				endian;
@@ -137,31 +135,7 @@ typedef struct		s_line
 **   INIT	**
 **************
 */
-t_mlx				*ft_init_window(char *title, size_t width, size_t height);
-
-/*
-**************
-** DISPLAY	**
-**************
-*/
-int					ft_nice_view(int choice, int x, int y);
-int					ft_display_swag(t_mlx *window, int x, int y);
-
-/*
-**************
-** 	 PRINT  **
-**************
-*/
-void				ft_print_struct_mlx(t_mlx *window);
-void				ft_print_struct_img(t_img *window);
-
-/*
-**************
-** 	 COLOR  **
-**************
-*/
-unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
-						unsigned char green, unsigned char blue);
+t_mlx				*ft_init_mlx(char *title, size_t width, size_t height);
 
 /*
 **************
@@ -173,22 +147,55 @@ t_line				*ft_line(t_point *one, t_point *two);
 double				ft_f_of_x(t_line *line, double x);
 double				ft_get_decimal(double number);
 int					ft_get_per_ntenth(double number, char precision);
-int					ft_display(t_mlx *window, int x, int y, int color);
-int					ft_draw_line(t_mlx *window, t_line *line, int color);
-int					ft_line_gradient(t_mlx *window, t_line *line);
+int					ft_color_pixel(t_mlx *mlx, int x, int y, int color);
+int					ft_draw_line(t_mlx *mlx, t_line *line, int color);
+int					ft_line_gradient(t_mlx *mlx, t_line *line);
 
 /*
 **************
 ** 	 TOOLS  **
 **************
 */
-int					ft_window_iter(t_mlx *window, int(*f)(t_mlx *, int, int));
+int					ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int));
+
+/*
+**************
+** 	 EVENT  **
+**************
+*/
+int					mouse_event(int button, int x, int y, t_mlx *param);
+int					key_event(int keycode, t_mlx *param);
+
+/*
+**************
+** DISPLAY	**
+**************
+*/
+int					ft_nice_view(int choice, int x, int y);
+int					ft_color_pixel_swag(t_mlx *mlx, int x, int y);
+void				render(t_mlx *mlx);
+
+/*
+**************
+** 	 PRINT  **
+**************
+*/
+void				ft_print_struct_mlx(t_mlx *mlx);
+void				ft_print_struct_img(t_img *mlx);
+
+/*
+**************
+** 	 COLOR  **
+**************
+*/
+unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
+						unsigned char green, unsigned char blue);
 
 /*
 **************
 ** 	 FREE   **
 **************
 */
-int					ft_clean_fdf(t_mlx *window);
+int					ft_clean_fdf(t_mlx *mlx);
 
 #endif

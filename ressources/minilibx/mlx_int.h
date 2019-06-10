@@ -65,7 +65,7 @@ typedef struct	s_event_list
 
 typedef struct	s_win_list
 {
-  Window		window;
+  Window		mlx;
   GC			gc;
   struct s_win_list	*next;
   int			(*mouse_hook)();

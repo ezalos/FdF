@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   key_event.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/08 02:24:05 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:43:45 by amartino         ###   ########.fr       */
+/*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
+/*   Updated: 2019/06/10 16:24:09 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
 
-int		ft_clean_fdf(t_mlx *mlx)
+int key_event(int keycode, t_mlx *param)
 {
-	mlx_destroy_image(mlx->mlx_pointer, mlx->window_pointer);
-	ft_clean_garbage();
+	(void)param;
+	ft_printf("Key event\n\tkey: %d\n", keycode);
+	if (keycode == 53)
+		exit(0);
+	if (keycode == 53)
+		exit(0);
 	return (0);
 }

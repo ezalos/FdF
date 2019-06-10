@@ -28,7 +28,7 @@ int	mlx_int_set_win_event_mask(t_xvar *xvar)
       i = MLX_MAX_EVENT;
       while (i--)
 	xwa.event_mask |= win->hooks[i].mask;
-      XChangeWindowAttributes(xvar->display, win->window, CWEventMask, &xwa);
+      XChangeWindowAttributes(xvar->display, win->mlx, CWEventMask, &xwa);
       win = win->next;
     }
 }
