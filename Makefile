@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/10 12:44:42 by amartino         ###   ########.fr        #
+#    Updated: 2019/06/11 20:36:10 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,10 @@ endif
 SRCS		=	main\
 				init\
 				line\
+				point\
+				circle\
+				bresenham\
+				xiaolin_wu\
 				display color\
 				print\
 				tools\

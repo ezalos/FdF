@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:46:41 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/11 22:13:47 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define OUR_CHOICE	3
 # define UNIQ_BPP	4
 # define TRANS		10
+# define PX_WHITE	0x00ffffff
 
 /*
 **************
@@ -113,6 +114,17 @@ typedef struct		s_point
 	int				y;
 }					t_point;
 
+typedef struct		s_xiaolin
+{
+	int 	x[3];
+	int 	xpxl[3];
+	int 	y[3];
+	int 	ypxl[3];
+	int 	steep;
+	float 	gradient;
+	float 	intery;
+}					t_xiaolin;
+
 typedef struct		s_line
 {
 	double			a;
@@ -139,17 +151,28 @@ t_mlx				*ft_init_mlx(char *title, size_t width, size_t height);
 
 /*
 **************
-** 	 LINE   **
+** 	POINT   **
 **************
 */
 t_point				*ft_get_point(int x, int y);
+int					ft_color_pixel(t_mlx *mlx, int x, int y, int color);
+int		ft_color_pixel_if_brighter(t_mlx *mlx, int x, int y, int color);
+
+/*
+**************
+** 	 LINE   **
+**************
+*/
+int		ft_xiaolin_wu(t_mlx *mlx, t_line *line, int color);
+int		ft_my_line(t_mlx *mlx, t_line *line, int color);
+int		ft_bresenham(t_mlx *mlx, t_line *line, int color);
 t_line				*ft_line(t_point *one, t_point *two);
 double				ft_f_of_x(t_line *line, double x);
 double				ft_get_decimal(double number);
 int					ft_get_per_ntenth(double number, char precision);
-int					ft_color_pixel(t_mlx *mlx, int x, int y, int color);
 int					ft_draw_line(t_mlx *mlx, t_line *line, int color);
 int					ft_line_gradient(t_mlx *mlx, t_line *line);
+int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius);
 
 /*
 **************
@@ -163,8 +186,8 @@ int					ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int));
 ** 	 EVENT  **
 **************
 */
-int					mouse_event(int button, int x, int y, t_mlx *param);
-int					key_event(int keycode, t_mlx *param);
+// int					mouse_event(int button, int x, int y, t_mlx *param);
+// int					key_event(int keycode, t_mlx *param);
 
 /*
 **************
