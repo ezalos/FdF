@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 21:15:42 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:49:39 by amartino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@
 **  GLOBAL	**
 **************
 */
-# define SIZE		0
+# define SIZE		3
 # define PRECISION	3
 # define SQRT_2		1.41421356237309504880
 # define OUR_CHOICE	3
 # define UNIQ_BPP	4
 # define TRANS		10
+
+# define FALSE 0
+# define TRUE 1
+
+# define SUCCESS 0
+# define FAILURE -1
 
 /*
 **************
@@ -50,8 +56,8 @@
 #  define SIZE_WIDTH 2560
 #  define SIZE_HEIGTH 1440
 # elif SIZE == 3
-#  define SIZE_WIDTH 800
-#  define SIZE_HEIGTH 600
+#  define SIZE_WIDTH 1500
+#  define SIZE_HEIGTH 1000
 # else
 #  define SIZE_WIDTH 600
 #  define SIZE_HEIGTH 600
@@ -77,6 +83,7 @@
 ******************************************************************************
 */
 # include "./../../libft/includes/libft.h"
+# include "./../../Get_next_line/get_next_line.h"
 # include "mlx.h"
 # include <stdio.h>
 # include <math.h>
@@ -94,12 +101,15 @@ typedef struct		s_mlx
 {
 	void			*mlx_pointer;
 	void			*window_pointer;
+	t_list			*image_list;
+	int				**map;
 	size_t			width;
 	size_t			height;
+	int				map_nb_of_line;
+	int				map_nb_of_column;
 	char			choice;
 	char			key_array[280];
 	char			mouse_array[8];
-	t_list			*image_list;
 }					t_mlx;
 
 typedef struct		s_img
@@ -207,6 +217,13 @@ unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
 */
 void				ft_clean_and_exit(t_mlx *mlx);
 void 				virgin_screen(t_mlx *mlx);
+
+/*
+**************
+** 	PARSING **
+**************
+*/
+int					parsing(char *str, t_mlx *mlx);
 
 /*
 **************
