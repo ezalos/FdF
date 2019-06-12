@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/11 20:36:10 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/06/12 18:20:39 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRCS		=	main\
 				easter_egg\
 				free\
 				mouse_event\
-				key_event
+				key_event\
+				parsing
 
 SRC_PATH	= ./srcs
 
@@ -165,7 +166,7 @@ all :	$(NAME)
 $(NAME): $(A_OBJ) $(HEAD_PATH) $(LIB)
 		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(MLX_INC) $(FT_PRINT) $(A_OBJ) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
 
-$(DIR_OBJ)%.o:$(SRC_PATH)/%.c Makefile
+$(DIR_OBJ)%.o:$(SRC_PATH)/%.c Makefile $(HEAD_PATH)
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
 
 $(LIB) : FORCE
@@ -196,8 +197,7 @@ git :
 		@git push
 
 t	:	all
-		clear
-		@./$(NAME) $(map) $(width) $(height)
+		./$(NAME) $(map) $(width) $(height)
 
 echooo :
 		@echo $(ARG)

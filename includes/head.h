@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 02:19:09 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 18:20:31 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,19 @@
 **  GLOBAL	**
 **************
 */
-# define SIZE		1
+# define SIZE		3
 # define PRECISION	3
 # define SQRT_2		1.41421356237309504880
 # define OUR_CHOICE	3
 # define UNIQ_BPP	4
 # define TRANS		10
 # define PX_WHITE	0x00ffffff
+
+# define FALSE 0
+# define TRUE 1
+
+# define SUCCESS 0
+# define FAILURE -1
 
 /*
 **************
@@ -51,17 +57,22 @@
 #  define SIZE_WIDTH 2560
 #  define SIZE_HEIGTH 1440
 # elif SIZE == 3
-#  define SIZE_WIDTH 800
-#  define SIZE_HEIGTH 600
+#  define SIZE_WIDTH 1500
+#  define SIZE_HEIGTH 1000
 # else
 #  define SIZE_WIDTH 600
 #  define SIZE_HEIGTH 600
 # endif
 
 /*
-** SIZE_WIDTH == X
-** SIZE_HEIGTH == Y
+**************
+**  KEYCODE	**
+**************
 */
+# define ESC 		53
+# define CONTROL 	256
+# define DEL		117
+# define SHIFT		257
 
 /*
 ******************************************************************************
@@ -90,10 +101,15 @@ typedef struct		s_mlx
 {
 	void			*mlx_pointer;
 	void			*window_pointer;
+	t_list			*image_list;
+	int				**map;
 	size_t			width;
 	size_t			height;
+	int				map_nb_of_line;
+	int				map_nb_of_column;
 	char			choice;
-	t_list			*image_list;
+	char			key_array[280];
+	char			mouse_array[8];
 }					t_mlx;
 
 typedef struct		s_img
@@ -190,13 +206,17 @@ int					ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int));
 */
 // int					mouse_event(int button, int x, int y, t_mlx *param);
 // int					key_event(int keycode, t_mlx *param);
+int					key_press(int keycode, t_mlx *param);
+int					key_release(int keycode, t_mlx *param);
+int					mouse_press(int button, int x, int y, t_mlx *param);
+int					mouse_release(int button, int x, int y, t_mlx *param);
+int					mouse_move(int x, int y, t_mlx *param);
 
 /*
 **************
 ** DISPLAY	**
 **************
 */
-int					ft_nice_view(int choice, int x, int y);
 int					ft_color_pixel_swag(t_mlx *mlx, int x, int y);
 void				render(t_mlx *mlx);
 
@@ -221,6 +241,22 @@ unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
 ** 	 FREE   **
 **************
 */
-int					ft_clean_fdf(t_mlx *mlx);
+void				ft_clean_and_exit(t_mlx *mlx);
+void 				virgin_screen(t_mlx *mlx);
+
+/*
+**************
+** 	PARSING **
+**************
+*/
+int					parsing(char *str, t_mlx *mlx);
+
+/*
+**************
+**EASTER_EGG**
+**************
+*/
+int					ft_nice_view(int choice, int x, int y);
+int					draw_lines_dynamically(int x, int y, t_mlx *param);
 
 #endif
