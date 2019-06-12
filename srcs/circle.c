@@ -6,11 +6,12 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 18:11:13 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/11 23:14:18 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 02:35:05 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
+#include <math.h>
 
 int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 {
@@ -26,8 +27,6 @@ int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 	while (y_ < y + radius)
 	{
 		point = ft_get_point(x_, y_);
-		if (!(y_ % 10) && !(x_ % 10))
-			ft_printf("%~{255;0;0}1\tx: %d/%d\ty: %d/%d\n", x_, x, y_, y);
 		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 255, 0, 0));
 		x_--;
 		y_++;
@@ -35,8 +34,6 @@ int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 	while (y_ > y)
 	{
 		point = ft_get_point(x_, y_);
-		if (!(y_ % 10) && !(x_ % 10))
-			ft_printf("%~{0;255;0}2\tx: %d/%d\ty: %d/%d\n", x_, x, y_, y);
 		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 0, 255, 0));
 		x_--;
 		y_--;
@@ -44,8 +41,6 @@ int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 	while (y_ > y - radius)
 	{
 		point = ft_get_point(x_, y_);
-		if (!(y_ % 10) && !(x_ % 10))
-			ft_printf("%~{0;0;255}3\tx: %d/%d\ty: %d/%d\n", x_, x, y_, y);
 		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 0, 0, 255));
 		x_++;
 		y_--;
@@ -53,13 +48,34 @@ int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 	while (x_ < x + radius)
 	{
 		point = ft_get_point(x_, y_);
-		if (!(y_ % 10) && !(x_ % 10))
-			ft_printf("%~{255;255;0}4\tx: %d/%d\ty: %d/%d\n", x_, x, y_, y);
 		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 255, 255, 0));
 		x_++;
 		y_++;
 	}
-	ft_printf("%llU\n", ft_get_color(0, 255, 0, 0));
+	// ft_printf("%llU\n", ft_get_color(0, 255, 0, 0));
 	render(mlx);
 	return (1);
+}
+
+void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius)
+{
+	t_point		*center;
+	t_point		*point;
+    int length = radius;
+	int x_, y_;
+    float angle = 0.0;
+    float angle_stepsize = 0.001;
+
+    // go through all angles from 0 to 2 * PI radians
+	center = ft_get_point(x, y);
+    while (angle < 2 * M_PI)
+    {
+        // calculate x, y from a vector with known length and angle
+        x_ = length * cos (angle);
+        y_ = length * sin (angle);
+		point = ft_get_point(x + x_, y + y_);
+		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(255, 255, 255, 0));
+        angle += angle_stepsize;
+  }
+  render(mlx);
 }

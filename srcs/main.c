@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/11 17:58:05 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 02:35:21 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			mouse_press(int button, int x, int y, t_mlx *param)
 		if (actual && last)
 		{
 			line = ft_line(last, actual);
-			ft_line_gradient(mlx, line);
+			ft_xiaolin_wu(mlx, line, ft_get_color(0, ft_random(100, 255, 0, 0), ft_random(100, 255, 0, 0), ft_random(100, 255, 0, 0)));
 			render(mlx);
 		}
 		else
@@ -93,11 +93,18 @@ int			mouse_release(int button, int x, int y, t_mlx *param)
 int		main(int ac, char **av)
 {
 	t_mlx			*mlx;
+	int				color;
 
 	if (ac < 2 && ac > 4)
 		return (0);
 	if (!(mlx = ft_init_mlx(av[0], ft_atoi(av[2]), ft_atoi(av[3]))))
 		ft_clean_garbage();
+	color = ft_get_color(0, 0, 0, 0);
+	// ft_printf("FIRST color: %d\n", color);
+	// ft_color_pixel(mlx, 100, 100, color);
+	// color = ft_get_color(0, 50, 100, 200);
+	// ft_printf("SECOND color: %d\n", color);
+	// ft_add_color_pixel(mlx, 100, 100, color, 0.5);
 	// ft_bresenham(mlx, ft_line(ft_get_point(100, 0), ft_get_point(100, 100)));
 	// render(mlx);
 	ft_draw_circle(mlx, mlx->width / 2, mlx->height / 2, 500);

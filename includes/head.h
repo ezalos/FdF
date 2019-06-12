@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/11 22:13:47 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 02:19:09 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ t_mlx				*ft_init_mlx(char *title, size_t width, size_t height);
 t_point				*ft_get_point(int x, int y);
 int					ft_color_pixel(t_mlx *mlx, int x, int y, int color);
 int		ft_color_pixel_if_brighter(t_mlx *mlx, int x, int y, int color);
+int		ft_add_color_pixel(t_mlx *mlx, int x, int y, unsigned int new_color, float brightness);
 
 /*
 **************
@@ -173,6 +174,7 @@ int					ft_get_per_ntenth(double number, char precision);
 int					ft_draw_line(t_mlx *mlx, t_line *line, int color);
 int					ft_line_gradient(t_mlx *mlx, t_line *line);
 int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius);
+void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius);
 
 /*
 **************
