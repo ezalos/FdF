@@ -6,22 +6,11 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 21:07:17 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/12 18:22:22 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
-
-t_point		*ft_get_point(int x, int y)
-{
-	t_point		*point;
-
-	if (!(point = ft_memalloc(sizeof(t_point))))
-		return (NULL);
-	point->x = x;
-	point->y = y;
-	return (point);
-}
 
 t_line		*ft_line(t_point *one, t_point *two)
 {
@@ -31,11 +20,20 @@ t_line		*ft_line(t_point *one, t_point *two)
 		return (NULL);
 	if (!(two->x - one->x))
 	{
-		line->a = INFINITY;
-		line->b = one->x;
-		return (line);
+		line->a = NAN;
+		line->b = NAN;
+		if (one->x > two->x)
+		{
+			line->limits[0] = *two;
+			line->limits[1] = *one;
+		}
+		else
+		{
+			line->limits[0] = *one;
+			line->limits[1] = *two;
+		}
 	}
-	if (one->x > two->x)
+	else if (one->x > two->x)
 	{
 		line->a = (double)(one->y - two->y) / (double)(one->x - two->x);
 		line->b = (double)two->y - (line->a * (double)two->x);
@@ -70,35 +68,6 @@ int			ft_get_per_ntenth(double number, char precision)
 int			ft_get_bound(double number)
 {
 	return (ft_get_per_ntenth(ft_get_decimal(number) - 0.5, PRECISION));
-}
-
-int		ft_color_pixel_if_brighter(t_mlx *mlx, int x, int y, int color)
-{
-	t_list	*lst;
-	t_img	*img;
-
-	lst = ft_lst_reach_end(mlx->image_list);
-	img = lst->content;
-	if (img->my_image_data[(img->width * y) + x] < color)
-	{
-		img->my_image_data[(img->width * y) + x] = color;
-		return (color);
-	}
-	return (-1);
-}
-
-int		ft_color_pixel(t_mlx *mlx, int x, int y, int color)
-{
-	t_list	*lst;
-	t_img	*img;
-
-	if ((size_t)x <= mlx->width && (size_t)y <= mlx->height)
-	{
-		lst = ft_lst_reach_end(mlx->image_list);
-		img = lst->content;
-		img->my_image_data[(img->width * y) + x] = color;
-	}
-	return (color);
 }
 
 //127-150
@@ -140,21 +109,80 @@ int		ft_how_far(double y, double x)
 
 int		ft_line_gradient(t_mlx *mlx, t_line *line)
 {
-	int			bound_x;
-	int			bound_y;
+	// int			bound_x;
+	// int			bound_y;
 	double		x;
 	double		y;
+	double		step;
 
-	x = line->limits[0].x;
-	while (x < line->limits[1].x)
+	// ft_printf("%s\n", __func__);
+	if (!(line->a != line->a))
 	{
-		y = ft_f_of_x(line, x);
-		if (y + 1 >= mlx->height)
-			return (0);
-		bound_y = ft_get_bound(y);
-		bound_x = ft_get_bound(x);
-		ft_color_pixel_if_brighter(mlx, x, y, ft_get_grey(ft_how_far(bound_y, bound_x), PRECISION));
-		x += 0.001;
+		// ft_printf("%s\n", "normal");
+		step = 1 / line->a;
+		step /= 2;
+		x = line->limits[0].x;
+		y = 0;
+		while (x < line->limits[1].x && y <= mlx->height && y >= 0)
+		{
+			y = ft_f_of_x(line, x);
+			// bound_y = ft_get_bound(y);
+			// bound_x = ft_get_bound(x);
+			ft_color_pixel(mlx, x, y, 0x00ffffff);
+			// ft_color_pixel_if_brighter(mlx, x, y, ft_get_grey(ft_how_far(bound_y, bound_x), PRECISION));
+			x += step;
+		}
 	}
-	return (line->limits[0].x - x);
+	else
+	{
+		step = 1;
+		ft_printf("%s\n", "vertical");
+		(void)x;
+		y = line->limits[0].y;
+		while (y < line->limits[1].y)
+		{
+			ft_color_pixel(mlx, line->limits[1].x, y, 0x00ffffff);
+			y += step;
+		}
+
+	}
+	return (1);
+}
+
+
+int		ft_my_line(t_mlx *mlx, t_line *line, int color)
+{
+	double		x;
+	double		y;
+	double		step;
+
+	step = 1;
+	if (!(line->a != line->a))
+	{
+		if (line->a)
+			step /= line->a;
+		if (step < 0)
+			step = -step;
+		// step /=1000;
+		x = line->limits[0].x;
+		y = 0;
+		while (x <= line->limits[1].x)
+		{
+			// if (color == PX_WHITE)
+			// ft_printf("f(%f)=%f\n", x, y);
+			y = ft_f_of_x(line, x);
+			ft_color_pixel(mlx, x, y, color);
+			x += step;
+		}
+	}
+	else
+	{
+		y = line->limits[0].y;
+		while (y <= line->limits[1].y)
+		{
+			ft_color_pixel(mlx, line->limits[1].x, y, color);
+			y += step;
+		}
+	}
+	return (1);
 }
