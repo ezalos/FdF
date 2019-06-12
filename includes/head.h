@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 18:20:31 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 22:43:14 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct		s_mlx
 	char			choice;
 	char			key_array[280];
 	char			mouse_array[8];
+	unsigned int	saved_color;
+	unsigned int	circle_size;
 }					t_mlx;
 
 typedef struct		s_img
@@ -174,6 +176,7 @@ t_point				*ft_get_point(int x, int y);
 int					ft_color_pixel(t_mlx *mlx, int x, int y, int color);
 int		ft_color_pixel_if_brighter(t_mlx *mlx, int x, int y, int color);
 int		ft_add_color_pixel(t_mlx *mlx, int x, int y, unsigned int new_color, float brightness);
+unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y);
 
 /*
 **************
@@ -189,8 +192,16 @@ double				ft_get_decimal(double number);
 int					ft_get_per_ntenth(double number, char precision);
 int					ft_draw_line(t_mlx *mlx, t_line *line, int color);
 int					ft_line_gradient(t_mlx *mlx, t_line *line);
+
+/*
+**************
+** 	SHAPE   **
+**************
+*/
 int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius);
-void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius);
+void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius, unsigned int color);
+void	ft_dynamic_rectangle(t_mlx *mlx, t_point *a);
+void	ft_draw_rectangle(t_mlx *mlx, t_point *a, t_point *b, unsigned int color);
 
 /*
 **************
@@ -235,6 +246,7 @@ void				ft_print_struct_img(t_img *mlx);
 */
 unsigned int					ft_get_color(unsigned char alpha, unsigned char red,
 						unsigned char green, unsigned char blue);
+						void				ft_show_all_colors(t_mlx *mlx);
 
 /*
 **************

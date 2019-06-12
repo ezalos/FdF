@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 18:11:13 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 02:35:05 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 23:47:02 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,32 @@ int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 	center = ft_get_point(x, y);
 	x_ = x + radius;
 	y_ = y;
-	ft_printf("%s\n", __func__);
+	// ft_printf("%s\n", __func__);
 	while (y_ < y + radius)
 	{
 		point = ft_get_point(x_, y_);
-		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 255, 0, 0));
+		ft_bresenham(mlx, ft_line(center, point), ft_get_color(0, 255, 0, 0));
 		x_--;
 		y_++;
 	}
 	while (y_ > y)
 	{
 		point = ft_get_point(x_, y_);
-		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 0, 255, 0));
+		ft_bresenham(mlx, ft_line(center, point), ft_get_color(0, 0, 255, 0));
 		x_--;
 		y_--;
 	}
 	while (y_ > y - radius)
 	{
 		point = ft_get_point(x_, y_);
-		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 0, 0, 255));
+		ft_bresenham(mlx, ft_line(center, point), ft_get_color(0, 0, 0, 255));
 		x_++;
 		y_--;
 	}
 	while (x_ < x + radius)
 	{
 		point = ft_get_point(x_, y_);
-		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(0, 255, 255, 0));
+		ft_bresenham(mlx, ft_line(center, point), ft_get_color(0, 255, 255, 0));
 		x_++;
 		y_++;
 	}
@@ -57,14 +57,14 @@ int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius)
 	return (1);
 }
 
-void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius)
+void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius, unsigned int color)
 {
 	t_point		*center;
 	t_point		*point;
     int length = radius;
 	int x_, y_;
     float angle = 0.0;
-    float angle_stepsize = 0.001;
+    float angle_stepsize = 1 / (2 * M_PI * radius);
 
     // go through all angles from 0 to 2 * PI radians
 	center = ft_get_point(x, y);
@@ -74,7 +74,7 @@ void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius)
         x_ = length * cos (angle);
         y_ = length * sin (angle);
 		point = ft_get_point(x + x_, y + y_);
-		ft_xiaolin_wu(mlx, ft_line(center, point), ft_get_color(255, 255, 255, 0));
+		ft_xiaolin_wu(mlx, ft_line(center, point), color);
         angle += angle_stepsize;
   }
   render(mlx);

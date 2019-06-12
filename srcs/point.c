@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:19:28 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 02:21:48 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 20:45:54 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,53 @@ unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y)
 	return (color);
 }
 
+unsigned int		ft_next_color(int step)
+{
+	static unsigned int		color;
+	static unsigned char	red;
+	static unsigned char	green;
+	static unsigned char	blue;
+	// static unsigned char	rgb;
+
+	return (color += step);
+	while (red < 255)
+	{
+		while (green < 255)
+		{
+			while (blue < 255)
+			{
+				return (ft_get_color(0, red, green, blue));
+			}
+		}
+	}
+	return (ft_get_color(0, red, green, blue));
+}
+
+void				ft_show_all_colors(t_mlx *mlx)
+{
+	t_list			*lst;
+	t_img			*img;
+	unsigned int	color;
+	int				x;
+	int				step;
+	int				y;
+
+	lst = ft_lst_reach_end(mlx->image_list);
+	img = lst->content;
+	color = 0;
+	step = ft_power(2, 24) / ((int)mlx->width * (int)mlx->height);
+	step = 1;
+	x = -1;
+	printf("step is %d\n", step);
+	while (++x < (int)mlx->width)
+	{
+		y = -1;
+		while (++y < (int)mlx->height)
+			img->my_image_data[(img->width * y) + x] = ft_next_color(step);
+	}
+	render(mlx);
+}
+
 int		ft_color_pixel(t_mlx *mlx, int x, int y, int color)
 {
 	t_list	*lst;
@@ -90,18 +137,9 @@ int		ft_get_primary_color(int color, char nb)
 	** 	red: nb = 2
 	** 	brightness: nb = 3
 	*/
-	// if (nb == 0)
-	// 	ft_printf("blue: ");
-	// else if (nb == 1)
-	// 	ft_printf("green: ");
-	// else if (nb == 2)
-	// 	ft_printf("red: ");
-	// else if (nb == 3)
-	// 	ft_printf("alpha: ");
 	unsigned char	*color_str;
 
 	color_str = (unsigned char*)&color;
-	// ft_printf("%d\n", (int)color_str[(int)nb]);
 	return ((int)color_str[(int)nb]);
 
 }

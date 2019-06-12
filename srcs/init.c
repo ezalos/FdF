@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 20:10:45 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/12 20:54:39 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ t_mlx		*ft_init_mlx(char *title, size_t width, size_t height)
 	if (!(ft_create_img(mlx, "GLOBAL", mlx->width, mlx->height)))
 		return (NULL);
 	ft_print_struct_mlx(mlx);
+	mlx->saved_color = PX_WHITE;
+	mlx->circle_size = 10;
 	return (mlx);
 }

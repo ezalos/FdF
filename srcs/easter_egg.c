@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 20:22:08 by amartino         ###   ########.fr       */
+/*   Updated: 2019/06/12 18:55:35 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			draw_lines_dynamically(int x, int y, t_mlx *param)
 	if (actual && last)
 	{
 		line = ft_line(last, actual);
-		ft_line_gradient(mlx, line);
+		ft_xiaolin_wu(mlx, line, ft_get_color(0, ft_random(0, 0, 0, 0), ft_random(0, 0, 0, 0), ft_random(0, 0, 0, 0)));
 		render(mlx);
 	}
 	else

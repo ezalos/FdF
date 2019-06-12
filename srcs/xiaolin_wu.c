@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 19:15:03 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 02:37:13 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 23:39:19 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ void		ft_xiaolin_wu_init(t_xiaolin *xia, t_line *line)
 	xia->x[0] = line->limits[0].x;
 	xia->x[1] = line->limits[1].x;
 
-	xia->steep = (ft_abs(xia->y[1] - xia->y[0]) > ft_abs(xia->x[1] - xia->x[0]));
+	xia->steep = (ft_abs(xia->y[1] - xia->y[0]) > ft_abs(xia->x[1] - xia->x[0]));//y < x
 	if (xia->steep)
 	{
 	    ft_swap(&xia->x[0], &xia->y[0], sizeof(int));
 	    ft_swap(&xia->x[1], &xia->y[1], sizeof(int));
 	}
-	if (xia->x[0] > xia->x[1])
+	if (xia->x[0] > xia->x[1])//yes
 	{
 	    ft_swap(&xia->x[0], &xia->x[1], sizeof(int));
 	    ft_swap(&xia->y[0], &xia->y[1], sizeof(int));
@@ -93,13 +93,13 @@ void		ft_xiaolin_wu_start(t_mlx *mlx, t_xiaolin *xia, int color)
     xia->ypxl[1] = ft_ipart(yend);
     if (xia->steep)
 	{
-        ft_color_pixel(mlx, xia->ypxl[1],   xia->xpxl[1], ft_plot(color, ft_rfpart(yend) * xgap));
-        // ft_color_pixel(mlx, xia->ypxl[1] + 1, xia->xpxl[1],  ft_plot(color, ft_fpart(yend) * xgap));
+        ft_add_color_pixel(mlx, xia->ypxl[1], xia->xpxl[1], color, ft_rfpart(yend) * xgap);
+        ft_add_color_pixel(mlx, xia->ypxl[1] + 1, xia->xpxl[1],  color, ft_fpart(yend) * xgap);
 	}
     else
 	{
-        ft_color_pixel(mlx, xia->xpxl[1], xia->ypxl[1]  , ft_plot(color, ft_rfpart(yend) * xgap));
-        // ft_color_pixel(mlx, xia->xpxl[1], xia->ypxl[1] + 1,  ft_plot(color, ft_fpart(yend) * xgap));
+        ft_color_pixel(mlx, xia->xpxl[1], xia->ypxl[1], ft_plot(color, ft_rfpart(yend) * xgap));
+        ft_color_pixel(mlx, xia->xpxl[1], xia->ypxl[1] + 1, ft_plot(color, ft_fpart(yend) * xgap));
 	}
 	xia->intery = yend + xia->gradient;
 }
@@ -159,6 +159,8 @@ int		ft_xiaolin_wu(t_mlx *mlx, t_line *line, int color)
 	t_xiaolin	xia;
 
 	ft_xiaolin_wu_init(&xia, line);
+	// if (!(xia.x[1] > xia.y[1] && !xia.steep && xia.x[0] < xia.x[1]) || line->limits[0].x > line->limits[1].x)
+	// 	return (0);
 	ft_xiaolin_wu_start(mlx, &xia, color);
 	ft_xiaolin_wu_end(mlx, &xia, color);
 	ft_xiaolin_wu_in(mlx, &xia, color);

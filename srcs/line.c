@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 14:08:15 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 18:22:22 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/12 23:45:41 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_line		*ft_line(t_point *one, t_point *two)
 			line->limits[1] = *two;
 		}
 	}
-	else if (one->x > two->x)
+	else if (one->x >= two->x)
 	{
 		line->a = (double)(one->y - two->y) / (double)(one->x - two->x);
 		line->b = (double)two->y - (line->a * (double)two->x);
