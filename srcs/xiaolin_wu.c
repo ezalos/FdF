@@ -6,38 +6,11 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 19:15:03 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 23:39:19 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/13 18:53:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
-
-// integer part of x
-int		ft_ipart(float x)
-{
-    return ((int)x);
-}
-
-int		ft_round(float x)
-{
-    return (ft_ipart(x + 0.5));
-}
-
-// fractional part of x
-float	ft_fpart(float x)
-{
-    return (x - (int)x);
-}
-
-float	ft_rfpart(float x)
-{
-    return (1 - ft_fpart(x));
-}
-
-int		ft_abs(int x)
-{
-	return (x < 0 ? -x : x);
-}
 
 unsigned int		ft_color_transparency(unsigned int color,
 	unsigned char brightness)

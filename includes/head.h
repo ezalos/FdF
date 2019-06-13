@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 22:43:14 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/13 19:10:56 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,17 @@ typedef struct		s_xiaolin
 	float 	gradient;
 	float 	intery;
 }					t_xiaolin;
+
+typedef struct		s_bresenham
+{
+	int 	x[3];
+	int 	y[3];
+	int		dx;
+	int		dy;
+	int		yi;
+	int		xi;
+	int		d;
+}					t_bresenham;
 
 typedef struct		s_line
 {

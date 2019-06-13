@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 18:11:13 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 23:47:02 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/13 19:19:01 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius, unsigned int colo
         x_ = length * cos (angle);
         y_ = length * sin (angle);
 		point = ft_get_point(x + x_, y + y_);
-		ft_xiaolin_wu(mlx, ft_line(center, point), color);
+		ft_bresenham(mlx, ft_line(center, point), color);
         angle += angle_stepsize;
   }
   render(mlx);
