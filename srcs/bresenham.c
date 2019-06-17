@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 17:02:18 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/13 19:20:07 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/13 19:25:14 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,28 +112,28 @@ int		ft_bresenham(t_mlx *mlx, t_line *line, int color)
 	t_bresenham		bre;
 
 	if (line->limits[0].x == line->limits[1].x)
+	{
 		ft_xone_equal_xtwo(mlx, line, color);
+		return (1);
+	}
+	ft_init_bresenham(&bre, line);
+	if (ft_abs(bre.y[1] - bre.y[0]) < ft_abs(bre.x[1] - bre.x[0]))
+	{
+		if (bre.x[0] > bre.x[1])
+		{
+			ft_swap(&bre.x[0], &bre.x[1], sizeof(int));
+			ft_swap(&bre.y[0], &bre.y[1], sizeof(int));
+		}
+		ft_bresenham_low(mlx, &bre, color);
+	}
 	else
 	{
-		ft_init_bresenham(&bre, line);
-		if (ft_abs(bre.y[1] - bre.y[0]) < ft_abs(bre.x[1] - bre.x[0]))
+		if (bre.y[0] > bre.y[1])
 		{
-			if (bre.x[0] > bre.x[1])
-			{
-				ft_swap(&bre.x[0], &bre.x[1], sizeof(int));
-				ft_swap(&bre.y[0], &bre.y[1], sizeof(int));
-			}
-			ft_bresenham_low(mlx, &bre, color);
+			ft_swap(&bre.x[0], &bre.x[1], sizeof(int));
+			ft_swap(&bre.y[0], &bre.y[1], sizeof(int));
 		}
-		else
-		{
-			if (bre.y[0] > bre.y[1])
-			{
-				ft_swap(&bre.x[0], &bre.x[1], sizeof(int));
-				ft_swap(&bre.y[0], &bre.y[1], sizeof(int));
-			}
-			ft_bresenham_high(mlx, &bre, color);
-		}
+		ft_bresenham_high(mlx, &bre, color);
 	}
 	return (1);
 }

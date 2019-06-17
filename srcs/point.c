@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:19:28 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/12 20:45:54 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/13 19:29:00 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,6 @@ unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y)
 	return (color);
 }
 
-unsigned int		ft_next_color(int step)
-{
-	static unsigned int		color;
-	static unsigned char	red;
-	static unsigned char	green;
-	static unsigned char	blue;
-	// static unsigned char	rgb;
-
-	return (color += step);
-	while (red < 255)
-	{
-		while (green < 255)
-		{
-			while (blue < 255)
-			{
-				return (ft_get_color(0, red, green, blue));
-			}
-		}
-	}
-	return (ft_get_color(0, red, green, blue));
-}
-
 void				ft_show_all_colors(t_mlx *mlx)
 {
 	t_list			*lst;
@@ -93,14 +71,16 @@ void				ft_show_all_colors(t_mlx *mlx)
 	img = lst->content;
 	color = 0;
 	step = ft_power(2, 24) / ((int)mlx->width * (int)mlx->height);
-	step = 1;
 	x = -1;
 	printf("step is %d\n", step);
 	while (++x < (int)mlx->width)
 	{
 		y = -1;
 		while (++y < (int)mlx->height)
-			img->my_image_data[(img->width * y) + x] = ft_next_color(step);
+		{
+			img->my_image_data[(img->width * y) + x] = color;
+			color += step;
+		}
 	}
 	render(mlx);
 }
