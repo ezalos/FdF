@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/12 22:44:26 by ldevelle         ###   ########.fr        #
+#    Updated: 2020/06/11 22:29:22 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,11 +28,13 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -Winline -Wlong-long -Wunreachable-code
 
 MLX_FLG = -lmlx -framework OpenGL -framework AppKit
-MLX_LIB = -L /usr/local/lib/
-MLX_INC = -I /usr/local/include
+MLX_FLG = -lmlx -lGL -lm -lbsd -lX11 -lXext
+MLX_LIB = -L /usr/local/lib
+MLX_INC = -I /usr/local/include/
 #CFLAGS = $(DFLAGS)
 
 CFLAGS += -fsanitize=address,undefined -g3
+
 
 
 ifeq ($(f), n)
@@ -165,7 +167,7 @@ endef
 all :	$(NAME)
 
 $(NAME): $(A_OBJ) $(HEAD_PATH) $(LIB)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(MLX_INC) $(FT_PRINT) $(A_OBJ) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
+		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(FT_PRINT) $(A_OBJ) $(MLX_INC) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c Makefile $(HEAD_PATH)
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)

@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 12:29:23 by amartino          #+#    #+#             */
-/*   Updated: 2019/06/12 18:30:22 by ldevelle         ###   ########.fr       */
+/*   Updated: 2020/06/08 18:25:17 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		fill_tab(char *str, t_mlx *mlx)
 ** }
 */
 
-int		parsing(char *str, t_mlx *mlx)
+int		fdf_parsing(char *str, t_mlx *mlx)
 {
 	int		fd;
 	int		ret;
