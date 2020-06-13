@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/11 23:03:16 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/13 18:20:20 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int		main(int ac, char **av)
 	// 	ft_clean_garbage();
 //	color = ft_get_color(0, 0, 0, 0);
 	ft_draw_circle(mlx, mlx->width / 2, mlx->height / 2, 500);
-	mlx_hook(mlx->window_pointer, 2, 0, key_press, mlx);
-	mlx_hook(mlx->window_pointer, 3, 0, key_release, mlx);
-	mlx_hook(mlx->window_pointer, 4, 0, mouse_press, mlx);
-	mlx_hook(mlx->window_pointer, 5, 0, mouse_release, mlx);
-	mlx_hook(mlx->window_pointer, 6, 0, mouse_move, mlx);
+	mlx_hook(mlx->window_pointer, 2, 1L<<0, key_press, mlx);
+	mlx_hook(mlx->window_pointer, 3, 1L<<1, key_release, mlx);
+	mlx_hook(mlx->window_pointer, 4, 1L<<2, mouse_press, mlx);
+	mlx_hook(mlx->window_pointer, 5, 1L<<3, mouse_release, mlx);
+	mlx_hook(mlx->window_pointer, 6, 1L<<6, mouse_move, mlx);
 	mlx_loop(mlx->mlx_pointer);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2020/06/11 22:29:22 by ezalos           ###   ########.fr        #
+#    Updated: 2020/06/13 18:20:08 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ MLX_LIB = -L /usr/local/lib
 MLX_INC = -I /usr/local/include/
 #CFLAGS = $(DFLAGS)
 
-CFLAGS += -fsanitize=address,undefined -g3
+#CFLAGS += -fsanitize=address,undefined -g3
 
 
 
