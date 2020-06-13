@@ -6,18 +6,80 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2020/06/13 18:20:08 by ezalos           ###   ########.fr        #
+#    Updated: 2020/05/06 19:55:23 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = FdF
+include init.mk
 
-CC = gcc
+CC 		= gcc
+AR		= ar -rcs
 
-CFLAGS = -Wall -Wextra -Werror
+##########################
+##						##
+##	   ARCHITECTURE		##
+##						##
+##########################
 
-DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
--O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
+MAIN_FOLD 	=	$(shell find srcs -maxdepth 1 -type d | grep '/' | cut -d '/' -f 2)
+MASTER		= 	srcs/
+
+$(shell mkdir -p $(MASTER))
+
+#AUTO_HEAD	=	$(MAIN_FOLD:%=auto/auto_%.h)
+AUTO_HEAD	=	auto_$(NAME).h
+
+HEAD		=	$(HEADERS:%=$(HEAD_DIR)%)
+
+mk			=	./.makegenius
+mk_p		= 	$(mk)/srcs_path/
+include_pat	=	$(MAIN_FOLD:%=$(mk_p)pat_%.mk)
+include_pat	+=	$(mk_p)pat_.mk
+include_dep	=	$(include_pat)
+
+PAT =
+
+$(shell mkdir -p $(mk) $(mk_p))
+$(shell touch $(include_dep))
+
+include $(include_dep)
+
+OBJ 	= $(PAT:%.c=%.o)
+OBJS	= $(PAT:$(MASTER)%.c=$(DIR_OBJ)%.o)
+
+ARG 	?= ldevelle
+MSG		?= "Automated commit message!"
+
+
+SUPPORTED_COMMANDS := run
+SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
+ifneq "$(SUPPORTS_MAKE_ARGS)" ""
+  COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(COMMAND_ARGS):;@:)
+endif
+
+##########################
+##						##
+##		 FLAGS			##
+##						##
+##########################
+
+ifeq ($(f), no)
+CFLAGS 		+=
+VALGRIND 	=
+else ifeq ($(f), n)
+CFLAGS 		=
+VALGRIND 	=
+else ifeq ($(f), f)
+CFLAGS 		+=  -fsanitize=address,undefined -g3
+VALGRIND 	=
+else ifeq ($(f), v)
+CFLAGS 		+= -g3
+SHOW_LEAK 	= --show-leak-kinds=definite
+VALGRIND 	= valgrind --track-origins=yes --leak-check=full $(SHOW_LEAK)
+else ifeq ($(f), h)
+CFLAGS 		= -fsanitize=address,undefined -g3 -pedantic\
+-ansi -O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
 -Werror-implicit-function-declaration -Wmain -Wparentheses -Wsequence-point\
 -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas\
 -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wbad-function-cast\
@@ -26,78 +88,8 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -Wmissing-noreturn -Wformat -Wmissing-format-attribute\
 -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs\
 -Winline -Wlong-long -Wunreachable-code
-
-MLX_FLG = -lmlx -framework OpenGL -framework AppKit
-MLX_FLG = -lmlx -lGL -lm -lbsd -lX11 -lXext
-MLX_LIB = -L /usr/local/lib
-MLX_INC = -I /usr/local/include/
-#CFLAGS = $(DFLAGS)
-
-#CFLAGS += -fsanitize=address,undefined -g3
-
-
-
-ifeq ($(f), n)
-CFLAGS =
-else ifeq ($(f), y)
-CFLAGS = $(DFLAGS)
+VALGRIND 	=
 endif
-
-##############################################################################
-##############################################################################
-##																			##
-##									----									##
-##									IFEQ									##
-##									----									##
-##																			##
-##############################################################################
-##############################################################################
-
-SRCS		=	main\
-				init\
-				line\
-				point\
-				circle\
-				rectangle\
-				bresenham\
-				xiaolin_wu\
-				display color\
-				print\
-				tools\
-				easter_egg\
-				free\
-				mouse_event\
-				key_event\
-				parsing
-
-SRC_PATH	= ./srcs
-
-DIR_OBJ 	= ./objs/
-
-##########################
-##						##
-##	   ARCHITECTURE		##
-##						##
-##########################
-
-A_SRC 		= $(patsubst %,$(SRC_PATH)/%.c,$(SRCS))
-A_OBJ		= $(patsubst %,$(DIR_OBJ)%.o,$(SRCS))
-
-OBJ 		= $(patsubst %,%.o,$(SRCS))
-
-LIB_DIR		= ./../libft
-HEAD		= head.h
-HEAD_DIR	= ./includes
-HEAD_PATH	= $(HEAD_DIR)/$(HEAD)
-
-LIB			= $(LIB_DIR)/libft.a
-##########################
-##						##
-##		  DEBUG			##
-##						##
-##########################
-
-VALGRIND = valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite
 
 ##########################
 ##						##
@@ -105,13 +97,25 @@ VALGRIND = valgrind --track-origins=yes --leak-check=full --show-leak-kinds=defi
 ##						##
 ##########################
 
-RED     = \x1b[31m
-GREEN   = \x1b[32m
-YELLOW  = \x1b[33m
-BLUE	= \x1b[34m
-MAGENTA	= \x1b[35m
-CYAN	= \x1b[36m
-END     = \x1b[0m
+UNAME			:=	$(shell uname)
+
+ifeq ($(UNAME),Linux)
+RED     	= \e[31m
+GREEN   	= \e[32m
+YELLOW  	= \e[33m
+BLUE		= \e[34m
+MAGENTA		= \e[35m
+CYAN		= \e[36m
+END     	= \e[0m
+else
+RED     	= \x1b[31m
+GREEN   	= \x1b[32m
+YELLOW  	= \x1b[33m
+BLUE		= \x1b[34m
+MAGENTA		= \x1b[35m
+CYAN		= \x1b[36m
+END     	= \x1b[0m
+endif
 
 COM_COLOR   = $(BLUE)
 OBJ_COLOR   = $(CYAN)
@@ -120,17 +124,16 @@ ERROR_COLOR = $(RED)
 WARN_COLOR  = $(YELLOW)
 NO_COLOR    = $(END)
 
-OK_STRING    = [OK]
-ERROR_STRING = [ERROR]
-WARN_STRING  = [WARNING]
-COM_STRING   = Compiling
+OK_STRING    	= [OK]
+ERROR_STRING 	= [ERROR]
+WARN_STRING  	= [WARNING]
+COM_STRING   	= Compiling
 
-MSG ?= Makefile automated push
-map ?= maps/subject_tests/42.fdf
-width ?= 0
-height ?= 0
-
-ARG=`ruby -e "puts (0..$(nb)).to_a.shuffle.join(' ')"`
+##########################
+##						##
+##		 OUTPUT			##
+##						##
+##########################
 
 define run_and_test
 printf "%b" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@F)$(NO_COLOR)\r"; \
@@ -164,56 +167,175 @@ endef
 ##						##
 ##########################
 
-all :	$(NAME)
+all :	$(modules) $(NAME) auteur $(DIR_OBJ)
 
-$(NAME): $(A_OBJ) $(HEAD_PATH) $(LIB)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(FT_PRINT) $(A_OBJ) $(MLX_INC) $(LIB) $(MLX_LIB) $(MLX_FLG) -o $(NAME))
+ifeq ($(LIB_PRJCT),y)
+$(NAME):	$(OBJS) $(HEAD_DIR)
+	@$(call run_and_test, $(AR) $(NAME) $(OBJS))
+else
+$(NAME):	$(LIB) $(OBJS) $(HEAD_DIR)
+	@$(call run_and_test, $(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIB) $(HEADERS_DIRECTORIES))
+endif
 
-$(DIR_OBJ)%.o:$(SRC_PATH)/%.c Makefile $(HEAD_PATH)
-		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
+DIR_PREP = $(shell find $(MASTER) -type d -exec echo {} \; | sed 's~$(MASTER)~$(DIR_OBJ)~g')
+$(DIR_OBJ)%.o:$(MASTER)%.c $(HEAD) Makefile
+	@mkdir -p $(DIR_OBJ)
+	@$(call run_and_test, $(CC) $(CFLAGS) $(HEADERS_DIRECTORIES) -o $@ -c $<)
 
-$(LIB) : FORCE
+$(LIB): FORCE
 		@$(MAKE) -C $(LIB_DIR)
 
 clean :
-		@echo "\$(YELLOW)fill_objs \$(END)\\t\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
-		@rm -f $(A_OBJ)
+	rm -f $(OBJS)
+	echo "\$(YELLOW)$(NAME) objs \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 
 fclean : clean
-		@echo "\$(YELLOW)$(NAME) \$(END)\\t\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
-		@rm -rf $(NAME)
+	rm -rf $(NAME) $(DIR_OBJ)
+	echo "\$(YELLOW)$(NAME) \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 
-aclean : clean
-		@$(MAKE) clean -C $(LIB_DIR)
+re : fclean
+	$(MAKE) all
 
-afclean : aclean fclean
-		@$(MAKE) fclean -C $(LIB_DIR)
+rere :
+	$(MAKE) re -C $(LIB_DIR)
+	$(MAKE) re
 
-re :	fclean all
 
-are :	afclean all
+auteur : Makefile
+		echo $(login) > auteur
 
-git :
-		@git add -A
-		@git status
-		git commit -am "$(MSG)"
-		@git push
+$(DIR_OBJ) :
+		mkdir -p $(DIR_OBJ)
+
+##########################
+##						##
+##		 RUN IT			##
+##						##
+##########################
 
 t	:	all
-		./$(NAME) $(map) $(width) $(height)
+		$(CC) $(CFLAGS) -I$(HEAD_DIR) $(NAME) main.c -o $(TESTEUR)
+		$(VALGRIND) ./$(TESTEUR) "$(ARG)"
 
-echooo :
-		@echo $(ARG)
+run	:	all
+		$(VALGRIND) ./$(NAME) $(COMMAND_ARGS)
+		@echo ""
 
-vt	:	all
-		@ $(VALGRIND) ./$(NAME) $(map) $(width) $(height)
+unit_test :
+
+big :
+n_times ?= 100
+n_times=$(n_times); \
+while [ $${n_times} -gt 0 ] ; do \
+    $(MAKE) unit_test \
+done; \
+true
+
+##########################
+##						##
+##		  GIT			##
+##						##
+##########################
+
+FETCH_MODULES	=	$(shell grep "url" .gitmodules | cut -d '=' -f 2)
+GIT_MODULES 	= $(FETCH_MODULES:%=git clone % ; )
+
+init:
+		sh ./.makegenius/scripts/init_makegenius.sh
+		echo -n "Do you wish to puh your project on github ?" && read ans && [ $${ans:-N} = y ]
+		$(MAKE) init_git
+
+init_git:
+		rm -rf .git
+		echo "# $(NAME)" > README.md
+		git init
+		git add -A
+		git commit -m "first commit"
+		git remote add origin $(GIT_REPO)
+		git push -u origin master
+
+
+REQUEST 		= 'read -p "Enter a commit message:	" pwd && echo $$pwd'
+COMMIT_MESSAGE ?= $(shell bash -c $(REQUEST))
+# $(GIT_VALID) || (echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ])
+git :
+		git add -A
+		git status
+		$(GIT_VALID) || (echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ])
+		git commit -m "$(COMMIT_MESSAGE)"
+		git push
+
+modules :
+		$(GIT_MODULES)
+
+##########################
+##						##
+##	    AUTOMATE		##
+##						##
+##########################
+
+ifeq ($(UNAME),Linux)
+update_head	=	bash .makegenius/scripts/get_protos.sh '' $(MASTER) '' $(NAME);
+update_dep	=	bash .makegenius/scripts/get_mk_srcs.sh '' $(MASTER) '' '-depth 1';
+else
+#update_head	=	$(MAIN_FOLD:%=sh .makegenius/scripts/get_protos.sh % $(MASTER);)
+update_head	=	bash .makegenius/scripts/get_protos.sh '' $(MASTER) '' $(NAME);
+#update_dep	=	$(MAIN_FOLD:%=sh .makegenius/scripts/get_mk_srcs.sh % $(MASTER);)
+update_dep	=	bash .makegenius/scripts/get_mk_srcs.sh '' $(MASTER) '' '-d 1';
+endif
+
+file : 	sources prototypes
+		$(MAKE)
+
+sources :	object_ready
+		rm -rf $(mk_p)
+		mkdir -p $(mk_p)
+		echo $(update_dep)
+		$(update_dep)
+		echo "\$(YELLOW)automatic sources\$(END)\\thas been \$(GREEN)\\t\\t  created\$(END)"
+
+DIR_PREP = $(shell find $(MASTER) -type d -exec echo {} \; | sed 's~$(MASTER)~$(DIR_OBJ)~g')
+object_ready :	$(DIR_OBJ)
+		rm -rf $(DIR_OBJ)/*
+		mkdir -p $(DIR_PREP)
+		find $(DIR_OBJ) -type d -exec touch {}/.gitkeep \;
+		echo "\$(YELLOW)objects paths\$(END)\\t\\thas been \$(GREEN)\\t\\t  created\$(END)"
+
+prototypes :	auto_dir
+		$(update_head)
+		bash .makegenius/scripts/get_master_head.sh $(HEAD_DIR) $(NAME)
+		echo "\$(YELLOW)automatic headers\$(END)\\thas been \$(GREEN)\\t\\t  created\$(END)"
+
+auto_dir :
+		mkdir -p $(HEAD_DIR)auto
+
+##########################
+##						##
+##		  SELF			##
+##						##
+##########################
+
+makegenius_repository=https://github.com/ezalos/Makegenius.git
+temp_folder=.tmp_makegenius_update/
+
+update :
+		rm -rf $(temp_folder)
+		git clone $(makegenius_repository) $(temp_folder)
+		bash "$(temp_folder).makegenius/scripts/update_makegenius.sh" $(temp_folder) &
+
+rm_update_tmp_dir:
+		rm -rf $(temp_folder)
+
+##########################
+##						##
+##		 PARAMS			##
+##						##
+##########################
 
 FORCE:
-
-##########################
-##						##
-##		 .PHONY			##
-##						##
-##########################
-
-.PHONY : clean fclean re all git aclean afclean are
+.PHONY	:	all clean fclean re git file object_ready check update\
+			rm_update_tmp_dir auto_dir prototypes sources modules\
+			rere auteur run unit_test big init init_git FORCE
+.SILENT	:	all clean fclean re git file object_ready check update\
+			rm_update_tmp_dir auto_dir prototypes sources modules\
+			rere auteur unit_test big init init_git FORCE
