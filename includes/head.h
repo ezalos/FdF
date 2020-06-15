@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/11 22:39:17 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/13 20:47:13 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ typedef struct		s_point
 	int				x;
 	int				y;
 }					t_point;
+
+typedef struct		s_complex
+{
+	float			i;
+	float			x;
+}					t_complex;
 
 typedef struct		s_xiaolin
 {
