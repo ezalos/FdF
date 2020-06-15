@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2020/02/24 08:39:34 by ezalos           ###   ########.fr        #
+#    Updated: 2020/06/15 18:19:47 by deyaberge        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,13 @@ HEADERS					=	$(AUTO_HEAD)\
 HEADERS_DIRECTORIES 	=	-I./$(HEAD_DIR)\
 							-I./$(LIB_DIR)/includes\
 							-I /usr/local/include/\
-							-lmlx -lGL -lm -lbsd -lX11 -lXext
+
+UNAME			:=	$(shell uname)
+
+ifeq ($(UNAME),Linux)
+HEADERS_DIRECTORIES +=		-lmlx -lGL -lm -lbsd -lX11 -lXext
+else
+LIB +=						-lmlx -framework OpenGL -framework AppKit
+endif
 
 # HEAD_PATH	=	$(HEAD_DIR)/$(HEAD)
