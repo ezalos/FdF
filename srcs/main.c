@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/15 10:11:51 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/15 18:05:03 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ int		mandelbrot_equation(t_complex *zn, t_complex *c)
 	float	_2ix;
 	float	_x2;
 
+
+	// Zn+1 = Zn^2 + c
 	_i2 = zn->i * zn->i;
 	_x2 = zn->x * zn->x;
 	_2ix = 2 * zn->x * zn->i;
 	if (_i2)
-		_x2 = -1 * _x2 * _i2;
+		_x2 = _x2 + (-1 * _i2);
 	zn->i = _2ix + c->i;
 	zn->x = _x2 + c->x;
 	if (sqrt((zn->x * zn->x) + (zn->i * zn->i)) > 2)
@@ -30,13 +32,32 @@ int		mandelbrot_equation(t_complex *zn, t_complex *c)
 	return (FALSE);
 }
 
-// void	mandelbrot_loop(t_mlx *mlx)
-// {
-// 	t_complex	zn;
-// 	t_complex	c;
-// 	int			x;
-//
-// }
+float	get_dimension(int pixel, int height, float min, float max)
+{
+	float	answer;
+	float	truc;
+	float	echelle;
+
+	truc = pixel / height;
+
+	echelle = max - min;
+	answer = (echelle * truc) - min;
+	return (answer);
+}
+
+void	mandelbrot_loop(t_mlx *mlx)
+{
+	t_complex	zn;
+	t_complex	c;
+	int			height;
+	int			width;
+	float		i;
+	float		x;
+
+	c.i = 0;
+	c.x = 0.75;
+
+}
 
 
 int		main(int ac, char **av)
