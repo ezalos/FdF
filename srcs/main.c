@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/17 23:47:22 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/18 12:17:30 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	mandelbrot_loop(t_mlx *mlx)
 	int			iter;
 	int			color;
 
-	// mlx->c.a = 0;
-	// mlx->c.b = 0.75;
 	pa = 0;
 	while (pa < mlx->width)
 	{
@@ -65,8 +63,8 @@ void	mandelbrot_loop(t_mlx *mlx)
 		while (pb < mlx->height)
 		{
 			iter = 0;
-			mlx->zn.a = get_small_dimension(pa, mlx->width, mlx->d.re_start, mlx->d.re_end);
-			mlx->zn.b = get_small_dimension(pb, mlx->height, mlx->d.im_start, mlx->d.im_end);
+			mlx->zn.a = get_small_dimension(pa, mlx->width, mlx->d.start.a, mlx->d.end.a);
+			mlx->zn.b = get_small_dimension(pb, mlx->height, mlx->d.start.b, mlx->d.end.b);
 			if (mlx->mandelbrot)
 			{
 				mlx->c.a = mlx->zn.a;
@@ -94,8 +92,8 @@ int		main(int ac, char **av)
 		return (0);
 	if (!(mlx = ft_init_mlx(av[0], ft_atoi(av[2]), ft_atoi(av[3]))))
 		ft_clean_garbage();
-	// mandelbrot_loop(mlx);
-	// render(mlx);
+	mandelbrot_loop(mlx);
+	render(mlx);
 	// if (fdf_parsing(av[1], mlx) == 0)
 	// 	ft_clean_garbage();
 //	ft_draw_circle(mlx, mlx->width / 2, mlx->height / 2, 500);

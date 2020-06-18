@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/17 23:32:05 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/18 12:04:08 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int key_press(int keycode, t_mlx *param)
 {
-	printf("%d\n", keycode);
+//	printf("%d\n", keycode);
 	param->key_array[keycode] = 1;
 	if (keycode == ESC)
 		ft_clean_and_exit(param);

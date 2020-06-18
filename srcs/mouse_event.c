@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/18 00:58:35 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/18 12:22:24 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,28 @@ void	mandelbrot_loop(t_mlx *mlx);
 
 int			mouse_press(int button, int x, int y, t_mlx *param)
 {
-	ft_printf("X %d & %d Y\n", x, y);
-	param->c.a = get_small_dimension(x, param->width, param->d.re_start, param->d.re_end);
-	param->c.b = get_small_dimension(y, param->height, param->d.im_start, param->d.im_end);
-	ft_printf("C = %d + %d i\n", param->c.a, param->c.b);
-	mandelbrot_loop(param);
-	render(param);
+//	ft_printf("X %d & %d Y\n", x, y);
+	ft_printf("button = [%d]\n", button);
+	if (button == 1)
+	{
+		param->c.a = get_small_dimension(x, param->width, param->d.start.a, param->d.end.a);
+		param->c.b = get_small_dimension(y, param->height, param->d.start.b, param->d.end.b);
+//	ft_printf("C = %d + %d i\n", param->c.a, param->c.b);
+		mandelbrot_loop(param);
+		render(param);
+		return (1);
+	}
+	if (button == 5 || button == 7)
+	{
+		ft_printf("coucou\n");
+		param->d.start.a += 0.5;
+		param->d.end.a += 0.5;
+		param->d.start.b += 0.5;
+		param->d.end.b += 0.5;
+		mandelbrot_loop(param);
+		render(param);
+		return (1);
+	}
 	return (1);
 	if (button == 1 && param->key_array[CONTROL] == 1)
 		draw_lines_dynamically(x, y, param);
@@ -72,8 +88,8 @@ int mouse_move(int x, int y, t_mlx *param)
 		{
 			last = ((double)(clock()));
 			ft_printf("TIME\n");
-			param->c.a = get_small_dimension(x, y, param->d.re_start, param->d.re_end);
-			param->c.b = get_small_dimension(x, y, param->d.im_start, param->d.im_end);
+			param->c.a = get_small_dimension(x, y, param->d.start.a, param->d.end.a);
+			param->c.b = get_small_dimension(y, y, param->d.start.b, param->d.end.b);
 			mandelbrot_loop(param);
 			render(param);
 		}

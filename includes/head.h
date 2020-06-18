@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/17 23:48:04 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/18 12:06:47 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,8 @@ typedef struct		s_complex
 
 typedef struct		s_dimension
 {
-	float			re_start;
-	float			re_end;
-	float			im_start;
-	float			im_end;
+	t_complex		start;
+	t_complex		end;
 }					t_dimension;
 
 typedef struct		s_mlx
@@ -151,9 +149,6 @@ typedef struct		s_point
 	int				x;
 	int				y;
 }					t_point;
-
-
-// dimensions complex //
 
 typedef struct		s_xiaolin
 {
