@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/11 23:10:59 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/17 23:22:16 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ void	*ft_open_mlx(t_mlx *mlx, char *title)
 			return (NULL);
 	}
 	return (mlx);
+}
+
+void	init_values(t_dimension *d)//todo mettre dans init
+{
+	d->re_start = -2;
+	d->re_end = 1;
+	d->im_start = -1;
+	d->im_end = 1;
 }
 
 t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height)
@@ -71,5 +79,6 @@ t_mlx		*ft_init_mlx(char *title, size_t width, size_t height)
 	// ft_print_struct_mlx(mlx);
 	mlx->saved_color = PX_WHITE;
 	mlx->circle_size = 10;
+	init_values(&mlx->d);
 	return (mlx);
 }

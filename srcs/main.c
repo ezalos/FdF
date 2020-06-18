@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/16 17:12:19 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/17 23:47:22 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int		mandelbrot_equation(t_complex *zn, t_complex *c)
 	real = a_sqr + (-1 * b_sqr);
 	zn->a = real + c->a;
 	zn->b = two_ab + c->b;
-	if (sqrt((zn->a * zn->a) + (zn->b * zn->b)) > 2)
+	if (zn->a > 2 || zn->b > 2 || zn->a < -2 || zn->b < -2
+	|| sqrt((zn->a * zn->a) + (zn->b * zn->b)) > 2)
 		return (FALSE);
 	return (TRUE);
 }
@@ -48,25 +49,15 @@ float	get_big_dimension(int nb, int size, float min, float max, float size_small
 	return (big);
 }
 
-void	init_values(t_dimension *d)
-{
-	d->re_start = -2;
-	d->re_end = 1;
-	d->im_start = -1;
-	d->im_end = 1;
-}
-
 void	mandelbrot_loop(t_mlx *mlx)
 {
-	t_complex	zn;
-	t_complex	c;
 	float		pa;
 	float		pb;
 	int			iter;
 	int			color;
-	t_dimension	d;
 
-	init_values(&d);
+	// mlx->c.a = 0;
+	// mlx->c.b = 0.75;
 	pa = 0;
 	while (pa < mlx->width)
 	{
@@ -74,11 +65,14 @@ void	mandelbrot_loop(t_mlx *mlx)
 		while (pb < mlx->height)
 		{
 			iter = 0;
-			zn.a = get_small_dimension(pa, mlx->width, d.re_start, d.re_end);
-			zn.b = get_small_dimension(pb, mlx->height, d.im_start, d.im_end);
-			c.a = zn.a;
-			c.b = zn.b;
-			while (iter < MAX_ITER && mandelbrot_equation(&zn, &c) == TRUE)
+			mlx->zn.a = get_small_dimension(pa, mlx->width, mlx->d.re_start, mlx->d.re_end);
+			mlx->zn.b = get_small_dimension(pb, mlx->height, mlx->d.im_start, mlx->d.im_end);
+			if (mlx->mandelbrot)
+			{
+				mlx->c.a = mlx->zn.a;
+				mlx->c.b = mlx->zn.b;
+			}
+			while (iter < MAX_ITER && mandelbrot_equation(&mlx->zn, &mlx->c) == TRUE)
 				iter++;
 			if (iter < MAX_ITER)
 				color = ft_get_color(0, 255, iter * 5, iter * 5);
@@ -100,16 +94,16 @@ int		main(int ac, char **av)
 		return (0);
 	if (!(mlx = ft_init_mlx(av[0], ft_atoi(av[2]), ft_atoi(av[3]))))
 		ft_clean_garbage();
-	mandelbrot_loop(mlx);
-	render(mlx);
+	// mandelbrot_loop(mlx);
+	// render(mlx);
 	// if (fdf_parsing(av[1], mlx) == 0)
 	// 	ft_clean_garbage();
-/*	ft_draw_circle(mlx, mlx->width / 2, mlx->height / 2, 500);
+//	ft_draw_circle(mlx, mlx->width / 2, mlx->height / 2, 500);
 	mlx_hook(mlx->window_pointer, 2, 1L<<0, key_press, mlx);
 	mlx_hook(mlx->window_pointer, 3, 1L<<1, key_release, mlx);
 	mlx_hook(mlx->window_pointer, 4, 1L<<2, mouse_press, mlx);
 	mlx_hook(mlx->window_pointer, 5, 1L<<3, mouse_release, mlx);
 	mlx_hook(mlx->window_pointer, 6, 1L<<6, mouse_move, mlx);
-*/	mlx_loop(mlx->mlx_pointer);
+	mlx_loop(mlx->mlx_pointer);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/16 16:45:41 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/17 23:48:04 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 **************
 */
 # define SIZE		3
-# define MAX_ITER	80
+# define MAX_ITER	50
 # define PRECISION	3
 # define SQRT_2		1.41421356237309504880
 # define OUR_CHOICE	3
@@ -98,6 +98,21 @@
 **																			**
 ******************************************************************************
 */
+// a + ib //
+typedef struct		s_complex
+{
+	float			a;
+	float			b;
+}					t_complex;
+
+typedef struct		s_dimension
+{
+	float			re_start;
+	float			re_end;
+	float			im_start;
+	float			im_end;
+}					t_dimension;
+
 typedef struct		s_mlx
 {
 	void			*mlx_pointer;
@@ -113,6 +128,10 @@ typedef struct		s_mlx
 	char			mouse_array[8];
 	unsigned int	saved_color;
 	unsigned int	circle_size;
+	t_complex		zn;
+	t_complex		c;
+	int				mandelbrot;
+	t_dimension		d;
 }					t_mlx;
 
 typedef struct		s_img
@@ -133,21 +152,8 @@ typedef struct		s_point
 	int				y;
 }					t_point;
 
-// a + ib //
-typedef struct		s_complex
-{
-	float			a;
-	float			b;
-}					t_complex;
 
 // dimensions complex //
-typedef struct		s_dimension
-{
-	float			re_start;
-	float			re_end;
-	float			im_start;
-	float			im_end;
-}					t_dimension;
 
 typedef struct		s_xiaolin
 {

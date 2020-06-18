@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/13 17:56:49 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/17 23:32:05 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int key_press(int keycode, t_mlx *param)
 		ft_show_all_colors(param);
 	if (keycode == 49)
 		ft_draw_circle(param, param->width / 2, param->height / 2, 500);
+	if (keycode == 46)
+		param->mandelbrot = !param->mandelbrot;
 	return (0);
 }
 
