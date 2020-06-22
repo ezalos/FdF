@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/18 12:17:30 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/22 12:42:21 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		mandelbrot_equation(t_complex *zn, t_complex *c)
 	return (TRUE);
 }
 
-float	get_small_dimension(float pixel, float size, float min, float max)
+float	pix_to_math(float pixel, float size, float min, float max)
 {
 	float small;
 
@@ -41,7 +41,7 @@ float	get_small_dimension(float pixel, float size, float min, float max)
 	return (small);
 }
 // FOR LATER - pour aller plus vite
-float	get_big_dimension(int nb, int size, float min, float max, float size_small)
+float	math_to_pix(int nb, int size, float min, float max, float size_small)
 {
 	float big;
 
@@ -57,14 +57,15 @@ void	mandelbrot_loop(t_mlx *mlx)
 	int			color;
 
 	pa = 0;
+	ft_printf("mlx->d.start.a = [%f]\nmlx->d.end.a = [%f]\nmlx->d.start.b = [%f]\nmlx->end.b = [%f]\n", mlx->d.start.a, mlx->d.end.a, mlx->d.start.b, mlx->d.end.b);
 	while (pa < mlx->width)
 	{
 		pb = 0;
 		while (pb < mlx->height)
 		{
 			iter = 0;
-			mlx->zn.a = get_small_dimension(pa, mlx->width, mlx->d.start.a, mlx->d.end.a);
-			mlx->zn.b = get_small_dimension(pb, mlx->height, mlx->d.start.b, mlx->d.end.b);
+			mlx->zn.a = pix_to_math(pa, mlx->width, mlx->d.start.a, mlx->d.end.a);
+			mlx->zn.b = pix_to_math(pb, mlx->height, mlx->d.start.b, mlx->d.end.b);
 			if (mlx->mandelbrot)
 			{
 				mlx->c.a = mlx->zn.a;

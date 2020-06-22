@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/18 12:06:47 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/22 21:32:00 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # define SIZE		3
 # define MAX_ITER	50
 # define PRECISION	3
+# define ZOOM_COEF	1/5
+# define Z_FORWARD	5
+# define Z_BACKWARD	4
 # define SQRT_2		1.41421356237309504880
 # define OUR_CHOICE	3
 # define UNIQ_BPP	4
@@ -195,6 +198,7 @@ typedef struct		s_line
 **************
 */
 t_mlx				*ft_init_mlx(char *title, size_t width, size_t height);
+
 
 /*
 **************
