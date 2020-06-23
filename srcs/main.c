@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/22 12:42:21 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/22 21:50:57 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	mandelbrot_loop(t_mlx *mlx)
 	int			color;
 
 	pa = 0;
-	ft_printf("mlx->d.start.a = [%f]\nmlx->d.end.a = [%f]\nmlx->d.start.b = [%f]\nmlx->end.b = [%f]\n", mlx->d.start.a, mlx->d.end.a, mlx->d.start.b, mlx->d.end.b);
 	while (pa < mlx->width)
 	{
 		pb = 0;
