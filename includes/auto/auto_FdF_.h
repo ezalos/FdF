@@ -5,29 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: deyaberger <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/22 20:25:05 by deyaberge         #+#    #+#             */
-/*   Updated: 2020/06/22 20:25:05 by deyaberge        ###   ########.fr       */
+/*   Created: 2020/06/23 16:18:35 by deyaberge         #+#    #+#             */
+/*   Updated: 2020/06/23 16:18:35 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AUTO_FDF__H
 # define AUTO_FDF__H
 
+int		ft_color_pixel_swag(t_mlx *mlx, int x, int y);
+void		render(t_mlx *mlx);
 int		ft_getnbr(char *str);
 int		fill_tab(char *str, t_mlx *mlx);
 int		fdf_parsing(char *str, t_mlx *mlx);
-int		ft_color_pixel_swag(t_mlx *mlx, int x, int y);
-void		render(t_mlx *mlx);
 void		ft_print_struct_img(t_img *mlx);
 void		ft_print_struct_mlx(t_mlx *mlx);
 int		ft_get_percent(intmax_t x, intmax_t x_max);
 int		ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int));
-void		zoom_forward(int x, int y, t_mlx *param);
-void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
-void		*ft_open_mlx(t_mlx *mlx, char *title);
-void		init_values(t_mlx *mlx);
-t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height);
-t_mlx		*ft_init_mlx(char *title, size_t width, size_t height);
 void		ft_draw_rectangle(t_mlx *mlx, t_point *a, t_point *b, unsigned int color);
 void		ft_dynamic_rectangle(t_mlx *mlx, t_point *a);
 t_line		*ft_line(t_point *one, t_point *two);
@@ -48,24 +42,10 @@ void		ft_xiaolin_wu_start(t_mlx *mlx, t_xiaolin *xia, int color);
 void		ft_xiaolin_wu_end(t_mlx *mlx, t_xiaolin *xia, int color);
 void		ft_xiaolin_wu_in(t_mlx *mlx, t_xiaolin *xia, int color);
 int		ft_xiaolin_wu(t_mlx *mlx, t_line *line, int color);
-int		mandelbrot_equation(t_complex *zn, t_complex *c);
-float		pix_to_math(float pixel, float size, float min, float max);
-float		math_to_pix(int nb, int size, float min, float max, float size_small);
-void		mandelbrot_loop(t_mlx *mlx);
-int		main(int ac, char **av);
 void		ft_clean_and_exit(t_mlx *mlx);
 void 		virgin_screen(t_mlx *mlx);
-int key_press(int keycode, t_mlx *param);
-int key_release(int keycode, t_mlx *param);
 int		ft_draw_circle(t_mlx *mlx, int x, int y, int radius);
 void 		ft_draw_a_circle (t_mlx *mlx, int x, int y, int radius, unsigned int color);
-t_point		*ft_get_point(int x, int y);
-unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y);
-void		ft_show_all_colors(t_mlx *mlx);
-int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
-int		ft_ponderate_mean(int x, int y, float mult);
-int		ft_get_primary_color(int color, char nb);
-int		ft_add_color_pixel(t_mlx *mlx, int x, int y, unsigned int new_color, float brightness);
 int		ft_xone_equal_xtwo(t_mlx *mlx, t_line *line, int color);
 void		ft_init_bresenham(t_bresenham *bre, t_line *line);
 void		ft_bresenham_low(t_mlx *mlx, t_bresenham *bre, int color);
@@ -73,6 +53,26 @@ void		ft_bresenham_high(t_mlx *mlx, t_bresenham *bre, int color);
 int		ft_bresenham(t_mlx *mlx, t_line *line, int color);
 int		ft_nice_view(int choice, int x, int y);
 int		draw_lines_dynamically(int x, int y, t_mlx *param);
+void		zoom(int direction, int x, int y, t_mlx *param);
+void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
+void		*ft_open_mlx(t_mlx *mlx, char *title);
+void		init_values(t_mlx *mlx);
+t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height);
+t_mlx		*ft_init_mlx(char *title, size_t width, size_t height);
+int		mandelbrot_equation(t_complex *zn, t_complex *c);
+float		pix_to_math(float pixel, float size, float min, float max);
+float		math_to_pix(int nb, int size, float min, float max, float size_small);
+void		mandelbrot_loop(t_mlx *mlx);
+int		main(int ac, char **av);
+int key_press(int keycode, t_mlx *param);
+int key_release(int keycode, t_mlx *param);
+t_point		*ft_get_point(int x, int y);
+unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y);
+void		ft_show_all_colors(t_mlx *mlx);
+int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
+int		ft_ponderate_mean(int x, int y, float mult);
+int		ft_get_primary_color(int color, char nb);
+int		ft_add_color_pixel(t_mlx *mlx, int x, int y, unsigned int new_color, float brightness);
 int		mouse_press(int button, int x, int y, t_mlx *param);
 int		mouse_release(int button, int x, int y, t_mlx *param);
 int mouse_move(int x, int y, t_mlx *param);

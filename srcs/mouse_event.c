@@ -6,16 +6,11 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/22 21:28:44 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/23 16:17:08 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
-
-float	pix_to_math(float pixel, float size, float min, float max);
-void	mandelbrot_loop(t_mlx *mlx);
-
-void		zoom(int button, int x, int y, t_mlx *param);
 
 int			mouse_press(int button, int x, int y, t_mlx *param)
 {

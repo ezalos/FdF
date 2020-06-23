@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/22 21:50:57 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/23 16:18:33 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ float	pix_to_math(float pixel, float size, float min, float max)
 {
 	float small;
 
-	small = (pixel - (size / 2)) * ((max - min) / size);
+	small = min + ((pixel / size) * (max - min));
 	return (small);
 }
 // FOR LATER - pour aller plus vite
@@ -51,10 +51,10 @@ float	math_to_pix(int nb, int size, float min, float max, float size_small)
 
 void	mandelbrot_loop(t_mlx *mlx)
 {
-	float		pa;
-	float		pb;
 	int			iter;
 	int			color;
+	float		pa;
+	float		pb;
 
 	pa = 0;
 	while (pa < mlx->width)

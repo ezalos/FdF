@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/22 21:32:00 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/23 16:31:27 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define SIZE		3
 # define MAX_ITER	50
 # define PRECISION	3
-# define ZOOM_COEF	1/5
+# define ZOOM_COEF	1/10
 # define Z_FORWARD	5
 # define Z_BACKWARD	4
 # define SQRT_2		1.41421356237309504880
@@ -181,6 +181,8 @@ typedef struct		s_line
 	double			b;
 	t_point			limits[2];
 }					t_line;
+
+# include "auto_FdF.h"
 
 /*
 ******************************************************************************

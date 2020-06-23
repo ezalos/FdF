@@ -6,14 +6,11 @@
 /*   By: deyaberger <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 20:07:55 by deyaberge         #+#    #+#             */
-/*   Updated: 2020/06/22 23:29:45 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/23 16:39:48 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/head.h"
-
-void	mandelbrot_loop(t_mlx *mlx);
-float	pix_to_math(float pixel, float size, float min, float max);
 
 void		zoom(int direction, int x, int y, t_mlx *param)
 {
@@ -21,28 +18,30 @@ void		zoom(int direction, int x, int y, t_mlx *param)
 	float 	width;
 	float	new_height;
 	float	new_width;
-	float	middle_a;
-	float	middle_b;
+	float	start_to_x;
+	float	start_to_y;
 
 	if (direction == Z_FORWARD)
 		direction = 1;
 	else
 		direction = -1;
 	////
-	height = param->d.end.a - param->d.start.a;
-	width = param->d.end.b - param->d.start.b;
+	height = param->d.end.b - param->d.start.b;
+	width = param->d.end.a - param->d.start.a;
 	////
 	new_height = height - ((height * ZOOM_COEF) * direction);
 	new_width = width - ((width * ZOOM_COEF) * direction);
 	////
-	middle_a = new_height / 2;
-	middle_b = new_width / 2;
-	////
 	ft_printf("x = %d, y = %d\n", x, y);
-	param->d.end.a = x - (middle_a * direction);
-	param->d.start.a = x + (middle_a * direction);
-	param->d.end.b = y - (middle_b * direction);
-	param->d.start.b = y + (middle_b * direction);
+	x = pix_to_math(x, param->width, param->d.start.a, param->d.end.a);
+	y = pix_to_math(y, param->height, param->d.start.b, param->d.end.b);
+	////
+	start_to_x = (x - param->d.start.a) / width;
+	start_to_y = (x - param->d.start.b) / height;
+	param->d.start.a = x - (new_width * start_to_x);
+	param->d.end.a = new_width + param->d.start.a;
+	param->d.start.b = y - (new_height * start_to_y);
+	param->d.end.b = new_height + param->d.start.b;
 	////
 	mandelbrot_loop(param);
 	render(param);
