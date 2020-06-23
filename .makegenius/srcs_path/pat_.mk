@@ -14,5 +14,5 @@ PAT += 	srcs/no_use/bresenham.c \
 	srcs/key_event.c \
 	srcs/init.c \
 	srcs/mouse_event.c \
-	srcs/zoom.c \
-	srcs/main.c 
+	srcs/main.c \
+	srcs/zoom.c 

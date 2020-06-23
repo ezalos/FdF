@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: deyaberger <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/23 16:18:35 by deyaberge         #+#    #+#             */
-/*   Updated: 2020/06/23 16:18:35 by deyaberge        ###   ########.fr       */
+/*   Created: 2020/06/23 17:07:41 by deyaberge         #+#    #+#             */
+/*   Updated: 2020/06/23 17:07:41 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ void		ft_bresenham_high(t_mlx *mlx, t_bresenham *bre, int color);
 int		ft_bresenham(t_mlx *mlx, t_line *line, int color);
 int		ft_nice_view(int choice, int x, int y);
 int		draw_lines_dynamically(int x, int y, t_mlx *param);
-void		zoom(int direction, int x, int y, t_mlx *param);
+void		zoom(int direction, float x, float y, t_mlx *param);
 void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
 void		*ft_open_mlx(t_mlx *mlx, char *title);
 void		init_values(t_mlx *mlx);
 t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height);
 t_mlx		*ft_init_mlx(char *title, size_t width, size_t height);
 int		mandelbrot_equation(t_complex *zn, t_complex *c);
-float		pix_to_math(float pixel, float size, float min, float max);
-float		math_to_pix(int nb, int size, float min, float max, float size_small);
+float		pix_to_math(float pixel, float size, float start, float end);
+float		math_to_pix(int nb, int size, float start, float end, float size_small);
 void		mandelbrot_loop(t_mlx *mlx);
 int		main(int ac, char **av);
 int key_press(int keycode, t_mlx *param);

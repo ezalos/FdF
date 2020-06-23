@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/23 16:18:33 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/23 17:39:29 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,20 @@ int		mandelbrot_equation(t_complex *zn, t_complex *c)
 	return (TRUE);
 }
 
-float	pix_to_math(float pixel, float size, float min, float max)
+float	pix_to_math(float pixel, float size, float start, float end)
 {
 	float small;
 
-	small = min + ((pixel / size) * (max - min));
+//	small = start + ((pixel / size) * (end - start));
+	small = pixel * (end - start) / size + start;
 	return (small);
 }
 // FOR LATER - pour aller plus vite
-float	math_to_pix(int nb, int size, float min, float max, float size_small)
+float	math_to_pix(int nb, int size, float start, float end, float size_small)
 {
 	float big;
 
-	big = (nb + (size_small / 2)) * (size / (max - min));
+	big = (nb + (size_small / 2)) * (size / (end - start));
 	return (big);
 }
 
@@ -57,6 +58,7 @@ void	mandelbrot_loop(t_mlx *mlx)
 	float		pb;
 
 	pa = 0;
+	ft_printf("min_a = [%f], max_a = [%f]\n", mlx->d.start.a, mlx->d.end.a);
 	while (pa < mlx->width)
 	{
 		pb = 0;
