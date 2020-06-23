@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/23 17:39:29 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/23 18:28:21 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,27 @@ float	pix_to_math(float pixel, float size, float start, float end)
 {
 	float small;
 
-//	small = start + ((pixel / size) * (end - start));
-	small = pixel * (end - start) / size + start;
+	small = start + ((pixel / size) * (end - start));
 	return (small);
 }
-// FOR LATER - pour aller plus vite
-float	math_to_pix(int nb, int size, float start, float end, float size_small)
-{
-	float big;
 
-	big = (nb + (size_small / 2)) * (size / (end - start));
-	return (big);
+int		colorize_fractol(int iter)
+{
+	int		color;
+
+	if (iter == 0)
+		color = ft_get_color(0, 204 + iter % 20, 153, 0);
+	else if (iter > 0 && iter % 10 < 2)
+		color = 0;
+	else if (iter % 10 >= 2 && iter % 10 < 4)
+		color = ft_get_color(0, 204 + iter % 20, 102, 0);
+	else if (iter % 10 >= 4 && iter % 10 < 6)
+		color = ft_get_color(0, 255, 255, 150 + iter % 20);
+	else if (iter % 10 >= 6 && iter % 10 < 8)
+		color = ft_get_color(0, 102, 0, 204);
+	else
+		color = 0;
+	return (color);
 }
 
 void	mandelbrot_loop(t_mlx *mlx)
@@ -58,7 +68,6 @@ void	mandelbrot_loop(t_mlx *mlx)
 	float		pb;
 
 	pa = 0;
-	ft_printf("min_a = [%f], max_a = [%f]\n", mlx->d.start.a, mlx->d.end.a);
 	while (pa < mlx->width)
 	{
 		pb = 0;
@@ -67,17 +76,14 @@ void	mandelbrot_loop(t_mlx *mlx)
 			iter = 0;
 			mlx->zn.a = pix_to_math(pa, mlx->width, mlx->d.start.a, mlx->d.end.a);
 			mlx->zn.b = pix_to_math(pb, mlx->height, mlx->d.start.b, mlx->d.end.b);
-			if (mlx->mandelbrot)
-			{
+	//		if (mlx->mandelbrot)
+	//		{
 				mlx->c.a = mlx->zn.a;
 				mlx->c.b = mlx->zn.b;
-			}
+	//		}
 			while (iter < MAX_ITER && mandelbrot_equation(&mlx->zn, &mlx->c) == TRUE)
 				iter++;
-			if (iter < MAX_ITER)
-				color = ft_get_color(0, 255, iter * 5, iter * 5);
-			else
-				color = 0;
+			color = colorize_fractol(iter);
 			ft_color_pixel(mlx, pa, pb, color);
 			pb++;
 		}
