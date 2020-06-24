@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 #It will be the name of your executable
-NAME 					=	FdF
+NAME 					=	Fractol
 
 TESTEUR					=	test
 
@@ -72,3 +72,4 @@ LIB +=						-lmlx -framework OpenGL -framework AppKit
 endif
 
 # HEAD_PATH	=	$(HEAD_DIR)/$(HEAD)
+LIB +=						-lpthread

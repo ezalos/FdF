@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/23 18:28:21 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/24 16:23:14 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,95 @@ void	mandelbrot_loop(t_mlx *mlx)
 	}
 }
 
+void	mandelbrot_loop_thread(t_mlx *mlx, t_complex zn, int start, int end)
+{
+	float		pa;
+	float		pb;
+	int			iter;
+	int			color;
+	t_complex	c;
+
+	pa = start;
+	color = 0;
+	c.a = mlx->c.a;
+	c.b = mlx->c.b;
+	while (pa < end)
+	{
+		pb = 0;
+		while (pb < mlx->height)
+		{
+			iter = 0;
+			zn.a = pix_to_math(pa, mlx->width, mlx->d.start.a, mlx->d.end.a);
+			zn.b = pix_to_math(pb, mlx->height, mlx->d.start.b, mlx->d.end.b);
+			if (mlx->mandelbrot)
+			{
+				c.a = zn.a;
+				c.b = zn.b;
+			}
+			while (iter < MAX_ITER && mandelbrot_equation(&zn, &c) == TRUE)
+				iter++;
+
+			if (!mlx->free_julia)
+				color = colorize_fractol(iter);
+			else
+				if (iter < MAX_ITER)
+					color = ft_get_color(0, ((float)iter / (float)MAX_ITER) * 255, ((float)iter / (float)MAX_ITER) * 255, ((float)iter / (float)MAX_ITER) * 255);
+				else
+					color = 0x00ffffff;
+			ft_color_pixel(mlx, pa, pb, color);
+			pb++;
+		}
+		pa++;
+	}
+}
+
+typedef struct		s_multi_thread
+{
+	pthread_t		pthread_nb;
+	t_mlx			*mlx;
+	t_complex		zn;
+	int				start;
+	int				end;
+}					t_multi_thread;
+
+void	*thread_func(void *data)
+{
+	t_multi_thread		*thread;
+
+	thread = data;
+	mandelbrot_loop_thread(thread->mlx, thread->zn, thread->start, thread->end);
+	return (NULL);
+}
+//	-lpthread
+
+void	mandel_thread(t_mlx *mlx, int nb_thread)
+{
+	t_multi_thread		*thread;
+	int					i;
+	int					step;
+	void				*ret;
+
+	(void)ret;
+	ret = NULL;
+	thread = ft_memalloc(sizeof(t_multi_thread) * nb_thread);
+	step = (mlx->width / nb_thread);
+	i = -1;
+	while (++i < nb_thread)
+	{
+		thread[i].mlx = mlx;
+		thread[i].start = (step * (i));
+		thread[i].end = step * (i + 1);
+		if (thread[i].end > (int)mlx->width)
+			thread[i].end = mlx->width;
+		if (pthread_create(&thread[i].pthread_nb, NULL, &thread_func, &thread[i]) == -1)
+			perror("pthread_create");
+	}
+	i = -1;
+	while (++i < nb_thread)
+		pthread_join(thread[i].pthread_nb, NULL);
+
+	render(mlx);
+}
 
 int		main(int ac, char **av)
 {
@@ -100,7 +189,7 @@ int		main(int ac, char **av)
 		return (0);
 	if (!(mlx = ft_init_mlx(av[0], ft_atoi(av[2]), ft_atoi(av[3]))))
 		ft_clean_garbage();
-	mandelbrot_loop(mlx);
+	mandel_thread(mlx, 8);
 	render(mlx);
 	// if (fdf_parsing(av[1], mlx) == 0)
 	// 	ft_clean_garbage();

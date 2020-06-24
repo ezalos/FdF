@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/23 16:17:08 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/24 16:12:28 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,12 @@ int			mouse_press(int button, int x, int y, t_mlx *param)
 	{
 		param->c.a = pix_to_math(x, param->width, param->d.start.a, param->d.end.a);
 		param->c.b = pix_to_math(y, param->height, param->d.start.b, param->d.end.b);
-		mandelbrot_loop(param);
-		render(param);
-		return (1);
 	}
 	if (button == 5 || button == 4)
-	{
 		zoom(button, x, y, param);
-		return (1);
-	}
-	if (button == 1 && param->key_array[CONTROL] == 1)
-		draw_lines_dynamically(x, y, param);
-	// printf("mouse p %d\n", button);
 	param->mouse_array[button] = 1;
-	if (button == 1)
-	{
-		ft_draw_a_circle(param, x, y, param->circle_size, param->saved_color);
-		render(param);
-		return (1);
-	}
-	if (button == 2)
-		param->saved_color = ft_get_color_pixel(param, x, y);
-	if (button == 3)
-		ft_dynamic_rectangle(param, ft_get_point(x, y));
-	if (button == 4)
-		param->circle_size++;
-	if (button == 5)
-		if (param->circle_size > 1)
-			param->circle_size--;
+	mandel_thread(param, 8);
+	render(param);
 	return (1);
 }
 
@@ -66,20 +44,23 @@ int			mouse_release(int button, int x, int y, t_mlx *param)
 
 int mouse_move(int x, int y, t_mlx *param)
 {
-	if (!param->mandelbrot && 0)
+	if (!param->mandelbrot && param->free_julia)
 	{
-		static double	last = 0;
+		static int	last = 0;
 
-		ft_printf("MANDEL %f\n", ((double)(last - clock())));
-		if (!last || ((double)(last - clock())) < -60000)
+		// ft_printf("STE %d\n", last);
+		if (!last)
 		{
-			last = ((double)(clock()));
-			ft_printf("TIME\n");
-			param->c.a = pix_to_math(x, y, param->d.start.a, param->d.end.a);
-			param->c.b = pix_to_math(y, y, param->d.start.b, param->d.end.b);
-			mandelbrot_loop(param);
-			render(param);
+			// ft_printf("MOVE [%d %d]\n", x ,y);
+			param->c.a = pix_to_math(x, param->width, -2, 2);
+			param->c.b = pix_to_math(y, param->height, -2, 2);
+			mandel_thread(param, 8);
+			last++;
 		}
+		else
+			last++;
+		if (last > 5)
+			last = 0;
 	}
 	if (param->key_array[SHIFT] == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/23 17:07:15 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/24 16:27:44 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define SIZE		3
 # define MAX_ITER	50
 # define PRECISION	3
-# define ZOOM_COEF	1/10
+# define ZOOM_COEF	0.1
 # define Z_FORWARD	5
 # define Z_BACKWARD	4
 # define SQRT_2		1.41421356237309504880
@@ -91,6 +91,7 @@
 # include "mlx.h"
 # include <stdio.h>
 # include <math.h>
+#include <pthread.h>
 
 /*
 ******************************************************************************
@@ -132,6 +133,7 @@ typedef struct		s_mlx
 	t_complex		zn;
 	t_complex		c;
 	int				mandelbrot;
+	int				free_julia;
 	t_dimension		d;
 }					t_mlx;
 

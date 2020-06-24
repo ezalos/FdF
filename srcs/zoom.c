@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   zoom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deyaberger <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/23 17:19:28 by deyaberge         #+#    #+#             */
-/*   Updated: 2020/06/23 18:00:48 by deyaberge        ###   ########.fr       */
+/*   Created: 2020/06/23 17:19:28 by deyaberg          #+#    #+#             */
+/*   Updated: 2020/06/24 16:12:34 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,4 @@ void		zoom(int direction, float x, float y, t_mlx *param)
 	param->d.start.b = y - (new_height * start_to_y);
 	param->d.end.b   = param->d.start.b + new_height;
 	////
-	mandelbrot_loop(param);
-	render(param);
 }

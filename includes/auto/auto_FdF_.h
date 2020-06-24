@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auto_FdF_.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deyaberger <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/23 17:07:41 by deyaberge         #+#    #+#             */
-/*   Updated: 2020/06/23 17:07:41 by deyaberge        ###   ########.fr       */
+/*   Created: 2020/06/23 17:07:41 by deyaberg          #+#    #+#             */
+/*   Updated: 2020/06/24 16:15:01 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int		ft_draw_line(t_mlx *mlx, t_line *line, int color);
 int		ft_how_far(double y, double x);
 int		ft_line_gradient(t_mlx *mlx, t_line *line);
 int		ft_my_line(t_mlx *mlx, t_line *line, int color);
+void	mandel_thread(t_mlx *mlx, int nb_thread);
+void	mandelbrot_loop_thread(t_mlx *mlx, t_complex zn, int start, int end);
 unsigned int		ft_color_transparency(unsigned int color,
 		unsigned char brightness);
 unsigned int		ft_plot(unsigned int color, float transparency);
