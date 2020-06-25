@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/18 12:17:41 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/24 17:25:54 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ void	*ft_open_mlx(t_mlx *mlx, char *title)
 
 void	init_values(t_mlx *mlx)
 {
-	mlx->d.start.a = -2;
-	mlx->d.end.a = 1;
-	mlx->d.start.b = -1;
-	mlx->d.end.b = 1;
+	mlx->d.start.a = -2.5;
+	mlx->d.end.a = 2.5;
+	mlx->d.start.b = -2;
+	mlx->d.end.b = 2;
 	// To be deleted //
 	mlx->c.a = 0;
 	mlx->c.b = 0.75;
+	if (parse_get("Mandelbrot"))
+		mlx->mandelbrot = 1;
+	if (parse_get("Movement"))
+		mlx->free_julia = 1;
 }
 
 t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height)

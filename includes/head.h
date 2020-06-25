@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/24 16:27:44 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/25 11:59:04 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@
 **************
 */
 # define SIZE		3
+# define FR_BLUE	0
+# define FR_GREEN	1
+# define FR_RED		2
+# define FR_NONE	3
+# define LEN_GRAD	6
 # define MAX_ITER	50
+# define NB_THREAD	32
 # define PRECISION	3
 # define ZOOM_COEF	0.1
 # define Z_FORWARD	5
@@ -91,7 +97,9 @@
 # include "mlx.h"
 # include <stdio.h>
 # include <math.h>
-#include <pthread.h>
+# include <pthread.h>
+# include "arg.h"
+# include "keycodes.h"
 
 /*
 ******************************************************************************
@@ -115,6 +123,16 @@ typedef struct		s_dimension
 	t_complex		end;
 }					t_dimension;
 
+typedef	struct		s_color
+{
+	int				*dracula;
+	int				*sunrise;
+	int				*aqua_marine; //(0x1A2980 && 0x26D0CE)
+	int				*aubergine; //(0xAA076B && 0x61045F)
+	int				*mango; // (0xF09819 && 0xEDDE5D)
+	int				*skyline; // (0x1488CC && 0x2B32B2)
+}					t_color;
+
 typedef struct		s_mlx
 {
 	void			*mlx_pointer;
@@ -135,7 +153,19 @@ typedef struct		s_mlx
 	int				mandelbrot;
 	int				free_julia;
 	t_dimension		d;
+	t_color			color;
+	int				*gradient;
+	size_t			size_gradient;
 }					t_mlx;
+
+typedef struct		s_multi_thread
+{
+	pthread_t		pthread_nb;
+	t_mlx			*mlx;
+	t_complex		zn;
+	int				start;
+	int				end;
+}					t_multi_thread;
 
 typedef struct		s_img
 {
@@ -184,7 +214,7 @@ typedef struct		s_line
 	t_point			limits[2];
 }					t_line;
 
-# include "auto_FdF.h"
+# include "auto_Fractol.h"
 
 /*
 ******************************************************************************

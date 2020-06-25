@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/24 16:27:39 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/24 17:02:55 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int key_press(int keycode, t_mlx *param)
 			virgin_screen(param);
 		if (keycode == 109)//M
 			param->mandelbrot = !param->mandelbrot;
-		if (keycode == 32)//SPACE
+		if (keycode == 49)//SPACE
 			param->free_julia = !param->free_julia;
 	}
 	if (keycode == 65361)//left
@@ -63,7 +63,7 @@ int key_press(int keycode, t_mlx *param)
 	if (keycode == 65364)//up
 		shifties(param, 0, -1);
 
-	mandel_thread(param, 8);
+	fractol_thread(param, NB_THREAD);
 	render(param);
 	return (0);
 }

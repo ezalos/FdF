@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/24 16:12:28 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/24 17:03:19 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			mouse_press(int button, int x, int y, t_mlx *param)
 	if (button == 5 || button == 4)
 		zoom(button, x, y, param);
 	param->mouse_array[button] = 1;
-	mandel_thread(param, 8);
+	fractol_thread(param, NB_THREAD);
 	render(param);
 	return (1);
 }
@@ -54,7 +54,7 @@ int mouse_move(int x, int y, t_mlx *param)
 			// ft_printf("MOVE [%d %d]\n", x ,y);
 			param->c.a = pix_to_math(x, param->width, -2, 2);
 			param->c.b = pix_to_math(y, param->height, -2, 2);
-			mandel_thread(param, 8);
+			fractol_thread(param, NB_THREAD);
 			last++;
 		}
 		else
