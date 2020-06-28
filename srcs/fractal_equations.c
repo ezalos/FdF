@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractal_equations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deyaberger <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/24 18:16:43 by deyaberge         #+#    #+#             */
-/*   Updated: 2020/06/24 18:17:04 by deyaberge        ###   ########.fr       */
+/*   Created: 2020/06/24 18:16:43 by deyaberg          #+#    #+#             */
+/*   Updated: 2020/06/28 23:46:21 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int		mandelbrot_equation(t_complex *zn, t_complex *c)
 	real = a_sqr + (-1 * b_sqr);
 	zn->a = real + c->a;
 	zn->b = two_ab + c->b;
-	if (zn->a > 2 || zn->b > 2 || zn->a < -2 || zn->b < -2
-	|| sqrt((zn->a * zn->a) + (zn->b * zn->b)) > 2)
+	if (ft_fabs(zn->a) > 2 || ft_fabs(zn->b) > 2
+	|| (zn->a * zn->a) + (zn->b * zn->b) > 4)
 		return (FALSE);
 	return (TRUE);
 }

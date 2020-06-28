@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/25 11:59:04 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/29 01:14:46 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define FR_NONE	3
 # define LEN_GRAD	6
 # define MAX_ITER	50
-# define NB_THREAD	32
+# define NB_THREAD	8
 # define PRECISION	3
 # define ZOOM_COEF	0.1
 # define Z_FORWARD	5
@@ -74,15 +74,6 @@
 #  define SIZE_HEIGTH 600
 # endif
 
-/*
-**************
-**  KEYCODE	**
-**************
-*/
-# define ESC 		53
-# define CONTROL 	256
-# define DEL		117
-# define SHIFT		257
 
 /*
 ******************************************************************************
@@ -93,12 +84,11 @@
 **																			**
 ******************************************************************************
 */
-# include "./../../libft/includes/libft.h"
+# include "./libft.h"
 # include "mlx.h"
 # include <stdio.h>
 # include <math.h>
 # include <pthread.h>
-# include "arg.h"
 # include "keycodes.h"
 
 /*
@@ -141,11 +131,12 @@ typedef struct		s_mlx
 	int				**map;
 	size_t			width;
 	size_t			height;
+	int				max_iter;
 	int				map_nb_of_line;
 	int				map_nb_of_column;
 	char			choice;
 	char			key_array[280];
-	char			mouse_array[8];
+	int				mouse_array[8][3];
 	unsigned int	saved_color;
 	unsigned int	circle_size;
 	t_complex		zn;

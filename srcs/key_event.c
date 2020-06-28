@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/24 17:02:55 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/29 01:15:51 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,35 @@ void		shifties(t_mlx *mlx, int x, int y)
 
 int key_press(int keycode, t_mlx *param)
 {
-	ft_printf("KEY %d\n", keycode);
+	ft_printf("KEY[%d] %d\n", MLX_KEYS_OS, keycode);
 	if (keycode < 280)
 	{
 		param->key_array[keycode] = 1;
-		if (keycode == ESC)
-			ft_clean_and_exit(param);
-		if (keycode == DEL)
-			virgin_screen(param);
-		if (keycode == 109)//M
+		if (keycode == MLX_KEY_M)
 			param->mandelbrot = !param->mandelbrot;
-		if (keycode == 49)//SPACE
+		if (keycode == MLX_KEY_SPACE)
 			param->free_julia = !param->free_julia;
 	}
-	if (keycode == 65361)//left
+	if (keycode == MLX_KEY_LEFT)
 		shifties(param, 1, 0);
-	if (keycode == 65362)//up
+	if (keycode == MLX_KEY_PLUS)
+		param->max_iter += 1;
+	if (keycode == MLX_KEY_MINUS && param->max_iter > 1)
+		param->max_iter -= 1;
+	if (keycode == MLX_KEY_UP)
 		shifties(param, 0, 1);
-	if (keycode == 65363)//right
+	if (keycode == MLX_KEY_RIGHT)
 		shifties(param, -1, 0);
-	if (keycode == 65364)//up
+	if (keycode == MLX_KEY_DOWN)
 		shifties(param, 0, -1);
 
+	if (keycode == MLX_KEY_ESCAPE)
+	{
+		exit(0);
+		ft_clean_and_exit(param);
+	}
+	if (keycode == MLX_KEY_DELETE)
+		virgin_screen(param);
 	fractol_thread(param, NB_THREAD);
 	render(param);
 	return (0);

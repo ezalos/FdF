@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/24 17:25:54 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/29 01:14:01 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_values(t_mlx *mlx)
 	// To be deleted //
 	mlx->c.a = 0;
 	mlx->c.b = 0.75;
+	mlx->max_iter = MAX_ITER;
 	if (parse_get("Mandelbrot"))
 		mlx->mandelbrot = 1;
 	if (parse_get("Movement"))
