@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/30 19:25:52 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 23:46:07 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,14 @@ typedef struct		s_multi_thread
 	t_complex		zn;
 	int				start;
 	int				end;
+	int				pxl_width;
+	int				pxl_height;
+	double			real_step;
+	double			imag_step;
+	double			thread_end;
+	double			thread_start;
+	t_complex		c;
+	t_complex		pos;
 }					t_multi_thread;
 
 typedef struct		s_img

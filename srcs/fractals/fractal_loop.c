@@ -1,58 +1,57 @@
 # include "head.h"
 
-void	mandelbrot_loop_thread(t_mlx *mlx, t_complex zn, int start, int end)
+static void		prepare_fractal_arguments(t_multi_thread *thread)
 {
-	int			iter;
-	int			color;
-	int			pa;
-	int			pb;
-	float		pa_step;
-	float		pb_step;
-	float		f_end;
-	float		f_start;
-	t_complex	c;
-	t_complex	pos;
-
-	pa_step = (float)(mlx->d.end.real - mlx->d.start.real) / (float)mlx->width;
-	pb_step = (float)(mlx->d.end.imag - mlx->d.start.imag) / (float)mlx->height;
-	f_start = pix_to_math(start, mlx->width, mlx->d.start.real, mlx->d.end.real);
-	f_end = pix_to_math(end, mlx->width, mlx->d.start.real, mlx->d.end.real);
-	color = 0;
-	c.real = mlx->c.real;
-	c.imag = mlx->c.imag;
-	pa = start;
-	pos.real = f_start;
-	while (pos.real < f_end)
+	thread->zn.real = thread->pos.real;
+	thread->zn.imag = thread->pos.imag;
+	if (thread->mlx->mandelbrot)
 	{
-		pb = 0;
-		pos.imag = mlx->d.start.imag;
-		while (pos.imag <  mlx->d.end.imag)
+		thread->c.real = thread->pos.real;
+		thread->c.imag = thread->pos.imag;
+	}
+}
+
+static void		apply_color(t_multi_thread *thread, int iter)
+{
+	int			color;
+
+	color = 0;
+	if (1 || !thread->mlx->free_julia)
+		color = colorize_fractol(iter, thread->mlx);
+	else if (iter < thread->mlx->max_iter)
+		color = ft_get_color(0,
+			((float)iter / (float)thread->mlx->max_iter) * 255,
+			((float)iter / (float)thread->mlx->max_iter) * 255,
+			((float)iter / (float)thread->mlx->max_iter) * 255);
+	else
+		color = 0x00ffffff;
+	ft_color_pixel(thread->mlx, thread->pxl_width, thread->pxl_height, color);
+}
+
+void			fractal_loop_thread(t_multi_thread *thread)
+{
+	int					iter;
+
+	thread->pxl_width = thread->start;
+	thread->pos.real = thread->thread_start;
+	while (thread->pos.real < thread->thread_end)
+	{
+		thread->pxl_height = 0;
+		thread->pos.imag = thread->mlx->d.start.imag;
+		while (thread->pos.imag < thread->mlx->d.end.imag)
 		{
 			iter = 0;
-			zn.real = pos.real;
-			zn.imag = pos.imag;
-			if (mlx->mandelbrot)
-			{
-				c.real = pos.real;
-				c.imag = pos.imag;
-			}
-			while (iter < mlx->max_iter && mandelbrot_equation(&zn, &c) == TRUE)
+			prepare_fractal_arguments(thread);
+
+			while (iter < thread->mlx->max_iter
+			&& mandelbrot_equation(&thread->zn, &thread->c) == TRUE)
 				iter++;
-			if (1 || !mlx->free_julia)
-				color = colorize_fractol(iter, mlx);
-			else
-				if (iter < mlx->max_iter)
-					color = ft_get_color(0,
-						((float)iter / (float)mlx->max_iter) * 255,
-						((float)iter / (float)mlx->max_iter) * 255,
-						((float)iter / (float)mlx->max_iter) * 255);
-				else
-					color = 0x00ffffff;
-			ft_color_pixel(mlx, pa, pb, color);
-			pos.imag = pos.imag + pb_step;
-			pb++;
+
+			apply_color(thread, iter);
+			thread->pos.imag += thread->imag_step;
+			thread->pxl_height++;
 		}
-		pos.real = pos.real + pa_step;
-		pa++;
+		thread->pos.real += thread->real_step;
+		thread->pxl_width++;
 	}
 }

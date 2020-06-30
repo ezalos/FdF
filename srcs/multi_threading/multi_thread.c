@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/30 18:46:53 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 23:46:49 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*thread_func(void *data)
 	t_multi_thread		*thread;
 
 	thread = data;
-	mandelbrot_loop_thread(thread->mlx, thread->zn, thread->start, thread->end);
+	fractal_loop_thread(thread);
 	pthread_exit(NULL);
 	return (NULL);
 }
@@ -33,12 +33,18 @@ void	thread_data_setup(void *data, t_multi_thread *thread,
 	thread->mlx = mlx;
 	thread->start = (step * (current_thread));
 	thread->end = (step * (current_thread + 1));
-
 	if (thread->start < 0)
 		thread->start = 0;
 	if (thread->end > (int)mlx->width)
 		thread->end = mlx->width;
-
+	thread->real_step = (mlx->d.end.real - mlx->d.start.real) / (double)mlx->width;
+	thread->imag_step = (mlx->d.end.imag - mlx->d.start.imag) / (double)mlx->height;
+	thread->thread_start = pix_to_math(thread->start, mlx->width,
+		mlx->d.start.real, mlx->d.end.real);
+	thread->thread_end = pix_to_math(thread->end, mlx->width,
+		mlx->d.start.real, mlx->d.end.real);
+	thread->c.real = mlx->c.real;
+	thread->c.imag = mlx->c.imag;
 }
 
 void	thread_fractol(t_mlx *mlx, int nb_thread)

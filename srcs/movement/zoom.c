@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 17:19:28 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/30 19:01:46 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 23:06:31 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			which_one(int direction)
 {
-	if (direction == Z_FORWARD)
+	if (direction == MLX_MOUSE_SCROLL_DOWN)
 		direction = 1;
 	else
 		direction = -1;
