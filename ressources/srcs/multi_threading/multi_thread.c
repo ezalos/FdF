@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/07/01 00:52:04 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 23:46:49 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	thread_data_setup(void *data, t_multi_thread *thread,
 		thread->start = 0;
 	if (thread->end > (int)mlx->width)
 		thread->end = mlx->width;
-	thread->real_step = (mlx->fractal.dimension.end.real - mlx->fractal.dimension.start.real) / (double)mlx->width;
-	thread->imag_step = (mlx->fractal.dimension.end.imag - mlx->fractal.dimension.start.imag) / (double)mlx->height;
+	thread->real_step = (mlx->d.end.real - mlx->d.start.real) / (double)mlx->width;
+	thread->imag_step = (mlx->d.end.imag - mlx->d.start.imag) / (double)mlx->height;
 	thread->thread_start = pix_to_math(thread->start, mlx->width,
-		mlx->fractal.dimension.start.real, mlx->fractal.dimension.end.real);
+		mlx->d.start.real, mlx->d.end.real);
 	thread->thread_end = pix_to_math(thread->end, mlx->width,
-		mlx->fractal.dimension.start.real, mlx->fractal.dimension.end.real);
-	thread->c.real = mlx->fractal.c.real;
-	thread->c.imag = mlx->fractal.c.imag;
+		mlx->d.start.real, mlx->d.end.real);
+	thread->c.real = mlx->c.real;
+	thread->c.imag = mlx->c.imag;
 }
 
 void	thread_fractol(t_mlx *mlx, int nb_thread)

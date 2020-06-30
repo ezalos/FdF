@@ -15,9 +15,9 @@
 int			mouse_press(int button, int x, int y, t_mlx *mlx)
 {
 	printf("mouse p %d\n", button);
-	mlx->keys.mouse_array[button][MLX_MOUSE_PRESSED] = TRUE;
-	mlx->keys.mouse_array[button][MLX_MOUSE_X_COORD] = x;
-	mlx->keys.mouse_array[button][MLX_MOUSE_Y_COORD] = y;
+	mlx->mouse_array[button][MLX_MOUSE_PRESSED] = TRUE;
+	mlx->mouse_array[button][MLX_MOUSE_X_COORD] = x;
+	mlx->mouse_array[button][MLX_MOUSE_Y_COORD] = y;
 	if (button == MLX_MOUSE_SCROLL_UP
 	|| button == MLX_MOUSE_SCROLL_DOWN)
 	{
@@ -31,18 +31,18 @@ int			mouse_press(int button, int x, int y, t_mlx *mlx)
 int			mouse_release(int button, int x, int y, t_mlx *mlx)
 {
 	printf("mouse r %d\n", button);
-	mlx->keys.mouse_array[button][MLX_MOUSE_PRESSED] = FALSE;
-	mlx->keys.mouse_array[button][MLX_MOUSE_X_COORD] = x;
-	mlx->keys.mouse_array[button][MLX_MOUSE_Y_COORD] = y;
+	mlx->mouse_array[button][MLX_MOUSE_PRESSED] = FALSE;
+	mlx->mouse_array[button][MLX_MOUSE_X_COORD] = x;
+	mlx->mouse_array[button][MLX_MOUSE_Y_COORD] = y;
 	return (1);
 }
 
 int mouse_move(int x, int y, t_mlx *mlx)
 {
 
-	if (mlx->keys.mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_PRESSED] == TRUE)
+	if (mlx->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_PRESSED] == TRUE)
 		move_content_window(mlx, x, y);
-	if (!mlx->fractal.mandelbrot && mlx->fractal.free_julia)
+	if (!mlx->mandelbrot && mlx->free_julia)
 		julia_react_to_mouse(mlx, x, y);
 	return (1);
 }

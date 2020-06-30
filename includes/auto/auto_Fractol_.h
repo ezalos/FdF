@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezalos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 00:21:32 by ezalos            #+#    #+#             */
-/*   Updated: 2020/07/01 00:21:32 by ezalos           ###   ########.fr       */
+/*   Created: 2020/07/01 01:08:18 by ezalos            #+#    #+#             */
+/*   Updated: 2020/07/01 01:08:18 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void		thread_data_setup(void *data, t_multi_thread *thread,
 		int current_thread, int total_thread);
 void		thread_fractol(t_mlx *mlx, int nb_thread);
 int		which_one(int direction);
-void		zoom(int direction, float x, float y, t_mlx *param);
+void		zoom(int direction, float x, float y, t_mlx *mlx);
 void		arrow_slide_screen(t_mlx *mlx, int x, int y);
-void		move_complex_window_center(t_mlx *param, int y, int x);
-void move_content_window(t_mlx *param, int x, int y);
-int key_press(int keycode, t_mlx *param);
-int key_release(int keycode, t_mlx *param);
+void		move_complex_window_center(t_mlx *mlx, int y, int x);
+void move_content_window(t_mlx *mlx, int x, int y);
+int key_press(int keycode, t_mlx *mlx);
+int key_release(int keycode, t_mlx *mlx);
 void		mlx_hooks_and_loop(t_mlx *mlx);
-int		mouse_press(int button, int x, int y, t_mlx *param);
-int		mouse_release(int button, int x, int y, t_mlx *param);
-int mouse_move(int x, int y, t_mlx *param);
+int		mouse_press(int button, int x, int y, t_mlx *mlx);
+int		mouse_release(int button, int x, int y, t_mlx *mlx);
+int mouse_move(int x, int y, t_mlx *mlx);
 void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
 void		*ft_open_mlx(t_mlx *mlx, char *title);
 void		init_values(t_mlx *mlx);
@@ -50,7 +50,7 @@ int		*palette_skyline(void);
 int		*ft_join_gradient(int *gradient, int *to_add, int size);
 void		set_up_palettes(t_mlx *mlx);
 int		colorize_fractol(int iter, t_mlx *mlx);
-void		julia_react_to_mouse(t_mlx *param, int x, int y);
+void		julia_react_to_mouse(t_mlx *mlx, int x, int y);
 int		mandelbrot_equation(t_complex *zn, t_complex *c);
 void		fractal_loop_thread(t_multi_thread *thread);
 t_complex		complex_cos(t_complex *nb);
@@ -63,6 +63,6 @@ t_complex		complex_cube(t_complex *cpx);
 t_complex		complex_inverse(t_complex *cpx);
 t_complex		complex_product(t_complex *n1, t_complex *n2);
 double		complex_module(t_complex *cpx);
-float		pix_to_math(float pixel, float size, float start, float end);
+double		pix_to_math(double pixel, double size, double start, double end);
 
 #endif

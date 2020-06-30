@@ -34,21 +34,21 @@ void		zoom(int direction, float x, float y, t_mlx *mlx)
 
 	direction = which_one(direction);
 	////
-	height = mlx->fractal.dimension.end.imag - mlx->fractal.dimension.start.imag;
-	width = mlx->fractal.dimension.end.real - mlx->fractal.dimension.start.real;
+	height = mlx->d.end.imag - mlx->d.start.imag;
+	width = mlx->d.end.real - mlx->d.start.real;
 	////
 	new_height = height - ((height * ZOOM_COEF) * direction);
 	new_width = width - ((width * ZOOM_COEF) * direction);
 	////
-	x = pix_to_math(x, mlx->width, mlx->fractal.dimension.start.real, mlx->fractal.dimension.end.real);
-	y = pix_to_math(y, mlx->height, mlx->fractal.dimension.start.imag, mlx->fractal.dimension.end.imag);
+	x = pix_to_math(x, mlx->width, mlx->d.start.real, mlx->d.end.real);
+	y = pix_to_math(y, mlx->height, mlx->d.start.imag, mlx->d.end.imag);
 	////
-	start_to_x = (x - mlx->fractal.dimension.start.real) / width;
-	start_to_y = (y - mlx->fractal.dimension.start.imag) / height;
+	start_to_x = (x - mlx->d.start.real) / width;
+	start_to_y = (y - mlx->d.start.imag) / height;
 	////
-	mlx->fractal.dimension.start.real = x - (new_width * start_to_x);
-	mlx->fractal.dimension.end.real   = mlx->fractal.dimension.start.real + new_width;
-	mlx->fractal.dimension.start.imag = y - (new_height * start_to_y);
-	mlx->fractal.dimension.end.imag   = mlx->fractal.dimension.start.imag + new_height;
+	mlx->d.start.real = x - (new_width * start_to_x);
+	mlx->d.end.real   = mlx->d.start.real + new_width;
+	mlx->d.start.imag = y - (new_height * start_to_y);
+	mlx->d.end.imag   = mlx->d.start.imag + new_height;
 	////
 }

@@ -1,9 +1,9 @@
 #include "head.h"
 
-float	pix_to_math(float pixel, float size, float start, float end)
+double	pix_to_math(double pixel, double size, double start, double end)
 {
-	float small;
+	double small;
 
-	small = start + ((pixel / size) * (end - start));
+	small = start + ((double)((double)pixel / (double)size) * (double)(end - start));
 	return (small);
 }

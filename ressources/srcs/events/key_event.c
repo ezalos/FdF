@@ -17,16 +17,16 @@ int key_press(int keycode, t_mlx *mlx)
 	ft_printf("KEY[%d] %d\n", MLX_KEYS_OS, keycode);
 	if (keycode < 280)
 	{
-		mlx->keys.key_array[keycode] = 1;
+		mlx->key_array[keycode] = 1;
 		if (keycode == MLX_KEY_M)
-			mlx->fractal.mandelbrot = !mlx->fractal.mandelbrot;
+			mlx->mandelbrot = !mlx->mandelbrot;
 		if (keycode == MLX_KEY_SPACE)
-			mlx->fractal.free_julia = !mlx->fractal.free_julia;
+			mlx->free_julia = !mlx->free_julia;
 	}
 	if (keycode == MLX_KEY_PLUS)
-		mlx->fractal.max_iter += 1;
-	if (keycode == MLX_KEY_MINUS && mlx->fractal.max_iter > 1)
-		mlx->fractal.max_iter -= 1;
+		mlx->max_iter += 1;
+	if (keycode == MLX_KEY_MINUS && mlx->max_iter > 1)
+		mlx->max_iter -= 1;
 	if (keycode == MLX_KEY_LEFT)
 		arrow_slide_screen(mlx, 1, 0);
 	if (keycode == MLX_KEY_UP)
@@ -50,6 +50,6 @@ int key_press(int keycode, t_mlx *mlx)
 
 int key_release(int keycode, t_mlx *mlx)
 {
-	mlx->keys.key_array[keycode] = 0;
+	mlx->key_array[keycode] = 0;
 	return (0);
 }

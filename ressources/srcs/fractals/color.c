@@ -139,17 +139,17 @@ void	set_up_palettes(t_mlx *mlx)
 {
 	mlx->size_gradient = 0;
 	mlx->gradient = NULL;
-	mlx->fractal.color.dracula = palette_dracula();
-	mlx->fractal.color.sunrise = palette_sunrise();
-	mlx->fractal.color.skyline = palette_skyline();
+	mlx->color.dracula = palette_dracula();
+	mlx->color.sunrise = palette_sunrise();
+	mlx->color.skyline = palette_skyline();
 	ft_printf("*******dracula*******\n");
-	mlx->gradient = ft_join_gradient(mlx->gradient, mlx->fractal.color.dracula, mlx->size_gradient);
+	mlx->gradient = ft_join_gradient(mlx->gradient, mlx->color.dracula, mlx->size_gradient);
 	mlx->size_gradient += LEN_GRAD;
 	ft_printf("*******sunrise*******\n");
-	mlx->gradient = ft_join_gradient(mlx->gradient, mlx->fractal.color.sunrise, mlx->size_gradient);
+	mlx->gradient = ft_join_gradient(mlx->gradient, mlx->color.sunrise, mlx->size_gradient);
 	mlx->size_gradient += LEN_GRAD;
 	ft_printf("*******skyline*******\n");
-	mlx->gradient = ft_join_gradient(mlx->gradient, mlx->fractal.color.skyline, mlx->size_gradient);
+	mlx->gradient = ft_join_gradient(mlx->gradient, mlx->color.skyline, mlx->size_gradient);
 	mlx->size_gradient += LEN_GRAD;
 }*/
 

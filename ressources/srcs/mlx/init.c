@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 00:44:08 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 18:59:14 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ void	*ft_open_mlx(t_mlx *mlx, char *title)
 
 void	init_values(t_mlx *mlx)
 {
-	mlx->fractal.dimension.start.real = -2.5;
-	mlx->fractal.dimension.end.real = 2.5;
-	mlx->fractal.dimension.start.imag = -2;
-	mlx->fractal.dimension.end.imag = 2;
+	mlx->d.start.real = -2.5;
+	mlx->d.end.real = 2.5;
+	mlx->d.start.imag = -2;
+	mlx->d.end.imag = 2;
 	// To be deleted //
-	mlx->fractal.c.real = 0;
-	mlx->fractal.c.imag = 0.75;
-	mlx->fractal.max_iter = MAX_ITER;
+	mlx->c.real = 0;
+	mlx->c.imag = 0.75;
+	mlx->max_iter = MAX_ITER;
 	if (parse_get("Mandelbrot"))
-		mlx->fractal.mandelbrot = 1;
+		mlx->mandelbrot = 1;
 	if (parse_get("Movement"))
-		mlx->fractal.free_julia = 1;
+		mlx->free_julia = 1;
 }
 
 t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height)

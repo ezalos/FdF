@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/30 23:46:07 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 00:36:08 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,16 @@ typedef struct		s_dimension
 	t_complex		end;
 }					t_dimension;
 
+typedef struct		s_fractal
+{
+	t_complex		zn;
+	t_complex		c;
+	t_dimension		dimension;
+	size_t			max_iter;
+	int				mandelbrot;
+	int				free_julia;
+}					t_fractal;
+
 typedef	struct		s_color
 {
 	int				*dracula;
@@ -124,6 +134,8 @@ typedef	struct		s_color
 	int				*aubergine; //(0xAA076B && 0x61045F)
 	int				*mango; // (0xF09819 && 0xEDDE5D)
 	int				*skyline; // (0x1488CC && 0x2B32B2)
+	int				*gradient;
+	size_t			size_gradient;
 }					t_color;
 
 typedef struct		s_mlx_keys
@@ -132,37 +144,15 @@ typedef struct		s_mlx_keys
 	int				mouse_array[10][3];
 }					t_mlx_keys;
 
-typedef struct		s_fractal
-{
-	t_complex		zn;
-	t_complex		c;
-	t_dimension		d;
-}					t_fractal;
-
 typedef struct		s_mlx
 {
 	void			*mlx_pointer;
 	void			*window_pointer;
 	t_list			*image_list;
-	int				**map;
 	size_t			width;
 	size_t			height;
-	int				max_iter;
-	int				map_nb_of_line;
-	int				map_nb_of_column;
-	char			choice;
-	char			key_array[280];
-	int				mouse_array[8][3];
-	unsigned int	saved_color;
-	unsigned int	circle_size;
-	t_complex		zn;
-	t_complex		c;
-	int				mandelbrot;
-	int				free_julia;
-	t_dimension		d;
-	t_color			color;
-	int				*gradient;
-	size_t			size_gradient;
+	t_mlx_keys		keys;
+	t_fractal		fractal;
 }					t_mlx;
 
 typedef struct		s_multi_thread

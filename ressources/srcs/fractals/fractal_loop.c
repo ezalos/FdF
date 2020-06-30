@@ -4,7 +4,7 @@ static void		prepare_fractal_arguments(t_multi_thread *thread)
 {
 	thread->zn.real = thread->pos.real;
 	thread->zn.imag = thread->pos.imag;
-	if (thread->mlx->fractal.mandelbrot)
+	if (thread->mlx->mandelbrot)
 	{
 		thread->c.real = thread->pos.real;
 		thread->c.imag = thread->pos.imag;
@@ -16,7 +16,7 @@ static void		apply_color(t_multi_thread *thread, size_t iter)
 	int			color;
 
 	color = 0;
-	if (1 || !thread->mlx->fractal.free_julia)
+	if (1 || !thread->mlx->free_julia)
 		color = colorize_fractol(iter, thread->mlx);
 	else if (iter < thread->mlx->fractal.max_iter)
 		color = ft_get_color(0,
@@ -30,15 +30,15 @@ static void		apply_color(t_multi_thread *thread, size_t iter)
 
 void			fractal_loop_thread(t_multi_thread *thread)
 {
-	size_t		iter;
+	size_t					iter;
 
 	thread->pxl_width = thread->start;
 	thread->pos.real = thread->thread_start;
 	while (thread->pos.real < thread->thread_end)
 	{
 		thread->pxl_height = 0;
-		thread->pos.imag = thread->mlx->fractal.dimension.start.imag;
-		while (thread->pos.imag < thread->mlx->fractal.dimension.end.imag)
+		thread->pos.imag = thread->mlx->d.start.imag;
+		while (thread->pos.imag < thread->mlx->d.end.imag)
 		{
 			iter = 0;
 			prepare_fractal_arguments(thread);
