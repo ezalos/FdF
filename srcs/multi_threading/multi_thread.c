@@ -6,21 +6,11 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/07/01 00:52:04 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 01:28:35 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "head.h"
-
-void	*thread_func(void *data)
-{
-	t_multi_thread		*thread;
-
-	thread = data;
-	fractal_loop_thread(thread);
-	pthread_exit(NULL);
-	return (NULL);
-}
 
 void	thread_data_setup(void *data, t_multi_thread *thread,
 							int current_thread, int total_thread)
@@ -45,6 +35,16 @@ void	thread_data_setup(void *data, t_multi_thread *thread,
 		mlx->fractal.dimension.start.real, mlx->fractal.dimension.end.real);
 	thread->c.real = mlx->fractal.c.real;
 	thread->c.imag = mlx->fractal.c.imag;
+}
+
+void	*thread_func(void *data)
+{
+	t_multi_thread		*thread;
+
+	thread = data;
+	fractal_loop_thread(thread);
+	pthread_exit(NULL);
+	return (NULL);
 }
 
 void	thread_fractol(t_mlx *mlx, int nb_thread)

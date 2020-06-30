@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 00:36:08 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 01:32:09 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ typedef struct		s_img
 	int				endian;
 	size_t			width;
 	size_t			height;
+	size_t			pos_height;
+	size_t			pos_width;
 }					t_img;
 
 typedef struct		s_point

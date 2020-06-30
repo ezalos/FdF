@@ -20,12 +20,12 @@ int					ft_color_pixel(t_mlx *mlx, int x, int y, int color)
 	t_list	*lst;
 	t_img	*img;
 
-	if (x < 0 || x >= (int)mlx->width)
-		return (-1);
-	if (y < 0 || y >= (int)mlx->height)
-		return (-1);
 	lst = ft_lst_reach_end(mlx->image_list);
 	img = lst->content;
+	if (x < 0 || x >= (int)img->width)
+		return (-1);
+	if (y < 0 || y >= (int)img->height)
+		return (-1);
 	img->my_image_data[(img->width * y) + x] = color;
 	return (color);
 }
@@ -37,5 +37,5 @@ void	render(t_mlx *mlx)
 	img = mlx->image_list->content;
 	// mlx_clear_window(mlx->mlx_pointer, mlx->window_pointer);
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window_pointer,\
-		img->image_pointer, 0, 0);
+		img->image_pointer, img->pos_height, img->pos_width);
 }
