@@ -43,11 +43,3 @@ double		complex_module(t_complex *cpx)
 {
 	return ((cpx->real * cpx->real) + (cpx->imag * cpx->imag));
 }
-
-float	pix_to_math(float pixel, float size, float start, float end)
-{
-	float small;
-
-	small = start + ((pixel / size) * (end - start));
-	return (small);
-}

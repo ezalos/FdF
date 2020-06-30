@@ -1,5 +1,32 @@
 #include "head.h"
 
+void		arrow_slide_screen(t_mlx *mlx, int x, int y)
+{
+	float		width;
+	float		shift_width;
+	float		height;
+	float		shift_height;
+
+	width = (mlx->d.end.real - mlx->d.start.real);
+	height = (mlx->d.end.imag - mlx->d.start.imag);
+	shift_width = ZOOM_COEF * width;
+	shift_height = ZOOM_COEF * height;
+	ft_printf("Shift [%f %f]\n", shift_height, shift_width);
+	if (x < 0)
+		shift_width = -shift_width;
+	else if (x == 0)
+		shift_width = 0;
+	if (y < 0)
+		shift_height = -shift_height;
+	else if (y == 0)
+		shift_height = 0;
+	ft_printf("Shift [%f %f]\n", shift_height, shift_width);
+	mlx->d.start.real += shift_width;
+	mlx->d.end.real += shift_width;
+	mlx->d.start.imag += shift_height;
+	mlx->d.end.imag += shift_height;
+}
+
 void	move_complex_window_center(t_mlx *param, int y, int x)
 {
 	float	height;

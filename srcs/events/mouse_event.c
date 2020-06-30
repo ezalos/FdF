@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/30 23:08:19 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 00:17:22 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ int			mouse_release(int button, int x, int y, t_mlx *param)
 	param->mouse_array[button][MLX_MOUSE_PRESSED] = FALSE;
 	param->mouse_array[button][MLX_MOUSE_X_COORD] = x;
 	param->mouse_array[button][MLX_MOUSE_Y_COORD] = y;
-	if (button == 1)
-	{
-		ft_color_pixel(param, x, y, 0x00ffffff);
-		render(param);
-		return (1);
-	}
-	if (button == 3)
-		ft_dynamic_rectangle(param, ft_get_point(x, y));
 	return (1);
 }
 
