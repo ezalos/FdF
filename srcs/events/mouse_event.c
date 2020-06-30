@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/29 01:13:23 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 18:15:47 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			mouse_press(int button, int x, int y, t_mlx *param)
 	if (button == 5 || button == 4)
 	{
 		zoom(button, x, y, param);
-		fractol_thread(param, NB_THREAD);
+		thread_fractol(param, NB_THREAD);
 	}
 	render(param);
 	return (1);
@@ -54,18 +54,18 @@ void	move_complex_window_center(t_mlx *param, int y, int x)
 
 	ft_printf("Moving %d %d", x, y);
 	////
-	height = param->d.end.b - param->d.start.b;
-	width = param->d.end.a - param->d.start.a;
+	height = param->d.end.imag - param->d.start.imag;
+	width = param->d.end.real - param->d.start.real;
 	////
 	f_x = pix_to_math(x, param->width, 0, height);
 	f_y = pix_to_math(y, param->height, 0, width);
 	ft_printf("\t-> %f %f\n", f_x, f_y);
 	////
 	////
-	param->d.start.a = param->d.start.a + f_y;
-	param->d.end.a   = param->d.end.a + f_y;
-	param->d.start.b = param->d.start.b + f_x;
-	param->d.end.b   = param->d.end.b + f_x;
+	param->d.start.real = param->d.start.real + f_y;
+	param->d.end.real   = param->d.end.real + f_y;
+	param->d.start.imag = param->d.start.imag + f_x;
+	param->d.end.imag   = param->d.end.imag + f_x;
 	////
 }
 
@@ -79,7 +79,7 @@ int mouse_move(int x, int y, t_mlx *param)
 		{
 			move_complex_window_center(param,
 				param->mouse_array[1][1] - x, param->mouse_array[1][2] - y);
-			fractol_thread(param, NB_THREAD);
+			thread_fractol(param, NB_THREAD);
 			render(param);
 			param->mouse_array[1][1] = x;
 			param->mouse_array[1][2] = y;
@@ -96,9 +96,9 @@ int mouse_move(int x, int y, t_mlx *param)
 		if (!last)
 		{
 			// ft_printf("MOVE [%d %d]\n", x ,y);
-			param->c.a = pix_to_math(x, param->width, -2, 2);
-			param->c.b = pix_to_math(y, param->height, -2, 2);
-			fractol_thread(param, NB_THREAD);
+			param->c.real = pix_to_math(x, param->width, -2, 2);
+			param->c.imag = pix_to_math(y, param->height, -2, 2);
+			thread_fractol(param, NB_THREAD);
 			render(param);
 			last++;
 		}

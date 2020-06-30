@@ -19,7 +19,7 @@ TESTEUR					=	test
 LIB_PRJCT 				=	n
 
 #These are your basic compilation flags
-CFLAGS					=	-Wall -Wextra -Werror\
+CFLAGS					=	-Wall -Wextra -Werror -O3\
 
 #USERNAME used for the auteur file
 login 					=	ldevelle

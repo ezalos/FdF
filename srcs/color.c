@@ -6,24 +6,11 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:50:28 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/25 16:36:23 by deyaberge        ###   ########.fr       */
+/*   Updated: 2020/06/30 18:04:29 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/head.h"
-
-unsigned int		ft_get_color(unsigned char alpha, unsigned char red, unsigned char green, unsigned char blue)
-{
-	unsigned int				color;
-	unsigned char	bad_col[4];
-
-	bad_col[3] = alpha;
-	bad_col[2] = red;
-	bad_col[1] = green;
-	bad_col[0] = blue;
-	ft_memmove(&color, bad_col, 4);
-	return (color);
-}
+#include "head.h"
 /*
 void	space_in_gradient(float add[3], int color_1, int color_2, int len)
 {
@@ -110,7 +97,7 @@ int		*ft_join_gradient(int *gradient, int *to_add, int size)
 	ft_printf("size = [%d]i, size + len = [%d]\n", size, size + LEN_GRAD);
 	while (i < size)
 	{
-		ft_printf("gradient[%d] = [%x]\n", i, gradient[i]); 
+		ft_printf("gradient[%d] = [%x]\n", i, gradient[i]);
 		i++;
 	}
 	i = 0;
@@ -183,7 +170,7 @@ int		colorize_fractol(int iter, t_mlx *mlx)
 	else
 		color = 0;
 	(void)mlx;
-	return (color);	
+	return (color);
 //	color = gradient[iter % len_gradient];//repasse plusieurs fois sur les couleurs
 //	color = mlx->gradient[(iter / MAX_ITER) * 4];
 //a un vrai min et un vrai max qui ne sont atteints que pour iter==0 et iter==max_iter

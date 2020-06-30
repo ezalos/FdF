@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/29 01:14:46 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 18:19:22 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@
 **  GLOBAL	**
 **************
 */
-# define SIZE		3
+# define SIZE		4
 # define FR_BLUE	0
 # define FR_GREEN	1
 # define FR_RED		2
 # define FR_NONE	3
 # define LEN_GRAD	6
 # define MAX_ITER	50
-# define NB_THREAD	8
+# define NB_THREAD	4
 # define PRECISION	3
 # define ZOOM_COEF	0.1
 # define Z_FORWARD	5
@@ -69,6 +69,9 @@
 # elif SIZE == 3
 #  define SIZE_WIDTH 1500
 #  define SIZE_HEIGTH 1000
+# elif SIZE == 4
+#  define SIZE_WIDTH 1000
+#  define SIZE_HEIGTH 750
 # else
 #  define SIZE_WIDTH 600
 #  define SIZE_HEIGTH 600
@@ -103,8 +106,8 @@
 // a + ib //
 typedef struct		s_complex
 {
-	float			a;
-	float			b;
+	double			real;
+	double			imag;
 }					t_complex;
 
 typedef struct		s_dimension
@@ -122,6 +125,19 @@ typedef	struct		s_color
 	int				*mango; // (0xF09819 && 0xEDDE5D)
 	int				*skyline; // (0x1488CC && 0x2B32B2)
 }					t_color;
+
+typedef struct		s_mlx_keys
+{
+	char			key_array[280];
+	int				mouse_array[8][3];
+}					t_mlx_keys;
+
+typedef struct		s_fractal
+{
+	t_complex		zn;
+	t_complex		c;
+	t_dimension		d;
+}					t_fractal;
 
 typedef struct		s_mlx
 {

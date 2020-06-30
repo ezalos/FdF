@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezalos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/28 14:14:41 by ezalos            #+#    #+#             */
-/*   Updated: 2020/06/28 14:14:41 by ezalos           ###   ########.fr       */
+/*   Created: 2020/06/30 18:13:38 by ezalos            #+#    #+#             */
+/*   Updated: 2020/06/30 18:13:38 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AUTO_FRACTOL__H
 # define AUTO_FRACTOL__H
 
-unsigned int		ft_get_color(unsigned char alpha, unsigned char red, unsigned char green, unsigned char blue);
 void		space_in_gradient(float add[3], int color_1, int color_2, int len);
 int		add_color(float add[3], int old);
 int		*ft_gradient(int color_1, int color_2);
@@ -23,26 +22,12 @@ int		*palette_skyline(void);
 int		*ft_join_gradient(int *gradient, int *to_add, int size);
 void		set_up_palettes(t_mlx *mlx);
 int		colorize_fractol(int iter, t_mlx *mlx);
-float		pix_to_math(float pixel, float size, float start, float end);
-void		mandelbrot_loop_thread(t_mlx *mlx, t_complex zn, int start, int end);
 int		parsing_fractol(int ac, char **av);
 int		main(int ac, char **av);
 void		*thread_func(void *data);
-void		fractol_thread(t_mlx *mlx, int nb_thread);
-int		which_one(int direction);
-void		zoom(int direction, float x, float y, t_mlx *param);
-void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
-void		*ft_open_mlx(t_mlx *mlx, char *title);
-void		init_values(t_mlx *mlx);
-t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height);
-t_mlx		*ft_init_mlx(char *title, size_t width, size_t height);
-t_point		*ft_get_point(int x, int y);
-unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y);
-void		ft_show_all_colors(t_mlx *mlx);
-int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
-int		ft_ponderate_mean(int x, int y, float mult);
-int		ft_get_primary_color(int color, char nb);
-int		ft_add_color_pixel(t_mlx *mlx, int x, int y, unsigned int new_color, float brightness);
+void		thread_data_setup(void *data, t_multi_thread *thread,
+		int current_thread, int total_thread);
+void		thread_fractol(t_mlx *mlx, int nb_thread);
 unsigned int		ft_color_transparency(unsigned int color,
 		unsigned char brightness);
 unsigned int		ft_plot(unsigned int color, float transparency);
@@ -74,6 +59,12 @@ int		ft_nice_view(int choice, int x, int y);
 int		draw_lines_dynamically(int x, int y, t_mlx *param);
 int		ft_get_percent(intmax_t x, intmax_t x_max);
 int		ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int));
+t_point		*ft_get_point(int x, int y);
+unsigned int		ft_get_color_pixel(t_mlx *mlx, int x, int y);
+void		ft_show_all_colors(t_mlx *mlx);
+int		ft_ponderate_mean(int x, int y, float mult);
+int		ft_get_primary_color(int color, char nb);
+int		ft_add_color_pixel(t_mlx *mlx, int x, int y, unsigned int new_color, float brightness);
 int		ft_getnbr(char *str);
 int		fill_tab(char *str, t_mlx *mlx);
 int		fdf_parsing(char *str, t_mlx *mlx);
@@ -81,13 +72,32 @@ void		ft_clean_and_exit(t_mlx *mlx);
 void 		virgin_screen(t_mlx *mlx);
 void		ft_draw_rectangle(t_mlx *mlx, t_point *a, t_point *b, unsigned int color);
 void		ft_dynamic_rectangle(t_mlx *mlx, t_point *a);
+int		which_one(int direction);
+void		zoom(int direction, float x, float y, t_mlx *param);
 int key_press(int keycode, t_mlx *param);
 int key_release(int keycode, t_mlx *param);
-int		mandelbrot_equation(t_complex *zn, t_complex *c);
+void		mlx_hooks_and_loop(t_mlx *mlx);
 int		mouse_press(int button, int x, int y, t_mlx *param);
 int		mouse_release(int button, int x, int y, t_mlx *param);
+void		move_complex_window_center(t_mlx *param, int y, int x);
 int mouse_move(int x, int y, t_mlx *param);
+void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
+void		*ft_open_mlx(t_mlx *mlx, char *title);
+void		init_values(t_mlx *mlx);
+t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height);
+t_mlx		*ft_init_mlx(char *title, size_t width, size_t height);
 int		ft_color_pixel_swag(t_mlx *mlx, int x, int y);
 void		render(t_mlx *mlx);
+unsigned int		ft_get_color(unsigned char alpha, unsigned char red,
+		unsigned char green, unsigned char blue);
+int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
+int		mandelbrot_equation(t_complex *zn, t_complex *c);
+t_complex		complex_square(t_complex *nb);
+t_complex		complex_cube(t_complex *nb);
+t_complex		complex_inverse(t_complex *nb);
+t_complex		complex_product(t_complex *n1, t_complex *n2);
+double		complex_module(t_complex *nb);
+float		pix_to_math(float pixel, float size, float start, float end);
+void		mandelbrot_loop_thread(t_mlx *mlx, t_complex zn, int start, int end);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:19:28 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/13 19:29:00 by ldevelle         ###   ########.fr       */
+/*   Updated: 2020/06/30 18:04:57 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,6 @@ void				ft_show_all_colors(t_mlx *mlx)
 		}
 	}
 	render(mlx);
-}
-
-int		ft_color_pixel(t_mlx *mlx, int x, int y, int color)
-{
-	t_list	*lst;
-	t_img	*img;
-
-	if (x < 0 || x >= (int)mlx->width)
-		return (-1);
-	if (y < 0 || y >= (int)mlx->height)
-		return (-1);
-	lst = ft_lst_reach_end(mlx->image_list);
-	img = lst->content;
-	img->my_image_data[(img->width * y) + x] = color;
-	return (color);
 }
 
 int		ft_ponderate_mean(int x, int y, float mult)

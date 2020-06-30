@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:37:44 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:47:09 by amartino         ###   ########.fr       */
+/*   Updated: 2020/06/30 17:16:51 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	render(t_mlx *mlx)
 	t_img			*img;
 
 	img = mlx->image_list->content;
-	mlx_clear_window(mlx->mlx_pointer, mlx->window_pointer);
+	// mlx_clear_window(mlx->mlx_pointer, mlx->window_pointer);
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window_pointer, img->image_pointer, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/29 00:56:17 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 17:53:34 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,47 @@ void	*thread_func(void *data)
 	// t_mlx				*mlx;
 
 	thread = data;
-	// mlx = thread->mlx;
 	mandelbrot_loop_thread(thread->mlx, thread->zn, thread->start, thread->end);
+	pthread_exit(NULL);
 	return (NULL);
 }
 
-void	fractol_thread(t_mlx *mlx, int nb_thread)
+void	thread_data_setup(void *data, t_multi_thread *thread,
+							int current_thread, int total_thread)
+{
+	t_mlx				*mlx;
+	float				step;
+
+	mlx = data;
+	step = ((float)mlx->width / (float)total_thread);
+	thread->mlx = mlx;
+	thread->start = (step * (current_thread));
+	thread->end = (step * (current_thread + 1));
+
+	if (thread->start < 0)
+		thread->start = 0;
+	if (thread->end > (int)mlx->width)
+		thread->end = mlx->width;
+
+}
+
+void	thread_fractol(t_mlx *mlx, int nb_thread)
 {
 	t_multi_thread		*thread;
-	int					i;
-	int					step;
-	void				*ret;
+	int					current_thread;
 
-	(void)ret;
-	ret = NULL;
 	thread = ft_memalloc(sizeof(t_multi_thread) * nb_thread);
-	step = (mlx->width / nb_thread);
-	i = -1;
-	while (++i < nb_thread)
+	current_thread = -1;
+	while (++current_thread < nb_thread)
 	{
-		thread[i].mlx = mlx;
-		thread[i].start = (step * (i));
-		thread[i].end = step * (i + 1);
-		if (thread[i].end > (int)mlx->width)
-			thread[i].end = mlx->width;
-		if (pthread_create(&thread[i].pthread_nb, NULL, &thread_func, &thread[i]) == -1)
+		thread_data_setup(mlx, &thread[current_thread],\
+							current_thread, nb_thread);
+		if (pthread_create(&thread[current_thread].pthread_nb, NULL,\
+							&thread_func, &thread[current_thread]) == -1)
 			perror("pthread_create");
 	}
-	i = -1;
-	while (++i < nb_thread)
-		pthread_join(thread[i].pthread_nb, NULL);
+	current_thread = -1;
+	while (++current_thread < nb_thread)
+		if (pthread_join(thread[current_thread].pthread_nb, NULL))
+			perror("pthread_join");
 }

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:59:58 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/10 16:44:42 by amartino         ###   ########.fr       */
+/*   Updated: 2020/06/30 12:06:04 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		ft_mlx_iter(t_mlx *mlx, int(*f)(t_mlx *, int, int))
 			ft_place_cursor(30, 50);
 			ft_rgb_color(-1, -1, -1);
 			ft_putnbr(percent);
-			C_RESET
+			// _C_RESET;
 			ft_putstr("%   \n");
 		}
 		x = -1;

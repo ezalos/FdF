@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/29 01:15:51 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 18:16:12 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void		shifties(t_mlx *mlx, int x, int y)
 	float		height;
 	float		shift_height;
 
-	width = (mlx->d.end.a - mlx->d.start.a);
-	height = (mlx->d.end.b - mlx->d.start.b);
+	width = (mlx->d.end.real - mlx->d.start.real);
+	height = (mlx->d.end.imag - mlx->d.start.imag);
 	shift_width = ZOOM_COEF * width;
 	shift_height = ZOOM_COEF * height;
 	ft_printf("Shift [%f %f]\n", shift_height, shift_width);
@@ -33,10 +33,10 @@ void		shifties(t_mlx *mlx, int x, int y)
 	else if (y == 0)
 		shift_height = 0;
 	ft_printf("Shift [%f %f]\n", shift_height, shift_width);
-	mlx->d.start.a += shift_width;
-	mlx->d.end.a += shift_width;
-	mlx->d.start.b += shift_height;
-	mlx->d.end.b += shift_height;
+	mlx->d.start.real += shift_width;
+	mlx->d.end.real += shift_width;
+	mlx->d.start.imag += shift_height;
+	mlx->d.end.imag += shift_height;
 }
 
 int key_press(int keycode, t_mlx *param)
@@ -70,7 +70,7 @@ int key_press(int keycode, t_mlx *param)
 	}
 	if (keycode == MLX_KEY_DELETE)
 		virgin_screen(param);
-	fractol_thread(param, NB_THREAD);
+	thread_fractol(param, NB_THREAD);
 	render(param);
 	return (0);
 }
