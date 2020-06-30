@@ -6,11 +6,11 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:37:44 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/30 17:16:51 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 18:47:08 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/head.h"
+#include "head.h"
 
 int		ft_color_pixel_swag(t_mlx *mlx, int x, int y)
 {
@@ -23,13 +23,4 @@ int		ft_color_pixel_swag(t_mlx *mlx, int x, int y)
 	color = ft_nice_view(mlx->choice, x, y);
 	img->my_image_data[(img->width * y) + x] = 0x00ffffff;
 	return (color);
-}
-
-void	render(t_mlx *mlx)
-{
-	t_img			*img;
-
-	img = mlx->image_list->content;
-	// mlx_clear_window(mlx->mlx_pointer, mlx->window_pointer);
-	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window_pointer, img->image_pointer, 0, 0);
 }

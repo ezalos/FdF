@@ -5,23 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezalos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/30 18:13:38 by ezalos            #+#    #+#             */
-/*   Updated: 2020/06/30 18:13:38 by ezalos           ###   ########.fr       */
+/*   Created: 2020/06/30 18:53:47 by ezalos            #+#    #+#             */
+/*   Updated: 2020/06/30 18:53:47 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AUTO_FRACTOL__H
 # define AUTO_FRACTOL__H
 
-void		space_in_gradient(float add[3], int color_1, int color_2, int len);
-int		add_color(float add[3], int old);
-int		*ft_gradient(int color_1, int color_2);
-int		*palette_dracula(void);
-int		*palette_sunrise(void);
-int		*palette_skyline(void);
-int		*ft_join_gradient(int *gradient, int *to_add, int size);
-void		set_up_palettes(t_mlx *mlx);
-int		colorize_fractol(int iter, t_mlx *mlx);
 int		parsing_fractol(int ac, char **av);
 int		main(int ac, char **av);
 void		*thread_func(void *data);
@@ -70,6 +61,7 @@ int		fill_tab(char *str, t_mlx *mlx);
 int		fdf_parsing(char *str, t_mlx *mlx);
 void		ft_clean_and_exit(t_mlx *mlx);
 void 		virgin_screen(t_mlx *mlx);
+int		ft_color_pixel_swag(t_mlx *mlx, int x, int y);
 void		ft_draw_rectangle(t_mlx *mlx, t_point *a, t_point *b, unsigned int color);
 void		ft_dynamic_rectangle(t_mlx *mlx, t_point *a);
 int		which_one(int direction);
@@ -86,17 +78,25 @@ void		*ft_open_mlx(t_mlx *mlx, char *title);
 void		init_values(t_mlx *mlx);
 t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height);
 t_mlx		*ft_init_mlx(char *title, size_t width, size_t height);
-int		ft_color_pixel_swag(t_mlx *mlx, int x, int y);
-void		render(t_mlx *mlx);
 unsigned int		ft_get_color(unsigned char alpha, unsigned char red,
 		unsigned char green, unsigned char blue);
 int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
+void		render(t_mlx *mlx);
+void		space_in_gradient(float add[3], int color_1, int color_2, int len);
+int		add_color(float add[3], int old);
+int		*ft_gradient(int color_1, int color_2);
+int		*palette_dracula(void);
+int		*palette_sunrise(void);
+int		*palette_skyline(void);
+int		*ft_join_gradient(int *gradient, int *to_add, int size);
+void		set_up_palettes(t_mlx *mlx);
+int		colorize_fractol(int iter, t_mlx *mlx);
 int		mandelbrot_equation(t_complex *zn, t_complex *c);
-t_complex		complex_square(t_complex *nb);
-t_complex		complex_cube(t_complex *nb);
-t_complex		complex_inverse(t_complex *nb);
+t_complex		complex_square(t_complex *cpx);
+t_complex		complex_cube(t_complex *cpx);
+t_complex		complex_inverse(t_complex *cpx);
 t_complex		complex_product(t_complex *n1, t_complex *n2);
-double		complex_module(t_complex *nb);
+double		complex_module(t_complex *cpx);
 float		pix_to_math(float pixel, float size, float start, float end);
 void		mandelbrot_loop_thread(t_mlx *mlx, t_complex zn, int start, int end);
 

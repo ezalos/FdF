@@ -6,16 +6,15 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/30 17:53:34 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 18:46:53 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/head.h"
+#include "head.h"
 
 void	*thread_func(void *data)
 {
 	t_multi_thread		*thread;
-	// t_mlx				*mlx;
 
 	thread = data;
 	mandelbrot_loop_thread(thread->mlx, thread->zn, thread->start, thread->end);
@@ -48,15 +47,18 @@ void	thread_fractol(t_mlx *mlx, int nb_thread)
 	int					current_thread;
 
 	thread = ft_memalloc(sizeof(t_multi_thread) * nb_thread);
+
 	current_thread = -1;
 	while (++current_thread < nb_thread)
 	{
 		thread_data_setup(mlx, &thread[current_thread],\
 							current_thread, nb_thread);
+
 		if (pthread_create(&thread[current_thread].pthread_nb, NULL,\
 							&thread_func, &thread[current_thread]) == -1)
 			perror("pthread_create");
 	}
+
 	current_thread = -1;
 	while (++current_thread < nb_thread)
 		if (pthread_join(thread[current_thread].pthread_nb, NULL))

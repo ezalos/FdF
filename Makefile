@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2020/06/30 12:20:01 by ezalos           ###   ########.fr        #
+#    Updated: 2020/06/30 12:22:39 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,10 @@ MASTER		= 	srcs/
 
 $(shell mkdir -p $(MASTER))
 
+
 #AUTO_HEAD	=	$(MAIN_FOLD:%=auto/auto_%.h)
-AUTO_HEAD	=	auto_$(NAME).h
+AUTO_HEAD	=	auto/auto_$(NAME)_.h
+AUTO_HEAD	+=	auto_$(NAME).h
 
 HEAD		=	$(HEADERS:%=$(HEAD_DIR)%)
 
@@ -177,8 +179,8 @@ $(NAME):	$(LIB) $(OBJS) $(HEAD_DIR)
 	@$(call run_and_test, $(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIB) $(HEADERS_DIRECTORIES))
 endif
 
-$(shell mkdir -p $(DIR_OBJ))
 DIR_PREP = $(shell find $(MASTER) -type d -exec echo {} \; | sed 's~$(MASTER)~$(DIR_OBJ)~g')
+$(shell mkdir -p $(DIR_PREP))
 
 $(DIR_OBJ)%.o:$(MASTER)%.c $(HEAD) Makefile
 	@$(call run_and_test, $(CC) $(CFLAGS) $(HEADERS_DIRECTORIES) -o $@ -c $<)
@@ -223,7 +225,6 @@ run	:	all
 		@echo ""
 
 unit_test :
-		echo $(DIR_PREP)
 
 big :
 n_times ?= 100
