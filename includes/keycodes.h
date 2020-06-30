@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:23:17 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/29 00:13:46 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 19:25:16 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@
 # else
 # define MLX_KEYS_OS			0
 # endif
+
+# define MLX_MOUSE_PRESSED		0
+# define MLX_MOUSE_X_COORD		1
+# define MLX_MOUSE_Y_COORD		2
+
+# define MLX_MOUSE_CLICK_LEFT	1
+# define MLX_MOUSE_CLICK_MIDDLE	2
+# define MLX_MOUSE_CLICK_RIGHT	3
+# define MLX_MOUSE_SCROLL_UP	4
+# define MLX_MOUSE_SCROLL_DOWN	5
+# define MLX_MOUSE_SCROLL_RIGHT	6
+# define MLX_MOUSE_SCROLL_LEFT	7
+# define MLX_MOUSE_SIDE_ONE		8
+# define MLX_MOUSE_SIDE_TWO		9
 
 # define MLX_KEY_A				(MLX_KEYS_OS ? 0 : (uint8_t)'a')
 # define MLX_KEY_S				(MLX_KEYS_OS ? 1 : (uint8_t)'s')

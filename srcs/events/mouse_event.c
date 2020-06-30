@@ -6,19 +6,20 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/06/30 18:15:47 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 19:32:36 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/head.h"
+#include "head.h"
 
 int			mouse_press(int button, int x, int y, t_mlx *param)
 {
 	printf("mouse p %d\n", button);
-	param->mouse_array[button][0] = 1;
-	param->mouse_array[button][1] = x;
-	param->mouse_array[button][2] = y;
-	if (button == 5 || button == 4)
+	param->mouse_array[button][MLX_MOUSE_PRESSED] = TRUE;
+	param->mouse_array[button][MLX_MOUSE_X_COORD] = x;
+	param->mouse_array[button][MLX_MOUSE_Y_COORD] = y;
+	if (button == MLX_MOUSE_SCROLL_UP
+	|| button == MLX_MOUSE_SCROLL_DOWN)
 	{
 		zoom(button, x, y, param);
 		thread_fractol(param, NB_THREAD);
@@ -30,9 +31,9 @@ int			mouse_press(int button, int x, int y, t_mlx *param)
 int			mouse_release(int button, int x, int y, t_mlx *param)
 {
 	printf("mouse r %d\n", button);
-	param->mouse_array[button][0] = 0;
-	param->mouse_array[button][1] = x;
-	param->mouse_array[button][2] = y;
+	param->mouse_array[button][MLX_MOUSE_PRESSED] = FALSE;
+	param->mouse_array[button][MLX_MOUSE_X_COORD] = x;
+	param->mouse_array[button][MLX_MOUSE_Y_COORD] = y;
 	if (button == 1)
 	{
 		ft_color_pixel(param, x, y, 0x00ffffff);
@@ -57,8 +58,8 @@ void	move_complex_window_center(t_mlx *param, int y, int x)
 	height = param->d.end.imag - param->d.start.imag;
 	width = param->d.end.real - param->d.start.real;
 	////
-	f_x = pix_to_math(x, param->width, 0, height);
-	f_y = pix_to_math(y, param->height, 0, width);
+	f_x = pix_to_math(x, param->width, 0, width);
+	f_y = pix_to_math(y, param->height, 0, height);
 	ft_printf("\t-> %f %f\n", f_x, f_y);
 	////
 	////
@@ -73,20 +74,22 @@ int mouse_move(int x, int y, t_mlx *param)
 {
 	static int	last = 0;
 
-	if (param->mouse_array[1][0] == 1)
+	if (param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_PRESSED] == 1)
 	{
-		if (!last)
+		if ((ft_abs(param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_X_COORD] - x) > 10
+		&& ft_abs(param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_X_COORD] - y) > 10))
 		{
 			move_complex_window_center(param,
-				param->mouse_array[1][1] - x, param->mouse_array[1][2] - y);
+				param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_X_COORD] - x,
+				param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_Y_COORD] - y);
 			thread_fractol(param, NB_THREAD);
 			render(param);
-			param->mouse_array[1][1] = x;
-			param->mouse_array[1][2] = y;
+			param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_X_COORD] = x;
+			param->mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_Y_COORD] = y;
 		}
 		else
 			last++;
-		if (last > 5)
+		if (last > 25)
 			last = 0;
 	}
 	if (!param->mandelbrot && param->free_julia)

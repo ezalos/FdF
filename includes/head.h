@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/06/30 18:50:03 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/06/30 19:25:52 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef	struct		s_color
 typedef struct		s_mlx_keys
 {
 	char			key_array[280];
-	int				mouse_array[8][3];
+	int				mouse_array[10][3];
 }					t_mlx_keys;
 
 typedef struct		s_fractal
