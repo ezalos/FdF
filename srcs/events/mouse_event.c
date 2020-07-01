@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:40 by amartino          #+#    #+#             */
-/*   Updated: 2020/07/01 02:23:24 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 11:21:27 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int			mouse_release(int button, int x, int y, t_mlx *mlx)
 	return (1);
 }
 
-
 long		get_time(void)
 {
 	long            ns;
@@ -48,7 +47,7 @@ long		get_time(void)
 	clock_gettime(CLOCK_REALTIME, &spec);
 	s = spec.tv_sec;
 	ns = spec.tv_nsec;
-	ms = (s * 1000 + ns / 1000000);
+	ms = (s * 1000) + (ns / 1000000);
 	return (ms);
 }
 
@@ -58,7 +57,7 @@ int mouse_move(int x, int y, t_mlx *mlx)
 
 	if (time == 0)
 		time = get_time();
-	if (get_time() - time < 1000 / 200)//avoid to flood computer with calculs 
+	if (get_time() - time < 1000 / 200)//avoid to flood computer with calculs
 		return (0);
 
 	time = get_time();
