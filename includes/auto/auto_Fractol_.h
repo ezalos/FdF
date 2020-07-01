@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezalos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 19:01:34 by ezalos            #+#    #+#             */
-/*   Updated: 2020/07/01 19:01:34 by ezalos           ###   ########.fr       */
+/*   Created: 2020/07/01 19:25:18 by ezalos            #+#    #+#             */
+/*   Updated: 2020/07/01 19:25:18 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
 void		render(t_mlx *mlx);
 void		ft_clean_and_exit(t_mlx *mlx);
 void 		virgin_screen(t_mlx *mlx);
-unsigned int		ft_get_color(unsigned char alpha, unsigned char red, unsigned char green, unsigned char blue);
+void		julia_react_to_mouse(t_mlx *mlx, int x, int y);
+int		mandelbrot_equation(t_complex *zn, t_complex *c);
 void		space_in_gradient(float add[BGRA], int color_1, int color_2, int len);
 int		add_color(float add[BGRA], int old);
-int		*ft_gradient(int color_1, int color_2, int len);
+int		colorize_fractol(int iter, t_mlx *mlx);
+void		set_up_palettes(t_color *colors);
 int		*palette_dracula(void);
 int		*palette_sunrise(void);
 int		*palette_skyline(void);
+int		*ft_gradient(int color_1, int color_2, int len);
 int		*ft_join_gradient(int *gradient, int *to_add, int size_grad, int size_add);
-void		set_up_palettes(t_color *colors);
-int		colorize_fractol(int iter, t_mlx *mlx);
-void		julia_react_to_mouse(t_mlx *mlx, int x, int y);
-int		mandelbrot_equation(t_complex *zn, t_complex *c);
 void		fractal_loop_thread(t_multi_thread *thread);
 t_complex		complex_cos(t_complex *nb);
 t_complex		complex_sin(t_complex *nb);
