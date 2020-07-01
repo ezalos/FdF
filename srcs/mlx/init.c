@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 00:44:08 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 01:40:11 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	init_values(t_mlx *mlx)
 	mlx->fractal.max_iter = MAX_ITER;
 	if (parse_get("Mandelbrot"))
 		mlx->fractal.mandelbrot = 1;
-	if (parse_get("Movement"))
+	// if (parse_get("Movement"))
 		mlx->fractal.free_julia = 1;
 }
 

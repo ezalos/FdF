@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:16:43 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/30 18:24:42 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 01:42:03 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int		mandelbrot_is_in_set(t_complex *zn)
 	if (complex_module(zn) > 4)
 		return (FALSE);
 	return (TRUE);
-
 }
 
 int				mandelbrot_equation(t_complex *zn, t_complex *c)
