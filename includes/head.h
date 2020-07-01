@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 01:32:09 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/01 19:06:45 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@
 **************
 */
 # define SIZE		4
+# define CAST_INT_(x)	((unsigned char*)&x)
+# define BGRA		4
 # define FR_BLUE	0
 # define FR_GREEN	1
 # define FR_RED		2
-# define FR_NONE	3
+# define FR_ALPHA	3
 # define LEN_GRAD	6
 # define MAX_ITER	50
 # define NB_THREAD	4
@@ -116,16 +118,6 @@ typedef struct		s_dimension
 	t_complex		end;
 }					t_dimension;
 
-typedef struct		s_fractal
-{
-	t_complex		zn;
-	t_complex		c;
-	t_dimension		dimension;
-	size_t			max_iter;
-	int				mandelbrot;
-	int				free_julia;
-}					t_fractal;
-
 typedef	struct		s_color
 {
 	int				*dracula;
@@ -137,6 +129,17 @@ typedef	struct		s_color
 	int				*gradient;
 	size_t			size_gradient;
 }					t_color;
+
+typedef struct		s_fractal
+{
+	t_complex		zn;
+	t_complex		c;
+	t_dimension		dimension;
+	size_t			max_iter;
+	int				mandelbrot;
+	int				free_julia;
+	t_color			colors;
+}					t_fractal;
 
 typedef struct		s_mlx_keys
 {

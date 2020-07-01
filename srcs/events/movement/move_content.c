@@ -58,7 +58,7 @@ void move_content_window(t_mlx *mlx, int x, int y)
 	int		old_x;
 	int		old_y;
 
-	movement_threshold = 10;
+	movement_threshold = 1;
 	old_x = mlx->keys.mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_X_COORD];
 	old_y = mlx->keys.mouse_array[MLX_MOUSE_CLICK_LEFT][MLX_MOUSE_Y_COORD];
 	if (ft_abs(old_x - x) > movement_threshold

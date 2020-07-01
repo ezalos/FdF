@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezalos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/01 01:08:18 by ezalos            #+#    #+#             */
-/*   Updated: 2020/07/01 01:08:18 by ezalos           ###   ########.fr       */
+/*   Created: 2020/07/01 19:01:34 by ezalos            #+#    #+#             */
+/*   Updated: 2020/07/01 19:01:34 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 int		parsing_fractol(int ac, char **av);
 int		main(int ac, char **av);
-void		*thread_func(void *data);
 void		thread_data_setup(void *data, t_multi_thread *thread,
 		int current_thread, int total_thread);
+void		*thread_func(void *data);
 void		thread_fractol(t_mlx *mlx, int nb_thread);
 int		which_one(int direction);
 void		zoom(int direction, float x, float y, t_mlx *mlx);
@@ -29,6 +29,7 @@ int key_release(int keycode, t_mlx *mlx);
 void		mlx_hooks_and_loop(t_mlx *mlx);
 int		mouse_press(int button, int x, int y, t_mlx *mlx);
 int		mouse_release(int button, int x, int y, t_mlx *mlx);
+long		get_time(void);
 int mouse_move(int x, int y, t_mlx *mlx);
 void		ft_check_window_size(t_mlx *mlx, size_t width, size_t height);
 void		*ft_open_mlx(t_mlx *mlx, char *title);
@@ -41,14 +42,15 @@ int		ft_color_pixel(t_mlx *mlx, int x, int y, int color);
 void		render(t_mlx *mlx);
 void		ft_clean_and_exit(t_mlx *mlx);
 void 		virgin_screen(t_mlx *mlx);
-void		space_in_gradient(float add[3], int color_1, int color_2, int len);
-int		add_color(float add[3], int old);
-int		*ft_gradient(int color_1, int color_2);
+unsigned int		ft_get_color(unsigned char alpha, unsigned char red, unsigned char green, unsigned char blue);
+void		space_in_gradient(float add[BGRA], int color_1, int color_2, int len);
+int		add_color(float add[BGRA], int old);
+int		*ft_gradient(int color_1, int color_2, int len);
 int		*palette_dracula(void);
 int		*palette_sunrise(void);
 int		*palette_skyline(void);
-int		*ft_join_gradient(int *gradient, int *to_add, int size);
-void		set_up_palettes(t_mlx *mlx);
+int		*ft_join_gradient(int *gradient, int *to_add, int size_grad, int size_add);
+void		set_up_palettes(t_color *colors);
 int		colorize_fractol(int iter, t_mlx *mlx);
 void		julia_react_to_mouse(t_mlx *mlx, int x, int y);
 int		mandelbrot_equation(t_complex *zn, t_complex *c);
