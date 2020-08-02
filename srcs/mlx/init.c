@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/08/02 17:57:58 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/02 21:15:24 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	*ft_open_mlx(t_mlx *mlx, char *title, t_abs_coord size)
 
 void	init_values(t_mlx *mlx)
 {
+	int		i;
+
 	mlx->fractal.dimension.start.real = -2.5;
 	mlx->fractal.dimension.end.real = 2.5;
 	mlx->fractal.dimension.start.imag = -2;
@@ -50,6 +52,26 @@ void	init_values(t_mlx *mlx)
 		mlx->fractal.mandelbrot = 1;
 	// if (parse_get("Movement"))
 		mlx->fractal.free_julia = 1;
+	double				step;
+	t_mlx_img			*img;
+	t_abs_coord			pos;
+	t_abs_coord			size;
+
+	step = ((float)mlx->size.hori / (float)NB_THREAD);
+	size.vert = mlx->size.vert;
+	size.hori = step;
+	mlx->fractal.images = ft_memalloc(sizeof(void*) * NB_THREAD);
+	if ((double)((double)size.hori / (double)step) < 1.0)
+		size.hori++;
+	i = -1;
+	while (++i < NB_THREAD)
+	{
+		pos.vert = 0;
+		pos.hori = (step * (i));
+		img = ft_create_img(mlx, NULL, size, pos);
+		ft_add_img(&mlx->images_manager, img);
+		mlx->fractal.images[i] = img;
+	}
 }
 
 t_mlx		*ft_init_mlx(char *title, size_t width, size_t height)

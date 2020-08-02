@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/08/02 17:43:40 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/02 21:12:57 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,18 +137,6 @@ typedef	struct		s_color
 	size_t			size_gradient;
 }					t_color;
 
-typedef struct		s_fractal
-{
-	t_complex		zn;
-	t_complex		c;
-	t_dimension		dimension;
-	size_t			max_iter;
-	size_t			in_set_pxl;
-	int				mandelbrot;
-	int				free_julia;
-	t_color			colors;
-}					t_fractal;
-
 typedef struct		s_mlx_keys
 {
 	char			key_array[280];
@@ -177,6 +165,19 @@ typedef struct		s_mlx_img
 	// size_t			pos_height;
 	// size_t			pos_width;
 }					t_mlx_img;
+
+typedef struct		s_fractal
+{
+	t_complex		zn;
+	t_complex		c;
+	t_dimension		dimension;
+	size_t			max_iter;
+	size_t			in_set_pxl;
+	int				mandelbrot;
+	int				free_julia;
+	t_color			colors;
+	t_mlx_img		**images;
+}					t_fractal;
 
 # define			IMG_MANAGER_INIT_SIZE	(NB_THREAD + 2)
 

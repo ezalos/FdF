@@ -35,7 +35,22 @@ void	render(t_mlx *mlx)
 		img = mlx->images_manager.images[i];
 		mlx_put_image_to_window(mlx->mlx_pointer, mlx->window_pointer,\
 			img->image_pointer,\
-			img->pos.vert, img->pos.hori);
+			img->pos.hori, img->pos.vert);
+		i++;
+	}
+	reset_images(mlx);
+	// while (++i < 1000000000);
+}
+
+void	reset_images(t_mlx *mlx)
+{
+	t_mlx_img			*img;
+	size_t				i;
+	i = 0;
+	while (i < mlx->images_manager.nb_images)
+	{
+		img = mlx->images_manager.images[i];
+		ft_bzero(img->my_image_data, img->size.hori * img->size.vert * sizeof(int));
 		i++;
 	}
 }

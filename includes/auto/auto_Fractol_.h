@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezalos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 17:42:44 by ezalos            #+#    #+#             */
-/*   Updated: 2020/08/02 17:42:44 by ezalos           ###   ########.fr       */
+/*   Created: 2020/08/02 22:03:14 by ezalos            #+#    #+#             */
+/*   Updated: 2020/08/02 22:03:14 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ unsigned int		ft_get_color(unsigned char alpha, unsigned char red,
 		unsigned char green, unsigned char blue);
 void		ft_color_pixel(t_mlx_img *img, int x, int y, int color);
 void		render(t_mlx *mlx);
+void		reset_images(t_mlx *mlx);
 int8_t		ft_add_img(t_mlx_all_img *img_grp, t_mlx_img *img);
 t_mlx_img		*ft_create_img(t_mlx *mlx, char *title, t_abs_coord size, t_abs_coord pos);
 void		ft_clean_and_exit(t_mlx *mlx);
