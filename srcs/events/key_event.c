@@ -6,7 +6,7 @@
 /*   By: amartino <amartino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 11:38:07 by amartino          #+#    #+#             */
-/*   Updated: 2020/07/01 00:21:19 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/02 12:29:24 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,19 @@ int key_press(int keycode, t_mlx *mlx)
 	{
 		mlx->keys.key_array[keycode] = 1;
 		if (keycode == MLX_KEY_M)
+		{
+			if (!mlx->fractal.mandelbrot)
+			{
+				mlx->fractal.dimension.start.real -= 0.5;
+				mlx->fractal.dimension.end.real   -= 0.5;
+			}
+			else
+			{
+				mlx->fractal.dimension.start.real += 0.5;
+				mlx->fractal.dimension.end.real   += 0.5;
+			}
 			mlx->fractal.mandelbrot = !mlx->fractal.mandelbrot;
+		}
 		if (keycode == MLX_KEY_SPACE)
 			mlx->fractal.free_julia = !mlx->fractal.free_julia;
 	}
@@ -27,6 +39,9 @@ int key_press(int keycode, t_mlx *mlx)
 		mlx->fractal.max_iter += 1;
 	if (keycode == MLX_KEY_MINUS && mlx->fractal.max_iter > 1)
 		mlx->fractal.max_iter -= 1;
+
+	if (anti_flood())
+		return (0);
 	if (keycode == MLX_KEY_LEFT)
 		arrow_slide_screen(mlx, 1, 0);
 	if (keycode == MLX_KEY_UP)
@@ -35,6 +50,8 @@ int key_press(int keycode, t_mlx *mlx)
 		arrow_slide_screen(mlx, -1, 0);
 	if (keycode == MLX_KEY_DOWN)
 		arrow_slide_screen(mlx, 0, -1);
+	if (keycode == MLX_KEY_R)
+		init_values(mlx);
 
 	if (keycode == MLX_KEY_ESCAPE)
 	{

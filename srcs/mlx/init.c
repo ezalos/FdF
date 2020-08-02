@@ -6,38 +6,33 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 01:40:11 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/02 17:57:58 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "head.h"
 
-void	ft_check_window_size(t_mlx *mlx, size_t width, size_t height)
+t_abs_coord	ft_check_window_size(t_mlx *mlx, size_t width, size_t height)
 {
+	t_abs_coord		size;
+
+	(void)mlx;
 	if (!width)
-		mlx->width = SIZE_WIDTH;
-	else
-		mlx->width = width;
+		width = SIZE_WIDTH;
 	if (!height)
-		mlx->height = SIZE_HEIGTH;
-	else
-		mlx->height = height;
+		height = SIZE_HEIGTH;
+	size.vert = height;
+	size.hori = width;
+	return(size);
 }
 
-void	*ft_open_mlx(t_mlx *mlx, char *title)
+void	*ft_open_mlx(t_mlx *mlx, char *title, t_abs_coord size)
 {
-	if (!title || !*title)
-	{
-		if ((mlx->window_pointer = mlx_new_window(mlx->mlx_pointer,\
-			mlx->width,mlx->height, "Fil de Fer")) == NULL)
-			return (NULL);
-	}
-	else
-	{
-		if ((mlx->window_pointer = mlx_new_window(mlx->mlx_pointer,\
-			mlx->width, mlx->height, title)) == NULL)
-			return (NULL);
-	}
+	(void)mlx;
+	(void)title;
+	if ((mlx->window_pointer = mlx_new_window(mlx->mlx_pointer,\
+		size.hori, size.vert, title)) == NULL)
+		return (NULL);
 	return (mlx);
 }
 
@@ -57,34 +52,20 @@ void	init_values(t_mlx *mlx)
 		mlx->fractal.free_julia = 1;
 }
 
-t_img		*ft_create_img(t_mlx *mlx, char *title, size_t width, size_t height)
-{
-	t_img			*img;
-
-	img = ft_memalloc(sizeof(t_img));
-	mlx->image_list = ft_lstnew_ptr(img, sizeof(t_img*));
-	if (!(img->image_pointer = mlx_new_image(mlx->mlx_pointer,\
-		mlx->width, mlx->height)))
-		return (NULL);
-	img->width = width;
-	img->height = height;
-	img->title = title;
-	img->my_image_data = (int*)mlx_get_data_addr(img->image_pointer,\
-		&img->bits_per_pixel, &img->size_line, &img->endian);
-	return (img);
-}
-
 t_mlx		*ft_init_mlx(char *title, size_t width, size_t height)
 {
 	t_mlx			*mlx;
+	t_abs_coord		pos;
 
+	(void)title;
 	mlx = ft_memalloc(sizeof(t_mlx));
-	ft_check_window_size(mlx, width, height);
+	mlx->size = ft_check_window_size(mlx, width, height);
 	if (!(mlx->mlx_pointer = mlx_init()))
 		return (NULL);
-	if (!ft_open_mlx(mlx, title))
+	if (!ft_open_mlx(mlx, title, mlx->size))
 		return (NULL);
-	if (!(ft_create_img(mlx, "GLOBAL", mlx->width, mlx->height)))
+	ft_bzero(&pos, sizeof(pos));
+	if (!(ft_add_img(&mlx->images_manager, ft_create_img(mlx, "GLOBAL", mlx->size, pos))))
 		return (NULL);
 	init_values(mlx);
 	return (mlx);

@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:23:17 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/06/30 19:25:16 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/07/02 01:43:01 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@
 # define MLX_KEY_BRACE_L		(MLX_KEYS_OS ? 33 : (uint8_t)'[')
 # define MLX_KEY_BRACE_R		(MLX_KEYS_OS ? 30 : (uint8_t)']')
 # define MLX_KEY_SEMI			(MLX_KEYS_OS ? 41 : (uint8_t)',')
-# define MLX_KEY_PLUS			(MLX_KEYS_OS ? 69 : (uint8_t)'+')
+# define MLX_KEY_PLUS			(MLX_KEYS_OS ? 69 : (uint8_t)61)
 # define MLX_KEY_MINUS			(MLX_KEYS_OS ? 78 : (uint8_t)'-')
 
 # define MLX_KEY_LEFT			(MLX_KEYS_OS ? 123 : 65361)

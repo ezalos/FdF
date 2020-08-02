@@ -15,27 +15,27 @@ unsigned int		ft_get_color(unsigned char alpha, unsigned char red,
 	return (color);
 }
 
-int					ft_color_pixel(t_mlx *mlx, int x, int y, int color)
+void				ft_color_pixel(t_mlx_img *img, int x, int y, int color)
 {
-	t_list	*lst;
-	t_img	*img;
-
-	lst = ft_lst_reach_end(mlx->image_list);
-	img = lst->content;
-	if (x < 0 || x >= (int)img->width)
-		return (-1);
-	if (y < 0 || y >= (int)img->height)
-		return (-1);
-	img->my_image_data[(img->width * y) + x] = color;
-	return (color);
+	x -= img->pos.hori;
+	y -= img->pos.vert;
+	if (x >= 0 && x < (int)img->size.hori)
+		if (y >= 0 && y < (int)img->size.vert)
+			img->my_image_data[(img->size.hori * y) + x] = color;
 }
 
 void	render(t_mlx *mlx)
 {
-	t_img			*img;
+	t_mlx_img			*img;
+	size_t				i;
 
-	img = mlx->image_list->content;
-	// mlx_clear_window(mlx->mlx_pointer, mlx->window_pointer);
-	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window_pointer,\
-		img->image_pointer, img->pos_height, img->pos_width);
+	i = 0;
+	while (i < mlx->images_manager.nb_images)
+	{
+		img = mlx->images_manager.images[i];
+		mlx_put_image_to_window(mlx->mlx_pointer, mlx->window_pointer,\
+			img->image_pointer,\
+			img->pos.vert, img->pos.hori);
+		i++;
+	}
 }

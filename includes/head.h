@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 19:06:45 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/02 17:43:40 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define FR_GREEN	1
 # define FR_RED		2
 # define FR_ALPHA	3
-# define LEN_GRAD	6
+# define LEN_GRAD	10
 # define MAX_ITER	50
 # define NB_THREAD	4
 # define PRECISION	3
@@ -112,6 +112,12 @@ typedef struct		s_complex
 	double			imag;
 }					t_complex;
 
+typedef struct		s_abs_coord
+{
+	size_t			hori;
+	size_t			vert;
+}					t_abs_coord;
+
 typedef struct		s_dimension
 {
 	t_complex		start;
@@ -127,6 +133,7 @@ typedef	struct		s_color
 	int				*mango; // (0xF09819 && 0xEDDE5D)
 	int				*skyline; // (0x1488CC && 0x2B32B2)
 	int				*gradient;
+	int				*louis_grad[3];
 	size_t			size_gradient;
 }					t_color;
 
@@ -136,6 +143,7 @@ typedef struct		s_fractal
 	t_complex		c;
 	t_dimension		dimension;
 	size_t			max_iter;
+	size_t			in_set_pxl;
 	int				mandelbrot;
 	int				free_julia;
 	t_color			colors;
@@ -147,21 +155,57 @@ typedef struct		s_mlx_keys
 	int				mouse_array[10][3];
 }					t_mlx_keys;
 
+typedef struct		s_mlx_time
+{
+	long			last_update;
+	long			time_since_update;
+	long			max_refresh;
+}					t_mlx_time;
+
+typedef struct		s_mlx_img
+{
+	int				*my_image_data;
+	char			*title;
+	void			*image_pointer;
+	int				size_line;
+	int				bits_per_pixel;
+	int				endian;
+	t_abs_coord		size;
+	t_abs_coord		pos;
+	// size_t			width;
+	// size_t			height;
+	// size_t			pos_height;
+	// size_t			pos_width;
+}					t_mlx_img;
+
+# define			IMG_MANAGER_INIT_SIZE	(NB_THREAD + 2)
+
+typedef struct		s_mlx_all_img
+{
+	t_mlx_img		**images;
+	size_t			nb_images;
+	size_t			size_manager;
+}					t_mlx_all_img;
+
 typedef struct		s_mlx
 {
 	void			*mlx_pointer;
 	void			*window_pointer;
+	t_mlx_all_img	images_manager;
 	t_list			*image_list;
-	size_t			width;
-	size_t			height;
+	t_abs_coord		size;
+	// size_t			width;
+	// size_t			height;
 	t_mlx_keys		keys;
 	t_fractal		fractal;
+	t_mlx_time		time;
 }					t_mlx;
 
 typedef struct		s_multi_thread
 {
 	pthread_t		pthread_nb;
 	t_mlx			*mlx;
+	t_mlx_img		*img;
 	t_complex		zn;
 	int				start;
 	int				end;
@@ -174,20 +218,6 @@ typedef struct		s_multi_thread
 	t_complex		c;
 	t_complex		pos;
 }					t_multi_thread;
-
-typedef struct		s_img
-{
-	int				*my_image_data;
-	char			*title;
-	void			*image_pointer;
-	int				size_line;
-	int				bits_per_pixel;
-	int				endian;
-	size_t			width;
-	size_t			height;
-	size_t			pos_height;
-	size_t			pos_width;
-}					t_img;
 
 typedef struct		s_point
 {

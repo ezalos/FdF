@@ -40,8 +40,8 @@ void		zoom(int direction, float x, float y, t_mlx *mlx)
 	new_height = height - ((height * ZOOM_COEF) * direction);
 	new_width = width - ((width * ZOOM_COEF) * direction);
 	////
-	x = pix_to_math(x, mlx->width, mlx->fractal.dimension.start.real, mlx->fractal.dimension.end.real);
-	y = pix_to_math(y, mlx->height, mlx->fractal.dimension.start.imag, mlx->fractal.dimension.end.imag);
+	x = pix_to_math(x, mlx->size.hori, mlx->fractal.dimension.start.real, mlx->fractal.dimension.end.real);
+	y = pix_to_math(y, mlx->size.vert, mlx->fractal.dimension.start.imag, mlx->fractal.dimension.end.imag);
 	////
 	start_to_x = (x - mlx->fractal.dimension.start.real) / width;
 	start_to_y = (y - mlx->fractal.dimension.start.imag) / height;

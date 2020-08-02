@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:50 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/07/01 19:08:57 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/02 17:48:01 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		main(int ac, char **av)
 	if (!(mlx = ft_init_mlx(av[0], ft_atoi(av[2]), ft_atoi(av[3]))))
 		ft_clean_garbage();
 //	set_up_palettes(mlx);
-set_up_palettes(&mlx->fractal.colors);
+	set_up_palettes(&mlx->fractal.colors);
 	thread_fractol(mlx, NB_THREAD);
 	render(mlx);
 	mlx_hooks_and_loop(mlx);

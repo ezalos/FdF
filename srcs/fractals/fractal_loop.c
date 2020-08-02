@@ -16,7 +16,9 @@ static void		apply_color(t_multi_thread *thread, size_t iter)
 	int			color;
 
 	color = 0;
-	if (1 || !thread->mlx->fractal.free_julia)
+	if (1)
+		color = picasso(thread->mlx, iter, thread->zn);
+	else if (1 || !thread->mlx->fractal.free_julia)
 		color = colorize_fractol(iter, thread->mlx);
 	else if (iter < thread->mlx->fractal.max_iter)
 		color = ft_get_color(0,
@@ -25,7 +27,7 @@ static void		apply_color(t_multi_thread *thread, size_t iter)
 			((float)iter / (float)thread->mlx->fractal.max_iter) * 255);
 	else
 		color = 0x00ffffff;
-	ft_color_pixel(thread->mlx, thread->pxl_width, thread->pxl_height, color);
+	ft_color_pixel(thread->img, thread->pxl_width, thread->pxl_height, color);
 }
 
 void			fractal_loop_thread(t_multi_thread *thread)

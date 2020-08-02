@@ -40,8 +40,8 @@ void	move_complex_window_center(t_mlx *mlx, int y, int x)
 	width = mlx->fractal.dimension.end.real - mlx->fractal.dimension.start.real;
 	////
 	ft_printf("\tH%f W%f", height, width);
-	f_x = pix_to_math(x, mlx->width, 0, width);
-	f_y = pix_to_math(y, mlx->height, 0, height);
+	f_x = pix_to_math(x, mlx->size.hori, 0, width);
+	f_y = pix_to_math(y, mlx->size.vert, 0, height);
 	ft_printf("\t-> %f %f\n", f_x, f_y);
 	////
 	////

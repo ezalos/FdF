@@ -9,9 +9,9 @@ void		ft_clean_and_exit(t_mlx *mlx)
 
 void 	virgin_screen(t_mlx *mlx)
 {
-	t_img			*img;
+	t_mlx_img			*img;
 
 	img = ft_lst_reach_end(mlx->image_list)->content;
-	ft_memset(img->my_image_data, 0, (mlx->width * mlx->height * 4));
+	ft_memset(img->my_image_data, 0, (mlx->size.hori * mlx->size.vert * 4));
 	render(mlx);
 }
