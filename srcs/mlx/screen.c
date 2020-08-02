@@ -38,7 +38,7 @@ void	render(t_mlx *mlx)
 			img->pos.hori, img->pos.vert);
 		i++;
 	}
-	reset_images(mlx);
+	// reset_images(mlx);
 	// while (++i < 1000000000);
 }
 
