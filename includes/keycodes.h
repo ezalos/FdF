@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 18:23:17 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/07/02 01:43:01 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/02 18:05:57 by deyaberge        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,23 @@
 # define MLX_KEY_DOWN			(MLX_KEYS_OS ? 125 : 65364)
 # define MLX_KEY_UP				(MLX_KEYS_OS ? 126 : 65362)
 
-# define MLX_KEY_CTRL_L			(MLX_KEYS_OS ? 11111 : 65507)
-# define MLX_KEY_CTRL_R			(MLX_KEYS_OS ? 11111 : 65508)
+# define MLX_KEY_CTRL_L			(MLX_KEYS_OS ? 256 : 65507)
+# define MLX_KEY_CTRL_R			(MLX_KEYS_OS ? 269 : 65508)
 
-# define MLX_KEY_ALT_L			(MLX_KEYS_OS ? 11111 : 65513)
-# define MLX_KEY_ALT_R			(MLX_KEYS_OS ? 11111 : 65514)
+# define MLX_KEY_ALT_L			(MLX_KEYS_OS ? 261 : 65513)
+# define MLX_KEY_ALT_R			(MLX_KEYS_OS ? 262 : 65514)
 
-# define MLX_KEY_SHIFT_L		(MLX_KEYS_OS ? 11111 : 65505)
-# define MLX_KEY_SHIFT_R		(MLX_KEYS_OS ? 11111 : 65506)
+# define MLX_KEY_SHIFT_L		(MLX_KEYS_OS ? 257 : 65505)
+# define MLX_KEY_SHIFT_R		(MLX_KEYS_OS ? 258 : 65506)
 
-# define MLX_KEY_CAPSLOCK		(MLX_KEYS_OS ? 11111 : 65509)
+# define MLX_KEY_CAPSLOCK		(MLX_KEYS_OS ? 272 : 65509)
 
-# define MLX_KEY_BACKSPACE		(MLX_KEYS_OS ? 11111 : 65288)
-# define MLX_KEY_DELETE			(MLX_KEYS_OS ? 11111 : 65535)
-# define MLX_KEY_ESCAPE			(MLX_KEYS_OS ? 11111 : 65307)
+# define MLX_KEY_BACKSPACE		(MLX_KEYS_OS ? 117 : 65288)
+# define MLX_KEY_DELETE			(MLX_KEYS_OS ? 51 : 65535)
+# define MLX_KEY_ESCAPE			(MLX_KEYS_OS ? 53 : 65307)
 
 # define MLX_KEY_TAB			(MLX_KEYS_OS ? 48 : 65289)
-# define MLX_KEY_SPACE			(MLX_KEYS_OS ? 11111 : 32)
-# define MLX_KEY_ENTER			(MLX_KEYS_OS ? 11111 : 65293)
+# define MLX_KEY_SPACE			(MLX_KEYS_OS ? 49 : 32)
+# define MLX_KEY_ENTER			(MLX_KEYS_OS ? 36 : 65293)
 
 #endif
