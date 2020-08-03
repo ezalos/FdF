@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/08/03 12:58:16 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/03 12:59:40 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	thread_fractol(t_mlx *mlx, int nb_thread)
 
 	while (current_thread--)
 		if (pthread_join(thread[current_thread].pthread_nb, NULL))
-			ft_printf("\n\n\n\n\n\n\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\npthread_join\n\n\\n\n\n\n\\n\n\n\n\n\\n\n\n\\n\n");
+			perror("pthread_join");
 
 	double		ratio;
 
