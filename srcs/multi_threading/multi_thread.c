@@ -6,7 +6,7 @@
 /*   By: deyaberg <deyaberg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:01:40 by deyaberg          #+#    #+#             */
-/*   Updated: 2020/08/02 22:09:15 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/03 12:58:16 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ void	thread_fractol(t_mlx *mlx, int nb_thread)
 {
 	t_multi_thread		*thread;
 	int					current_thread;
+	long				time;
 
+	time = get_time();
 	mlx->fractal.in_set_pxl = 0;
 	thread = ft_memalloc(sizeof(t_multi_thread) * nb_thread);
 
@@ -81,4 +83,5 @@ void	thread_fractol(t_mlx *mlx, int nb_thread)
 	// else
 	// 	mlx->fractal.max_iter += mlx->fractal.max_iter * 0.1;
 	ft_printf("MAX_ITER %u\n", mlx->fractal.max_iter);
+	ft_printf("Time calcul %dms\n", get_time() - time);
 }

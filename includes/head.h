@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:21:33 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/08/02 21:12:57 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/03 12:49:30 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ typedef struct		s_fractal
 	int				free_julia;
 	t_color			colors;
 	t_mlx_img		**images;
+	uint8_t			color_mode;
 }					t_fractal;
 
 # define			IMG_MANAGER_INIT_SIZE	(NB_THREAD + 2)

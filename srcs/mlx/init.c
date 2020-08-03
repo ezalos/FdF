@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 00:33:41 by ldevelle          #+#    #+#             */
-/*   Updated: 2020/08/02 21:15:24 by ezalos           ###   ########.fr       */
+/*   Updated: 2020/08/03 12:52:13 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init_values(t_mlx *mlx)
 		mlx->fractal.mandelbrot = 1;
 	// if (parse_get("Movement"))
 		mlx->fractal.free_julia = 1;
+	// mlx->fractal.color_mode = 0;
 	double				step;
 	t_mlx_img			*img;
 	t_abs_coord			pos;

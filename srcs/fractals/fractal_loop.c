@@ -16,11 +16,11 @@ static void		apply_color(t_multi_thread *thread, size_t iter)
 	int			color;
 
 	color = 0;
-	if (1)
+	if (thread->mlx->fractal.color_mode == 0)
 		color = picasso(thread->mlx, iter, thread->zn);
-	else if (1 || !thread->mlx->fractal.free_julia)
+	else if (thread->mlx->fractal.color_mode == 1)
 		color = colorize_fractol(iter, thread->mlx);
-	else if (iter < thread->mlx->fractal.max_iter)
+	else if (thread->mlx->fractal.color_mode == 2)
 		color = ft_get_color(0,
 			((float)iter / (float)thread->mlx->fractal.max_iter) * 255,
 			((float)iter / (float)thread->mlx->fractal.max_iter) * 255,

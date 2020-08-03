@@ -1,5 +1,18 @@
-
 #include "head.h"
+
+long		get_time(void)
+{
+	long            ns;
+	time_t          s;
+	struct timespec spec;
+	long            ms;
+
+	clock_gettime(CLOCK_REALTIME, &spec);
+	s = spec.tv_sec;
+	ns = spec.tv_nsec;
+	ms = (s * 1000) + (ns / 1000000);
+	return (ms);
+}
 
 int			anti_flood(void)
 {
